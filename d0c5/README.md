@@ -1,1 +1,1 @@
-<iframe width="560" height="315" src='https://dbdiagram.io/embed/5db58fb502e6e93440f2ac56'></iframe>
+![Database](puzzles.png)
