@@ -51,4 +51,25 @@ class AuthController extends Controller {
             'password' => Hash::make($request->password),
         ]);
     }
+
+    public function changePassword(Request $request) {
+        $request->validate([
+            'old_password' => 'required|string|min:6',
+            'new_password' => 'required|string|min:6',
+        ]);
+        $user = $request->user();
+        $attempt = Request::create('/api/login', 'post', [
+            'username' => isset($user->phone) ? $user->phone : $user->email,
+            'password' => $request->old_password,
+        ]);
+        $response = app()->handle($attempt);
+        if ($response->getStatusCode() != 200)
+            return response()->json('رمز عبور قدیمی صحیح نیست', 403);
+        $user->update(['password' => Hash::make($request->new_password)]);
+        $userTokens = $user->tokens;
+        foreach ($userTokens as $token) {
+            $token->revoke();
+        }
+        return response()->json('رمز عبور تغییر کرد', 200);
+    }
 }
