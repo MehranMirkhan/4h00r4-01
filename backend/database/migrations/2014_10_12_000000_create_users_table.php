@@ -19,7 +19,15 @@ class CreateUsersTable extends Migration {
             $table->string('phone')->unique()->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->nullable();
+            $table->integer('coin_1')->nullable();
+            $table->integer('coin_2')->nullable();
+            $table->integer('score_daily')->nullable();
+            $table->integer('score_weekly')->nullable();
+            $table->string('profile_pic')->nullable();
+            $table->integer('daily_solved_count')->nullable();
+            $table->integer('weekly_solved_count')->nullable();
+            $table->integer('level')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
