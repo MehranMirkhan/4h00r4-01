@@ -1,1 +1,1 @@
-![Database](puzzles.png)
+![Database](db.png)
