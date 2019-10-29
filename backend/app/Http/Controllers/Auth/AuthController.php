@@ -35,10 +35,10 @@ class AuthController extends Controller {
 
     public function register(Request $request) {
         $request->validate([
-            'name'     => ['string', 'max:255'],
-            'email'    => ['string', 'email', 'max:255', 'unique:users'],
-            'phone'    => ['string', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6']
+            'name'     => 'string|max:255',
+            'email'    => 'string|email|max:255|unique:users',
+            'phone'    => 'string|max:255|unique:users',
+            'password' => 'required|string|min:6',
         ]);
 
         if (!isset($request->email) && !isset($request->phone))

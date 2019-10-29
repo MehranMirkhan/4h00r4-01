@@ -1,30 +1,22 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
-Route::namespace('Auth')->group(function () {
+Route::group(['namespace' => 'Auth'], function () {
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'], function () {
+    Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
+        Route::apiResource('users', 'UserController')->except(['store']);
+    });
 });
 
-Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'], function () {
-    Route::get('/users', function () {
-        return User::all();
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
+        Route::get('/users/me', 'UserController@me');
+        Route::put('/users/password', 'UserController@changePassword');
     });
 });
