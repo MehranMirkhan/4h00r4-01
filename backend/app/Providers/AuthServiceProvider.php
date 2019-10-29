@@ -22,7 +22,16 @@ class AuthServiceProvider extends ServiceProvider {
      */
     public function boot() {
         $this->registerPolicies();
-
-        Passport::routes();
+        Passport::tokensCan([
+            'admin' => 'can do anything',
+            'user'  => 'can do some things',
+        ]);
+        Passport::routes(function ($router) {
+            //            $router->forAuthorization();
+            $router->forAccessTokens();
+            //            $router->forTransientTokens();
+            //            $router->forClients();
+            //            $router->forPersonalAccessTokens();
+        });
     }
 }

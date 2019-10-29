@@ -1,32 +1,29 @@
 <?php
 
-
 namespace App\Http\Controllers\Auth;
 
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+
 class AuthController extends Controller {
-
     public function login(Request $request) {
-        $http = new Client();
-
         try {
-            $response = $http->post(config('services.passport.login_endpoint'), [
-                'form_params' => [
-                    'grant_type'    => 'password',
-                    'client_id'     => config('services.passport.client_id'),
-                    'client_secret' => config('services.passport.client_secret'),
-                    'username'      => $request->username,
-                    'password'      => $request->password,
-                ]
+            $user = (new User)->findForPassport($request->username);
+            $tokenRequest = Request::create('/oauth/token', 'post', [
+                'grant_type'    => 'password',
+                'client_id'     => config('services.passport.client_id'),
+                'client_secret' => config('services.passport.client_secret'),
+                'username'      => $request->username,
+                'password'      => $request->password,
+                'scope'         => $user->role,
             ]);
-            return $response->getBody();
+            $response = app()->handle($tokenRequest);
+            return $response;
         } catch (BadResponseException $e) {
             if ($e->getCode() === 400)
                 return response()->json('درخواست نامعتبر است. لطفاً نام کاربری و رمز عبور وارد کنید', $e->getCode());

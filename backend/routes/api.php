@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 /*
@@ -13,11 +14,17 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::namespace('Auth')->group(function () {
+    Route::post('/login', 'AuthController@login');
+    Route::post('/register', 'AuthController@register');
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::namespace('Auth')->group(function () {
-    Route::post('/login', 'AuthController@login');
-    Route::post('/register', 'AuthController@register');
+Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'], function () {
+    Route::get('/users', function () {
+        return User::all();
+    });
 });
