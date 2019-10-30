@@ -13,6 +13,7 @@ Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'],
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
         Route::apiResource('users', 'UserController')->except(['store']);
         Route::apiResource('questions', 'QuestionController');
+        Route::apiResource('solutions', 'SolutionController');
     });
 });
 
