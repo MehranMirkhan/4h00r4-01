@@ -20,4 +20,8 @@ class Question extends Model {
         'start_time' => 'datetime',
         'end_time'   => 'datetime',
     ];
+
+    public function solutions() {
+        return $this->hasMany(Solution::class);
+    }
 }

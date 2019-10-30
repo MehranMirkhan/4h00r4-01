@@ -31,4 +31,8 @@ class User extends Authenticatable {
                     ->orWhere('phone', $username)
                     ->firstOrFail();
     }
+
+    public function solves() {
+        return $this->hasMany(Solve::class);
+    }
 }
