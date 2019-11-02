@@ -33,4 +33,13 @@ class SolveController extends Controller {
             return response()->json('خطای نامشخص', $e->getCode());
         }
     }
+
+    //----------  Sub Routes  ----------
+    public function user(Solve $solve) {
+        return $solve->user();
+    }
+
+    public function question(Solve $solve) {
+        return $solve->question();
+    }
 }

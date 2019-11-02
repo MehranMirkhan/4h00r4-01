@@ -32,6 +32,10 @@ class User extends Authenticatable {
                     ->firstOrFail();
     }
 
+    public function answers() {
+        return $this->hasMany(Answer::class);
+    }
+
     public function solves() {
         return $this->hasMany(Solve::class);
     }

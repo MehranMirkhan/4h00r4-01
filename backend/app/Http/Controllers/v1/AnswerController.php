@@ -33,4 +33,13 @@ class AnswerController extends Controller {
             return response()->json('خطای نامشخص', $e->getCode());
         }
     }
+
+    //----------  Sub Routes  ----------
+    public function user(Answer $answer) {
+        return $answer->user();
+    }
+
+    public function question(Answer $answer) {
+        return $answer->question();
+    }
 }

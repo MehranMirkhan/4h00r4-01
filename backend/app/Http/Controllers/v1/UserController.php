@@ -32,4 +32,13 @@ class UserController extends Controller {
             return response()->json('خطای نامشخص', $e->getCode());
         }
     }
+
+    //----------  Sub Routes  ----------
+    public function answers(User $user) {
+        return $user->answers();
+    }
+
+    public function solves(User $user) {
+        return $user->solves();
+    }
 }

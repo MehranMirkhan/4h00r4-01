@@ -34,4 +34,9 @@ class QuestionController extends Controller {
             return response()->json('خطای نامشخص', $e->getCode());
         }
     }
+
+    //----------  Sub Routes  ----------
+    public function solutions(Question $question) {
+        return $question->solutions();
+    }
 }
