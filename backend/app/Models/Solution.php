@@ -8,6 +8,7 @@ class Solution extends Model {
     protected $table    = 'solutions';
     protected $fillable = [
         'text',
+        'question_id',
     ];
 
     public function question() {

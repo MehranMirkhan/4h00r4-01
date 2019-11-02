@@ -5,7 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Solve extends Model {
-    protected $table = 'solves';
+    protected $table    = 'solves';
+    protected $fillable = [
+        'user_id',
+        'question_id',
+    ];
 
     public function user() {
         return $this->belongsTo(User::class);
