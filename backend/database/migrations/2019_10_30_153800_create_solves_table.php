@@ -13,11 +13,11 @@ class CreateSolvesTable extends Migration {
     public function up() {
         Schema::create('solves', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')
                   ->references('id')->on('users')
                   ->onDelete('cascade');
-            $table->integer('question_id')->unsigned();
+            $table->bigInteger('question_id')->unsigned();
             $table->foreign('question_id')
                   ->references('id')->on('questions')
                   ->onDelete('cascade');

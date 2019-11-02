@@ -14,11 +14,11 @@ class CreateAnswersTable extends Migration {
         Schema::create('answers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('text');
-            $table->integer('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')
                   ->references('id')->on('users')
                   ->onDelete('cascade');
-            $table->integer('question_id')->unsigned();
+            $table->bigInteger('question_id')->unsigned();
             $table->foreign('question_id')
                   ->references('id')->on('questions')
                   ->onDelete('cascade');

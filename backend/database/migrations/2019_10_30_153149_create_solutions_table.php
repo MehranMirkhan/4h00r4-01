@@ -14,7 +14,7 @@ class CreateSolutionsTable extends Migration {
         Schema::create('solutions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('text');
-            $table->integer('question_id')->unsigned();
+            $table->bigInteger('question_id')->unsigned();
             $table->foreign('question_id')
                   ->references('id')->on('questions')
                   ->onDelete('cascade');
