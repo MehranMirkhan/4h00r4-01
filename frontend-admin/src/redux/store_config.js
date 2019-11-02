@@ -9,6 +9,7 @@ import reducer from 'src/redux/reducer';
 const persistConfig = {
   key: 'puzzles_ugQzdLOtUd',
   storage,
+  whitelist: ['auth'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

@@ -5,12 +5,12 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Landing from 'src/pages/Landing';
-import NotFound from 'src/pages/NotFound';
+import Auth from 'src/modules/auth';
+import NotFound from 'src/modules/NotFound';
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: !!state.user.accessToken,
+  isAuthenticated: !!state.auth.accessToken,
 });
 
 const AuthRoute = connect(mapStateToProps)(
@@ -33,8 +33,8 @@ export default function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <UnAuthRoute exact path="/" component={Landing} />
-        <AuthRoute exact path="/report" component={Landing} />
+        <UnAuthRoute exact path="/" component={Auth} />
+        {/* <AuthRoute exact path="/report" component={Landing} /> */}
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>

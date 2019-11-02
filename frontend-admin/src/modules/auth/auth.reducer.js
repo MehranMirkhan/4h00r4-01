@@ -1,19 +1,19 @@
 
-export const USER_ACTIONS = {
-  SET: 'user/SET',
-  RESET: 'user/RESET',
+export const AUTH_ACTIONS = {
+  SET: 'auth/SET',
+  RESET: 'auth/RESET',
 };
 
 const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case USER_ACTIONS.SET:
+    case AUTH_ACTIONS.SET:
       return {
         ...state,
-        ...action.user,
+        ...action.payload,
       };
-    case USER_ACTIONS.RESET:
+    case AUTH_ACTIONS.RESET:
       return {
         ...initialState
       };
