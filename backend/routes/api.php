@@ -15,6 +15,7 @@ Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'],
         Route::apiResource('questions', 'QuestionController');
         Route::apiResource('solutions', 'SolutionController');
         Route::apiResource('answers', 'AnswerController');
+        Route::apiResource('solves', 'SolveController');
     });
 });
 
