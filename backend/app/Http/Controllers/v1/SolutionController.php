@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Utility;
 use App\Models\Solution;
 use Illuminate\Http\Request;
 
 class SolutionController extends Controller {
-    public function index() {
-        return Solution::all();
+    public function index(Request $request) {
+        return Utility::richRetrieve($request, Solution::query());
     }
 
     public function store(Request $request) {

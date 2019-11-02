@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Utility;
 use App\Models\Question;
 use Illuminate\Http\Request;
 
 
 class QuestionController extends Controller {
-    public function index() {
-        return Question::all();
+    public function index(Request $request) {
+        return Utility::richRetrieve($request, Question::query());
     }
 
     public function store(Request $request) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Utility;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,8 +12,8 @@ class UserController extends Controller {
         return $request->user();
     }
 
-    public function index() {
-        return User::all();
+    public function index(Request $request) {
+        return Utility::richRetrieve($request, User::query());
     }
 
     public function show(User $user) {

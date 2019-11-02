@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Utility;
 use App\Models\Solve;
 use Illuminate\Http\Request;
 
 class SolveController extends Controller {
-    public function index() {
-        return Solve::all();
+    public function index(Request $request) {
+        return Utility::richRetrieve($request, Solve::query());
     }
 
     public function store(Request $request) {
