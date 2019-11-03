@@ -22,7 +22,6 @@ const AuthRoute = connect(mapStateToProps)(
 
 const UnAuthRoute = connect(mapStateToProps)(
   ({ isAuthenticated, ...otherProps }) => {
-    console.log(isAuthenticated);
     return isAuthenticated
       ? <Redirect to="/" />
       : <Route {...otherProps} />
