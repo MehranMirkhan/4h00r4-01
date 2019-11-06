@@ -1,3 +1,4 @@
+import { API } from "src/redux/store_config";
 
 export const AUTH_ACTIONS = {
   SET: 'auth/SET',
@@ -9,6 +10,10 @@ const initialState = {};
 export default (state = initialState, action) => {
   switch (action.type) {
     case AUTH_ACTIONS.SET:
+      if (!!action.payload) {
+        if (!API.defaults.headers) API.defaults.headers = {};
+        API.defaults.headers.Authorization = `Bearer ${action.payload.access_token}`;
+      }
       return {
         ...state,
         ...action.payload,
@@ -28,7 +33,7 @@ export const login = (username, password) => (dispatch, _, API) => {
   return API.post('/login', { username, password })
     .then(resp => dispatch({
       type: AUTH_ACTIONS.SET,
-      payload: !!resp ? resp.data : {},
+      payload: !!resp ? resp.data : undefined,
     }));
 };
 

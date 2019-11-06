@@ -17,6 +17,7 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 export const API = Axios.create({
   baseURL: 'http://localhost/4h00r4-01/backend/public/api',
   timeout: 3000,
+  headers: {"Accept": "application/json", "Content-Type": "application/json"},
 });
 
 const store = createStore(

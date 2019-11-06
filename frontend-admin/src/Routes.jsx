@@ -5,9 +5,10 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import {isAuthenticated} from 'src/modules/auth/auth.reducer';
+import { isAuthenticated } from 'src/modules/auth/auth.reducer';
 
 import Auth from 'src/modules/auth';
+import Report from 'src/modules/report';
 import NotFound from 'src/modules/NotFound';
 
 
@@ -35,7 +36,7 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <UnAuthRoute exact path="/" component={Auth} />
-        {/* <AuthRoute exact path="/report" component={Landing} /> */}
+        <AuthRoute exact path="/report" component={Report} />
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>
