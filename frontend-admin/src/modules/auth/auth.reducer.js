@@ -21,3 +21,18 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+// --------- ACTIONS ---------
+
+export const login = (username, password) => (dispatch, _, API) => {
+  return API.post('/login', { username, password })
+    .then(resp => dispatch({
+      type: AUTH_ACTIONS.SET,
+      payload: resp.data,
+    }))
+    .catch(resp => { });
+}
+
+// --------- STATES ---------
+
+export const isAuthenticated = auth => !!auth.access_token;

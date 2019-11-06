@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button, Form, Segment } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
+
 import { Center, Field_, CHECKS } from 'src/utils';
+import { login } from './auth.reducer';
 
 
 const checkMinLen6 = CHECKS.MIN_LEN(6);
@@ -20,26 +23,21 @@ const LoginForm = reduxForm({ form: 'login' })(
     </Form>
 );
 
-const LoginContainer = ({ children }) => <>
-  <Segment raised style={{ width: 400 }}>
-    {children}
-  </Segment>
-</>;
-
-export default class Auth extends React.Component {
-  onSubmit = async (values) => {
-    alert(JSON.stringify(values));
-    return new Promise((res, rej) => setTimeout(() => res(), 1000));
-  };
+class Auth extends React.Component {
+  onSubmit = values => this.props.login(values.username, values.password);
   render() {
     return (
       <div style={{ backgroundColor: "#abc" }}>
         <Center>
-          <LoginContainer>
+          <Segment raised style={{ width: 400 }}>
             <LoginForm onSubmit={this.onSubmit} />
-          </LoginContainer>
+          </Segment>
         </Center>
       </div>
     );
   }
 }
+
+export default connect(null, dispatch => ({
+  login: (username, password) => dispatch(login(username, password)),
+}))(Auth);

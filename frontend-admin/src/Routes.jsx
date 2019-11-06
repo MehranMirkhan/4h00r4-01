@@ -5,12 +5,14 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import {isAuthenticated} from 'src/modules/auth/auth.reducer';
+
 import Auth from 'src/modules/auth';
 import NotFound from 'src/modules/NotFound';
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: !!state.auth.accessToken,
+  isAuthenticated: isAuthenticated(state.auth),
 });
 
 const AuthRoute = connect(mapStateToProps)(
@@ -23,7 +25,7 @@ const AuthRoute = connect(mapStateToProps)(
 const UnAuthRoute = connect(mapStateToProps)(
   ({ isAuthenticated, ...otherProps }) => {
     return isAuthenticated
-      ? <Redirect to="/" />
+      ? <Redirect to="/report" />
       : <Route {...otherProps} />
   }
 );

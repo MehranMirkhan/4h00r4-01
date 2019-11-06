@@ -4,7 +4,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import reducer from 'src/redux/reducer';
-// import API from 'API';
+import Axios from 'axios';
 
 const persistConfig = {
   key: 'puzzles_ugQzdLOtUd',
@@ -14,9 +14,14 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
+const API = Axios.create({
+  baseURL: 'http://localhost/4h00r4-01/backend/public/api',
+  timeout: 3000,
+});
+
 const store = createStore(
   persistedReducer,
-  applyMiddleware(thunk/*.withExtraArgument(API)*/));
+  applyMiddleware(thunk.withExtraArgument(API)));
 const persistor = persistStore(store);
 
 export { store, persistor };
