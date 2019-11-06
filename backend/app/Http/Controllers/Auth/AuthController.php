@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use GuzzleHttp\Exception\BadResponseException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,6 +15,10 @@ class AuthController extends Controller {
     public function login(Request $request) {
         try {
             $user = (new User)->findForPassport($request->username);
+        } catch (ModelNotFoundException $e) {
+            return response()->json('نام کاربری یا رمز عبور اشتباه است', 401);
+        }
+        try {
             $tokenRequest = Request::create('/oauth/token', 'post', [
                 'grant_type'    => 'password',
                 'client_id'     => config('services.passport.client_id'),

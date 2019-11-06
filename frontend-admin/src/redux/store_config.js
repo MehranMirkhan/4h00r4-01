@@ -14,7 +14,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-const API = Axios.create({
+export const API = Axios.create({
   baseURL: 'http://localhost/4h00r4-01/backend/public/api',
   timeout: 3000,
 });

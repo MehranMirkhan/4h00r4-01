@@ -28,10 +28,15 @@ export const login = (username, password) => (dispatch, _, API) => {
   return API.post('/login', { username, password })
     .then(resp => dispatch({
       type: AUTH_ACTIONS.SET,
-      payload: resp.data,
-    }))
-    .catch(resp => { });
-}
+      payload: !!resp ? resp.data : {},
+    }));
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({
+    type: AUTH_ACTIONS.RESET,
+  });
+};
 
 // --------- STATES ---------
 
