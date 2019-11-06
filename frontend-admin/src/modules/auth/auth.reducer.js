@@ -1,5 +1,3 @@
-import { API } from "src/redux/store_config";
-
 export const AUTH_ACTIONS = {
   SET: 'auth/SET',
   RESET: 'auth/RESET',
@@ -10,10 +8,6 @@ const initialState = {};
 export default (state = initialState, action) => {
   switch (action.type) {
     case AUTH_ACTIONS.SET:
-      if (!!action.payload) {
-        if (!API.defaults.headers) API.defaults.headers = {};
-        API.defaults.headers.Authorization = `Bearer ${action.payload.access_token}`;
-      }
       return {
         ...state,
         ...action.payload,

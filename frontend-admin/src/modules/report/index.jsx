@@ -3,27 +3,21 @@ import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 
 import { logout } from 'src/modules/auth/auth.reducer';
-import { API } from 'src/redux/store_config';
+import { fetchMe } from './report.reducer';
 
 
-class Report extends React.Component {
-  state = { me: {} };
-  // componentDidMount() {
-  //   API.get('/v1/users/me').then(resp => this.setState({ me: resp.data }));
-  // }
-  fetchMe = () => API.get('/v1/users/me').then(resp => this.setState({ me: resp.data }));
-  render() {
-    const { logout } = this.props;
-    const { me } = this.state;
-    return <>
-      <h1>Report</h1>
-      <Button onClick={() => logout()}>خروج</Button>
-      <Button onClick={this.fetchMe}>fetchMe</Button>
-      {!!me && me.name}
-    </>;
-  }
+function Report({ me, logout, fetchMe }) {
+  return <>
+    <h1>Report</h1>
+    <Button onClick={() => logout()}>خروج</Button>
+    <Button onClick={fetchMe}>fetchMe</Button>
+    {!!me && me.name}
+  </>;
 }
 
-export default connect(null, dispatch => ({
+export default connect(state => ({
+  me: state.report.me,
+}), dispatch => ({
   logout: () => dispatch(logout()),
+  fetchMe: () => dispatch(fetchMe()),
 }))(Report);

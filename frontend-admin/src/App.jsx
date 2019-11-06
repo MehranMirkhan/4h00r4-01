@@ -16,7 +16,7 @@ export default function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <AlertProvider template={AlertTemplate}
-          timeout={5000} position={positions.TOP_RIGHT} transition={transitions.SCALE}>
+          timeout={5000} position={positions.TOP_CENTER} transition={transitions.SCALE}>
           <ErrorHandler>
             <Routes />
           </ErrorHandler>

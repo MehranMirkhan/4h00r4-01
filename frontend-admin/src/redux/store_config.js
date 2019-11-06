@@ -26,3 +26,15 @@ const store = createStore(
 const persistor = persistStore(store);
 
 export { store, persistor };
+
+API.interceptors.request.use(
+  config => {
+    if (!config.headers.Authorization) {
+      const access_token = store.getState().auth.access_token;
+      if (!!access_token)
+        config.headers.Authorization = `Bearer ${access_token}`;
+    }
+
+    return config;
+  },
+);
