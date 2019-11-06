@@ -1,22 +1,20 @@
 import React from 'react';
 import { Button, Form, Segment } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
-import { Field_, Center } from 'src/utils';
+import { Center, Field_, CHECKS } from 'src/utils';
 
 
-const checkRequired = v => (!v || v === '') ? 'این فیلد را پر کنید' : undefined;
-const checkMinVal = minVal => v => (!!v && v.length < minVal) ? `باید بیشتر از ${minVal} کاراکتر باشد` : undefined;
-const checkMinVal6 = checkMinVal(6);
+const checkMinLen6 = CHECKS.MIN_LEN(6);
 
 const LoginForm = reduxForm({ form: 'login' })(
   ({ handleSubmit, pristine, invalid, submitting }) =>
     <Form onSubmit={handleSubmit}>
       <Field component={Field_} Comp={Form.Input}
-        name="username" label="نام کاربری" type="text" inline fluid
-        required validate={checkRequired} />
+        name="username" label="نام کاربری" type="text" inline fluid autoFocus
+        required validate={CHECKS.REQUIRED} />
       <Field component={Field_} Comp={Form.Input}
         name="password" label="رمز عبور" type="password" inline fluid
-        required validate={[checkRequired, checkMinVal6]} />
+        required validate={[CHECKS.REQUIRED, checkMinLen6]} />
       <Button type='submit' primary
         disabled={pristine || invalid} loading={submitting}>ورود</Button>
     </Form>
