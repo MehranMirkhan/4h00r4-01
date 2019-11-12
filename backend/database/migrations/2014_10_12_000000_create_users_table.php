@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration {
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('user');
-            $table->boolean('is_active')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->integer('coin_1')->nullable();
             $table->integer('coin_2')->nullable();
             $table->integer('score_daily')->nullable();

@@ -25,8 +25,11 @@ export default (state = initialState, action) => {
 
 // --------- ACTIONS ---------
 
-export const fetchUsers = () => (dispatch, _, API) => {
-  return API.get('/admin/v1/users')
+export const fetchUsers = (searchParams) => (dispatch, _, API) => {
+  let params = {};
+  if (searchParams && searchParams.filter && Object.entries(searchParams.filter).length !== 0)
+    params.filter = Object.keys(searchParams.filter).map(k => `${k}:${searchParams.filter[k]}`).join(',');
+  return API.get('/admin/v1/users', { params })
     .then(resp => dispatch({
       type: USERS_ACTIONS.SET_DATA,
       payload: !!resp ? resp.data : undefined,

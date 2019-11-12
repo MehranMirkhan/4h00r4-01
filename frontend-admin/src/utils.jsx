@@ -16,3 +16,8 @@ export const CHECKS = {
   MAX_VAL: maxVal => v => (!!v && v > maxVal) ? `باید کمتر از ${maxVal} باشد` : undefined,
   MIN_VAL: minVal => v => (!!v && v < minVal) ? `باید بیشتر از ${minVal} باشد` : undefined,
 };
+
+export const booleanOptions = [
+  {key: 'true', text: 'True', value: '1'},
+  {key: 'false', text: 'False', value: '0'},
+];
