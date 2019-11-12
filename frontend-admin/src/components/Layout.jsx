@@ -22,8 +22,8 @@ const Navbar = connect(null, dispatch => ({
       />
       <Dropdown item text='جداول'>
         <Dropdown.Menu>
-          <Dropdown.Item text='کاربران' />
-          <Dropdown.Item text='سؤالات' />
+          <Dropdown.Item text='کاربران' as={Link} to='/users' />
+          <Dropdown.Item text='سؤالات' as={Link} to='/questions' />
         </Dropdown.Menu>
       </Dropdown>
       <Menu.Item

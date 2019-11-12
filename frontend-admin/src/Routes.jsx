@@ -9,6 +9,7 @@ import { isAuthenticated } from 'src/modules/auth/auth.reducer';
 
 import Auth from 'src/modules/auth';
 import Report from 'src/modules/report';
+import Users from 'src/modules/users';
 import NotFound from 'src/modules/NotFound';
 
 
@@ -37,6 +38,7 @@ export default function Routes() {
       <Switch>
         <UnAuthRoute exact path="/" component={Auth} />
         <AuthRoute exact path="/report" component={Report} />
+        <AuthRoute exact path="/users" component={Users} />
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>
