@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Menu, Dropdown } from 'semantic-ui-react';
+import { Menu, Dropdown, Container } from 'semantic-ui-react';
 
 import { logout } from 'src/modules/auth/auth.reducer';
 
@@ -43,10 +43,12 @@ const Navbar = connect(null, dispatch => ({
 }));
 
 function Layout({ children }) {
-  return <div>
+  return <>
     <Navbar />
-    {children}
-  </div>;
+    <Container>
+      {children}
+    </Container>
+  </>;
 }
 
 export default Layout;
