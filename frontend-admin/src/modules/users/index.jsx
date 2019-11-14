@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Segment, Form, Button, Icon } from 'semantic-ui-react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, submit } from 'redux-form';
 
 import { fetchUsers } from './users.reducer';
 
@@ -10,39 +10,53 @@ import Table from 'src/components/Table';
 import { Field_, booleanOptions } from 'src/utils';
 
 
+const UserSearchForm = reduxForm({ form: 'users/search' })(
+  ({ handleSubmit, submitting, pristine, reset }) =>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group widths='equal'>
+        <Field component={Field_} as={Form.Input}
+          name="name" label="نام" type="text" inline fluid />
+        <Field component={Field_} as={Form.Input}
+          name="phone" label="شماره همراه" type="text" inline fluid />
+        <Field component={Field_} as={Form.Input}
+          name="email" label="ایمیل" type="text" inline fluid />
+      </Form.Group>
+      <Form.Group widths='equal'>
+        <Field component={Field_} as={Form.Input}
+          name="role" label="نقش" type="text" inline fluid />
+        <Field component={Field_} as={Form.Dropdown} selection
+          name="is_active" label="فعال" type="select" options={booleanOptions} inline fluid />
+      </Form.Group>
+      <Button type='submit' primary loading={submitting}>
+        <Icon name='search' />
+        جستجو
+      </Button>
+      <Button type='button' secondary disabled={pristine || submitting} onClick={reset}>
+        <Icon name='refresh' />
+        پاک‌سازی فرم
+      </Button>
+    </Form>
+);
+
 class Users extends React.Component {
+  state = {
+    page: 1,
+    page_size: 20,
+  };
   componentDidMount() {
-    this.props.fetchUsers();
+    this.onSubmit({});
   }
-  SearchForm = reduxForm({ form: 'users/search' })(
-    ({ handleSubmit, submitting, pristine, reset }) =>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group widths='equal'>
-          <Field component={Field_} as={Form.Input}
-            name="name" label="نام" type="text" inline fluid />
-          <Field component={Field_} as={Form.Input}
-            name="phone" label="شماره همراه" type="text" inline fluid />
-          <Field component={Field_} as={Form.Input}
-            name="email" label="ایمیل" type="text" inline fluid />
-        </Form.Group>
-        <Form.Group widths='equal'>
-          <Field component={Field_} as={Form.Input}
-            name="role" label="نقش" type="text" inline fluid />
-          <Field component={Field_} as={Form.Dropdown} selection
-            name="is_active" label="فعال" type="select" options={booleanOptions} inline fluid />
-        </Form.Group>
-        <Button type='submit' primary loading={submitting}>
-          <Icon name='search' />
-          جستجو
-        </Button>
-        <Button type='button' secondary disabled={pristine || submitting} onClick={reset}>
-          <Icon name='search' />
-          پاک‌سازی فرم
-        </Button>
-      </Form>
-  );
+  onSubmit = values => {
+    this.props.fetchUsers({ filter: values, page: this.state.page, page_size: this.state.page_size });
+  };
+  setPage = page => {
+    this.setState({ page }, this.props.search);
+  };
+  setPageSize = page_size => {
+    this.setState({ page_size }, this.props.search);
+  };
   render() {
-    const { data } = this.props.users;
+    const { data, current_page, last_page } = this.props.users;
     const schema = [
       { key: "name", header: "نام" },
       { key: "phone", header: "شماره همراه" },
@@ -55,9 +69,13 @@ class Users extends React.Component {
         <h1>کاربران</h1>
       </Segment>
       <Segment>
-        <this.SearchForm onSubmit={values => this.props.fetchUsers({ filter: values })} />
+        <UserSearchForm onSubmit={this.onSubmit} />
       </Segment>
-      <Table schema={schema} data={data} />
+      <Table schema={schema} data={data}
+        pagination={{
+          current_page, last_page, per_page: this.state.page_size,
+          setPage: this.setPage, setPageSize: this.setPageSize,
+        }} />
     </Layout>;
   }
 }
@@ -66,4 +84,5 @@ export default connect(state => ({
   users: state.users,
 }), dispatch => ({
   fetchUsers: searchParams => dispatch(fetchUsers(searchParams)),
+  search: () => dispatch(submit('users/search')),
 }))(Users);

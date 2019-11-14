@@ -26,9 +26,14 @@ export default (state = initialState, action) => {
 // --------- ACTIONS ---------
 
 export const fetchUsers = (searchParams) => (dispatch, _, API) => {
+  console.log(searchParams);
   let params = {};
   if (searchParams && searchParams.filter && Object.entries(searchParams.filter).length !== 0)
     params.filter = Object.keys(searchParams.filter).map(k => `${k}:${searchParams.filter[k]}`).join(',');
+  if (searchParams && searchParams.page)
+    params.page = searchParams.page;
+  if (searchParams && searchParams.page_size)
+    params.page_size = searchParams.page_size;
   return API.get('/admin/v1/users', { params })
     .then(resp => dispatch({
       type: USERS_ACTIONS.SET_DATA,
