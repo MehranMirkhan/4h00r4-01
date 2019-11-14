@@ -64,6 +64,7 @@ export const fetchUsers = (searchParams) => (dispatch, _, API) => {
 
 export const fetchUser = id => (dispatch, _, API) => {
   console.log("Fetching user:", id);
+  if (!id) return;
   return API.get(`/admin/v1/users/${id}`)
     .then(resp => dispatch({
       type: USERS_ACTIONS.SET_ENTITY,
@@ -71,12 +72,22 @@ export const fetchUser = id => (dispatch, _, API) => {
     }));
 };
 
-export const updateUser = (id, entity) => (dispatch, _, API) => {
-  console.log("Updating user:", id);
-  return API.put(`/admin/v1/users/${id}`, entity);
-};
-
 export const newUser = entity => (dispatch, _, API) => {
   console.log("Creating user");
+  if (!entity) return;
   return API.post(`/register`, entity);
+};
+
+export const updateUser = (id, entity) => (dispatch, _, API) => {
+  console.log("Updating user:", id);
+  if (!id || !entity) return;
+  return API.put(`/admin/v1/users/${id}`, entity)
+    .then(resp => dispatch(fetchUser(id)));
+};
+
+export const deleteUser = id => (dispatch, _, API) => {
+  console.log("Deleting user:", id);
+  if (!id) return;
+  return API.delete(`/admin/v1/users/${id}`)
+    .then(resp => dispatch(fetchUsers()));
 };

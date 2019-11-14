@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Segment, Form, Button, Icon } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
+import { withAlert } from 'react-alert';
 
 import Layout from 'src/components/Layout';
 import { resetEntity, fetchUser, updateUser, newUser } from './users.reducer';
@@ -32,6 +33,7 @@ let UserEditForm = ({ handleSubmit, submitting, pristine, reset }) => {
 };
 
 UserEditForm = reduxForm({ form: 'users/edit', enableReinitialize: true })(UserEditForm);
+
 
 let UserNewForm = ({ handleSubmit, submitting, pristine, reset }) => {
   return <Form onSubmit={handleSubmit}>
@@ -64,10 +66,15 @@ class UserEdit extends React.Component {
     return this.props.fetchEntity(id);
   };
   updateEntity = id => values => {
-    return this.props.updateEntity(id, values);
+    return this.props.updateEntity(id, values)
+    .then(() => this.props.alert.success("کاربر با موفقیت اصلاح شد"));
   };
   newEntity = values => {
-    return this.props.newEntity(values);
+    return this.props.newEntity(values)
+      .then(() => {
+        this.props.alert.success("کاربر با موفقیت ایجاد شد");
+        this.props.history.goBack();
+      });
   };
   render() {
     const { id } = this.props.match.params;
@@ -76,7 +83,7 @@ class UserEdit extends React.Component {
       if (!entity || (entity.id.toString() !== id))
         this.fetchEntity(id);
     } else if (entity)
-        this.props.resetEntity();
+      this.props.resetEntity();
     return <Layout>
       <Segment raised padded style={{ maxWidth: 600, margin: '0 auto' }}>
         {id
@@ -88,7 +95,7 @@ class UserEdit extends React.Component {
   }
 }
 
-export default connect(
+export default withAlert()(connect(
   state => ({ entity: state.users.entity }),
   dispatch => ({
     resetEntity: () => dispatch(resetEntity()),
@@ -96,4 +103,4 @@ export default connect(
     updateEntity: (id, entity) => dispatch(updateUser(id, entity)),
     newEntity: entity => dispatch(newUser(entity)),
   })
-)(UserEdit);
+)(UserEdit));

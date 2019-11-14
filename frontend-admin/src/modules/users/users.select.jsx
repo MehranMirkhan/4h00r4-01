@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Segment, Form, Button, Icon } from 'semantic-ui-react';
+import { Segment, Form, Button, Icon, Modal } from 'semantic-ui-react';
 import { Field, reduxForm, submit } from 'redux-form';
 import qs from 'query-string';
+import { withAlert } from 'react-alert';
 
-import { fetchUsers } from './users.reducer';
+import { fetchUsers, deleteUser } from './users.reducer';
 
 import Layout from 'src/components/Layout';
 import Table from 'src/components/Table';
@@ -40,13 +41,36 @@ const UserSearchForm = reduxForm({ form: 'users/search' })(
     </Form>
 );
 
-const UserSearchResult = ({ data, pagination }) => {
+let UserSearchResult = ({ data, pagination, deleteUser, alert }) => {
   const editButton = entity =>
     <Button icon as={Link} to={`/users/${!!entity ? entity.id : '?'}`}>
       <Icon name="edit" />
     </Button>;
+  const deleteButton = entity =>
+    <Modal
+      trigger={
+        <Button icon color="red">
+          <Icon name="times" />
+        </Button>
+      }
+      header='هشدار!'
+      content={`آیا از حذف کاربر با نام «${entity.name}» اطمینان دارید؟`}
+      actions={[
+        {
+          key: 'yes', content: 'بله', negative: true,
+          onClick: () => deleteUser(!!entity ? entity.id : undefined)
+            .then(() => alert.success("کاربر با موفقیت حذف شد"))
+        },
+        { key: 'no', content: 'خیر' },
+      ]}
+    />;
+  const actionButtons = entity =>
+    <>
+      {editButton(entity)}
+      {deleteButton(entity)}
+    </>;
   const schema = [
-    { key: "operations", header: "عملیات", render: editButton },
+    { key: "operations", header: "عملیات", render: actionButtons },
     { key: "name", header: "نام" },
     { key: "phone", header: "شماره همراه" },
     { key: "email", header: "ایمیل" },
@@ -55,6 +79,11 @@ const UserSearchResult = ({ data, pagination }) => {
   ];
   return <Table schema={schema} data={data} pagination={pagination} />;
 };
+
+UserSearchResult = withAlert()(connect(null, dispatch => ({
+  deleteUser: id => dispatch(deleteUser(id)),
+}))(UserSearchResult));
+
 
 class UserSelect extends React.Component {
   state = {
