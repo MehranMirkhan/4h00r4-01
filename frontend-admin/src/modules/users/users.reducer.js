@@ -14,12 +14,12 @@ export default (state = initialState, action) => {
     case USERS_ACTIONS.SET_ENTITY_LIST:
       return {
         ...state,
-        entityList: action.payload,
+        entityList: { ...action.payload },
       };
     case USERS_ACTIONS.SET_ENTITY:
       return {
         ...state,
-        entity: action.payload,
+        entity: { ...action.payload },
       };
     case USERS_ACTIONS.RESET:
       return {
@@ -33,6 +33,7 @@ export default (state = initialState, action) => {
 // --------- ACTIONS ---------
 
 export const fetchUsers = (searchParams) => (dispatch, _, API) => {
+  console.log("Fetching all users");
   let params = {};
   if (searchParams && searchParams.filter && Object.entries(searchParams.filter).length !== 0)
     params.filter = Object.keys(searchParams.filter).map(k => `${k}:${searchParams.filter[k]}`).join(',');
@@ -48,7 +49,17 @@ export const fetchUsers = (searchParams) => (dispatch, _, API) => {
 };
 
 export const fetchUser = id => (dispatch, _, API) => {
+  console.log("Fetching user:", id);
   return API.get(`/admin/v1/users/${id}`)
+    .then(resp => dispatch({
+      type: USERS_ACTIONS.SET_ENTITY,
+      payload: !!resp ? resp.data : undefined,
+    }));
+};
+
+export const updateUser = (id, entity) => (dispatch, _, API) => {
+  console.log("Updating user:", id);
+  return API.put(`/admin/v1/users/${id}`, entity)
     .then(resp => dispatch({
       type: USERS_ACTIONS.SET_ENTITY,
       payload: !!resp ? resp.data : undefined,

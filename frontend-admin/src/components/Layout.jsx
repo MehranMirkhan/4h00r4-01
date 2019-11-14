@@ -45,7 +45,7 @@ const Navbar = connect(null, dispatch => ({
 function Layout({ children }) {
   return <>
     <Navbar />
-    <Container>
+    <Container style={{ margin: '16px 0' }}>
       {children}
     </Container>
   </>;

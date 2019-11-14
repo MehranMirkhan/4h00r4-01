@@ -17,17 +17,17 @@ const UserSearchForm = reduxForm({ form: 'users/search' })(
     <Form onSubmit={handleSubmit}>
       <Form.Group widths='equal'>
         <Field component={Field_} as={Form.Input}
-          name="name" label="نام" type="text" inline fluid />
+          name="name" label="نام" type="text" />
         <Field component={Field_} as={Form.Input}
-          name="phone" label="شماره همراه" type="text" inline fluid />
+          name="phone" label="شماره همراه" type="text" />
         <Field component={Field_} as={Form.Input}
-          name="email" label="ایمیل" type="text" inline fluid />
+          name="email" label="ایمیل" type="text" />
       </Form.Group>
       <Form.Group widths='equal'>
         <Field component={Field_} as={Form.Input}
-          name="role" label="نقش" type="text" inline fluid />
+          name="role" label="نقش" type="text" />
         <Field component={Field_} as={Form.Dropdown} selection
-          name="is_active" label="فعال" type="select" options={booleanOptions} inline fluid />
+          name="is_active" label="فعال" type="select" options={booleanOptions} />
       </Form.Group>
       <Button type='submit' primary loading={submitting}>
         <Icon name='search' />
@@ -81,7 +81,7 @@ class UserSelect extends React.Component {
   render() {
     const { data, current_page, last_page } = this.props.entityList;
     return <Layout>
-      <Segment raised textAlign="center" color="blue" inverted style={{ margin: '16px 0' }}>
+      <Segment raised textAlign="center" color="blue" inverted>
         <h1>کاربران</h1>
       </Segment>
       <Segment>
