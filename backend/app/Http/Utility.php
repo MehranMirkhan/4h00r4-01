@@ -32,7 +32,7 @@ class Utility {
             }
             return $query->paginate($page_size);
         } catch (\Exception $e) {
-            return response()->json('خطای نامشخص', $e->getCode());
+            return response()->json(['message' => 'خطای نامشخص'], $e->getCode());
         }
     }
 }
