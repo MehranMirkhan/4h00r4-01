@@ -66,7 +66,7 @@ class UserSelect extends React.Component {
   }
   onSubmit = values => {
     const params = qs.parse(this.props.location.search);
-    this.props.fetchUsers({
+    return this.props.fetchUsers({
       filter: { ...params, ...values },
       page: this.state.page,
       page_size: this.state.page_size
