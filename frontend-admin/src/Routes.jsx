@@ -5,16 +5,17 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { isAuthenticated } from 'src/modules/auth/auth.reducer';
+import { fetchMe, logout, isAuthenticated, getMe } from 'src/modules/auth/auth.reducer';
 
 import Auth from 'src/modules/auth';
 import Report from 'src/modules/report';
 import Users from 'src/modules/users';
+import Test from 'src/modules/Test';
 import NotFound from 'src/modules/NotFound';
 
 
 const mapStateToProps = state => ({
-  isAuthenticated: isAuthenticated(state.auth),
+  isAuthenticated: isAuthenticated(state),
 });
 
 const AuthRoute = connect(mapStateToProps)(
@@ -32,15 +33,33 @@ const UnAuthRoute = connect(mapStateToProps)(
   }
 );
 
-export default function Routes() {
+function Routes({ fetchMe, logout, isAuthenticated, me }) {
+  if (isAuthenticated) {
+    if (Object.keys(me).length === 0) {
+      fetchMe();
+      return <div />;
+    } else if (me.role !== 'admin') {
+      logout();
+      alert("فقط مدیر سامانه اجازه دسترسی دارد");
+    }
+  }
   return (
     <BrowserRouter>
       <Switch>
         <UnAuthRoute exact path="/" component={Auth} />
         <AuthRoute exact path="/report" component={Report} />
         <AuthRoute exact path="/users" component={Users} />
+        <Route exact path="/test" component={Test} />
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>
   );
 }
+
+export default connect(state => ({
+  isAuthenticated: isAuthenticated(state),
+  me: getMe(state),
+}), dispatch => ({
+  fetchMe: () => dispatch(fetchMe()),
+  logout: () => dispatch(logout()),
+}))(Routes);

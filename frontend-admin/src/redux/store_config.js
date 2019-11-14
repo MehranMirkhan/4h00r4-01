@@ -2,9 +2,11 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import Axios from 'axios';
 
 import reducer from 'src/redux/reducer';
-import Axios from 'axios';
+import { isAuthenticated, getAccessToken } from 'src/modules/auth/auth.reducer';
+
 
 const persistConfig = {
   key: 'puzzles_ugQzdLOtUd',
@@ -30,9 +32,9 @@ export { store, persistor };
 API.interceptors.request.use(
   config => {
     if (!config.headers.Authorization) {
-      const access_token = store.getState().auth.access_token;
-      if (!!access_token)
-        config.headers.Authorization = `Bearer ${access_token}`;
+      const state = store.getState();
+      if (isAuthenticated(state))
+        config.headers.Authorization = `Bearer ${getAccessToken(state)}`;
     }
 
     return config;

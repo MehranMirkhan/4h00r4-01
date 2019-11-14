@@ -7,7 +7,7 @@ import { fetchUsers } from './users.reducer';
 
 import Layout from 'src/components/Layout';
 import Table from 'src/components/Table';
-import { Field_ } from 'src/utils';
+import { Field_, booleanOptions } from 'src/utils';
 
 
 class Users extends React.Component {
@@ -15,23 +15,30 @@ class Users extends React.Component {
     this.props.fetchUsers();
   }
   SearchForm = reduxForm({ form: 'users/search' })(
-    ({ handleSubmit, submitting }) =>
+    ({ handleSubmit, submitting, pristine, reset }) =>
       <Form onSubmit={handleSubmit}>
         <Form.Group widths='equal'>
-          <Field component={Field_} Comp={Form.Input}
+          <Field component={Field_} as={Form.Input}
             name="name" label="نام" type="text" inline fluid />
-          <Field component={Field_} Comp={Form.Input}
+          <Field component={Field_} as={Form.Input}
             name="phone" label="شماره همراه" type="text" inline fluid />
-          <Field component={Field_} Comp={Form.Input}
+          <Field component={Field_} as={Form.Input}
             name="email" label="ایمیل" type="text" inline fluid />
         </Form.Group>
         <Form.Group widths='equal'>
-          <Field component={Field_} Comp={Form.Input}
+          <Field component={Field_} as={Form.Input}
             name="role" label="نقش" type="text" inline fluid />
-          {/* <Field component={Field_} Comp={Form.Select}
-            name="is_active" label="فعال" type="select" options={booleanOptions} inline fluid /> */}
+          <Field component={Field_} as={Form.Dropdown} selection
+            name="is_active" label="فعال" type="select" options={booleanOptions} inline fluid />
         </Form.Group>
-        <Button type='submit' primary loading={submitting}><Icon name='search'/>جستجو</Button>
+        <Button type='submit' primary loading={submitting}>
+          <Icon name='search' />
+          جستجو
+        </Button>
+        <Button type='button' secondary disabled={pristine || submitting} onClick={reset}>
+          <Icon name='search' />
+          پاک‌سازی فرم
+        </Button>
       </Form>
   );
   render() {

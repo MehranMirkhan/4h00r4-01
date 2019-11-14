@@ -14,7 +14,7 @@ class Utility {
             $filters = explode(',', $request->input('filter'));
             foreach ($filters as $filter) {
                 list($criteria, $value) = explode(':', $filter);
-                $query->where($criteria, $value);
+                $query->where($criteria, 'like', '%' . $value . '%');
             }
         }
         if ($request->has('sort')) {

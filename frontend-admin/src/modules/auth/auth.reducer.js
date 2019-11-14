@@ -1,16 +1,25 @@
 export const AUTH_ACTIONS = {
-  SET: 'auth/SET',
+  LOGIN: 'auth/LOGIN',
+  ME: 'auth/ME',
   RESET: 'auth/RESET',
 };
 
-const initialState = {};
+const initialState = {
+  token: {},
+  me: {},
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_ACTIONS.SET:
+    case AUTH_ACTIONS.LOGIN:
       return {
         ...state,
-        ...action.payload,
+        token: action.payload,
+      };
+    case AUTH_ACTIONS.ME:
+      return {
+        ...state,
+        me: action.payload,
       };
     case AUTH_ACTIONS.RESET:
       return {
@@ -26,7 +35,7 @@ export default (state = initialState, action) => {
 export const login = (username, password) => (dispatch, _, API) => {
   return API.post('/login', { username, password })
     .then(resp => dispatch({
-      type: AUTH_ACTIONS.SET,
+      type: AUTH_ACTIONS.LOGIN,
       payload: !!resp ? resp.data : undefined,
     }));
 };
@@ -37,6 +46,16 @@ export const logout = () => (dispatch) => {
   });
 };
 
+export const fetchMe = () => (dispatch, _, API) => {
+  return API.get('/v1/me')
+    .then(resp => dispatch({
+      type: AUTH_ACTIONS.ME,
+      payload: !!resp ? resp.data : undefined,
+    }));
+};
+
 // --------- STATES ---------
 
-export const isAuthenticated = auth => !!auth.access_token;
+export const getAccessToken = state => !!state.auth.token && state.auth.token.access_token;
+export const getMe = state => state.auth.me;
+export const isAuthenticated = state => !!state.auth.token && !!state.auth.token.access_token;

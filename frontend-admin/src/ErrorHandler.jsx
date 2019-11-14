@@ -31,9 +31,9 @@ class ErrorHandler extends React.Component {
     this.responseInterceptor = API.interceptors.response.use(
       res => res,
       error => {
-        if (!!error.response && !!error.response.data) {
-          console.log(JSON.stringify(error.response.data));
-          this.props.alert.error(JSON.stringify(error.response.data));
+        console.log(error);
+        if (!!error.response && !!error.response.data && !!error.response.data.message) {
+          this.props.alert.error(JSON.stringify(error.response.data.message));
         }
         this.setState({ error });
       }
@@ -48,7 +48,8 @@ class ErrorHandler extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.log(error);
-    this.props.alert.error(JSON.stringify(error));
+    if (!!error && !!error.message)
+      this.props.alert.error(JSON.stringify(error.message));
   }
 
   render() {
