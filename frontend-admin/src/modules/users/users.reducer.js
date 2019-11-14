@@ -14,12 +14,12 @@ export default (state = initialState, action) => {
     case USERS_ACTIONS.SET_ENTITY_LIST:
       return {
         ...state,
-        entityList: { ...action.payload },
+        entityList: action.payload,
       };
     case USERS_ACTIONS.SET_ENTITY:
       return {
         ...state,
-        entity: { ...action.payload },
+        entity: action.payload,
       };
     case USERS_ACTIONS.RESET:
       return {
@@ -31,6 +31,20 @@ export default (state = initialState, action) => {
 };
 
 // --------- ACTIONS ---------
+
+export const resetEntityList = () => ({
+  type: USERS_ACTIONS.SET_ENTITY_LIST,
+  payload: [],
+});
+
+export const resetEntity = () => ({
+  type: USERS_ACTIONS.SET_ENTITY,
+  payload: undefined,
+});
+
+export const reset = () => ({
+  type: USERS_ACTIONS.RESET,
+});
 
 export const fetchUsers = (searchParams) => (dispatch, _, API) => {
   console.log("Fetching all users");
@@ -59,9 +73,10 @@ export const fetchUser = id => (dispatch, _, API) => {
 
 export const updateUser = (id, entity) => (dispatch, _, API) => {
   console.log("Updating user:", id);
-  return API.put(`/admin/v1/users/${id}`, entity)
-    .then(resp => dispatch({
-      type: USERS_ACTIONS.SET_ENTITY,
-      payload: !!resp ? resp.data : undefined,
-    }));
+  return API.put(`/admin/v1/users/${id}`, entity);
+};
+
+export const newUser = entity => (dispatch, _, API) => {
+  console.log("Creating user");
+  return API.post(`/register`, entity);
 };

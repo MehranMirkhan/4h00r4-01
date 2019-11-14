@@ -87,11 +87,14 @@ class UserSelect extends React.Component {
       <Segment>
         <UserSearchForm onSubmit={this.onSubmit} />
       </Segment>
-      <UserSearchResult data={data}
-        pagination={{
-          current_page, last_page, per_page: this.state.page_size,
-          setPage: this.setPage, setPageSize: this.setPageSize,
-        }} />
+      <Segment>
+        <Button color="green" icon as={Link} to="/users/new"><Icon name="plus" />جدید</Button>
+        <UserSearchResult data={data}
+          pagination={{
+            current_page, last_page, per_page: this.state.page_size,
+            setPage: this.setPage, setPageSize: this.setPageSize,
+          }} />
+      </Segment>
     </Layout>;
   }
 }

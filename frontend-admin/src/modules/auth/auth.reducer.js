@@ -14,12 +14,12 @@ export default (state = initialState, action) => {
     case AUTH_ACTIONS.LOGIN:
       return {
         ...state,
-        token: { ...action.payload },
+        token: action.payload,
       };
     case AUTH_ACTIONS.ME:
       return {
         ...state,
-        me: { ...action.payload },
+        me: action.payload,
       };
     case AUTH_ACTIONS.RESET:
       return {
