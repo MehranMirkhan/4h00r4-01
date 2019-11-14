@@ -1,18 +1,25 @@
 export const USERS_ACTIONS = {
-  SET_DATA: 'users/SET_DATA',
+  SET_ENTITY_LIST: 'users/SET_ENTITY_LIST',
+  SET_ENTITY: 'users/SET_ENTITY',
   RESET: 'users/RESET',
 };
 
 const initialState = {
-  data: [],
+  entityList: [],
+  entity: undefined,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case USERS_ACTIONS.SET_DATA:
+    case USERS_ACTIONS.SET_ENTITY_LIST:
       return {
         ...state,
-        ...action.payload,
+        entityList: action.payload,
+      };
+    case USERS_ACTIONS.SET_ENTITY:
+      return {
+        ...state,
+        entity: action.payload,
       };
     case USERS_ACTIONS.RESET:
       return {
@@ -26,7 +33,6 @@ export default (state = initialState, action) => {
 // --------- ACTIONS ---------
 
 export const fetchUsers = (searchParams) => (dispatch, _, API) => {
-  console.log(searchParams);
   let params = {};
   if (searchParams && searchParams.filter && Object.entries(searchParams.filter).length !== 0)
     params.filter = Object.keys(searchParams.filter).map(k => `${k}:${searchParams.filter[k]}`).join(',');
@@ -36,7 +42,15 @@ export const fetchUsers = (searchParams) => (dispatch, _, API) => {
     params.page_size = searchParams.page_size;
   return API.get('/admin/v1/users', { params })
     .then(resp => dispatch({
-      type: USERS_ACTIONS.SET_DATA,
+      type: USERS_ACTIONS.SET_ENTITY_LIST,
+      payload: !!resp ? resp.data : undefined,
+    }));
+};
+
+export const fetchUser = id => (dispatch, _, API) => {
+  return API.get(`/admin/v1/users/${id}`)
+    .then(resp => dispatch({
+      type: USERS_ACTIONS.SET_ENTITY,
       payload: !!resp ? resp.data : undefined,
     }));
 };

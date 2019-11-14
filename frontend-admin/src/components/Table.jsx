@@ -12,7 +12,7 @@ const Column = (entity, index) => col => {
         c.children = !!entity[col.key] ? trueIcon : falseIcon;
       }
     } else {
-      c.children = col.render(entity[col.key]);
+      c.children = col.render(entity);
     }
   } else {
     c.children = entity[col.key];
@@ -64,6 +64,7 @@ const Pagination = (colSpan, pagination) => {
 };
 
 export default function MyTable({ schema, data, pagination }) {
+  if (!data) data = [];
   return <Table celled
     headerRow={schema.map(col => col.header)}
     renderBodyRow={Row(schema)}

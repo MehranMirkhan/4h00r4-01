@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Segment, Form, Button, Icon } from 'semantic-ui-react';
 import { Field, reduxForm, submit } from 'redux-form';
+import qs from 'query-string';
 
 import { fetchUsers } from './users.reducer';
 
@@ -38,7 +40,23 @@ const UserSearchForm = reduxForm({ form: 'users/search' })(
     </Form>
 );
 
-class Users extends React.Component {
+const UserSearchResult = ({ data, pagination }) => {
+  const editButton = entity =>
+    <Button icon as={Link} to={`/users/${!!entity ? entity.id : '?'}`}>
+      <Icon name="edit" />
+    </Button>;
+  const schema = [
+    { key: "operations", header: "عملیات", render: editButton },
+    { key: "name", header: "نام" },
+    { key: "phone", header: "شماره همراه" },
+    { key: "email", header: "ایمیل" },
+    { key: "role", header: "نقش" },
+    { key: "is_active", header: "فعال", render: "boolean" },
+  ];
+  return <Table schema={schema} data={data} pagination={pagination} />;
+};
+
+class UserSelect extends React.Component {
   state = {
     page: 1,
     page_size: 20,
@@ -47,7 +65,12 @@ class Users extends React.Component {
     this.onSubmit({});
   }
   onSubmit = values => {
-    this.props.fetchUsers({ filter: values, page: this.state.page, page_size: this.state.page_size });
+    const params = qs.parse(this.props.location.search);
+    this.props.fetchUsers({
+      filter: { ...params, ...values },
+      page: this.state.page,
+      page_size: this.state.page_size
+    });
   };
   setPage = page => {
     this.setState({ page }, this.props.search);
@@ -56,14 +79,7 @@ class Users extends React.Component {
     this.setState({ page_size }, this.props.search);
   };
   render() {
-    const { data, current_page, last_page } = this.props.users;
-    const schema = [
-      { key: "name", header: "نام" },
-      { key: "phone", header: "شماره همراه" },
-      { key: "email", header: "ایمیل" },
-      { key: "role", header: "نقش" },
-      { key: "is_active", header: "فعال", render: "boolean" },
-    ];
+    const { data, current_page, last_page } = this.props.entityList;
     return <Layout>
       <Segment raised textAlign="center" color="blue" inverted style={{ margin: '16px 0' }}>
         <h1>کاربران</h1>
@@ -71,7 +87,7 @@ class Users extends React.Component {
       <Segment>
         <UserSearchForm onSubmit={this.onSubmit} />
       </Segment>
-      <Table schema={schema} data={data}
+      <UserSearchResult data={data}
         pagination={{
           current_page, last_page, per_page: this.state.page_size,
           setPage: this.setPage, setPageSize: this.setPageSize,
@@ -81,8 +97,8 @@ class Users extends React.Component {
 }
 
 export default connect(state => ({
-  users: state.users,
+  entityList: state.users.entityList,
 }), dispatch => ({
   fetchUsers: searchParams => dispatch(fetchUsers(searchParams)),
   search: () => dispatch(submit('users/search')),
-}))(Users);
+}))(UserSelect);
