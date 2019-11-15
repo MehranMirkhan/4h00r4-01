@@ -20,12 +20,13 @@ const Navbar = connect(null, dispatch => ({
         as={Link}
         to="/report"
       />
-      <Dropdown item text='جداول'>
+      <Menu.Item as={Dropdown} item text='جداول'
+        active={['users', 'questions'].indexOf(route) >= 0} color="teal">
         <Dropdown.Menu>
           <Dropdown.Item text='کاربران' as={Link} to='/users' />
           <Dropdown.Item text='سؤالات' as={Link} to='/questions' />
         </Dropdown.Menu>
-      </Dropdown>
+      </Menu.Item>
       <Menu.Item
         name='تنظیمات'
         active={route === 'setting'}
@@ -34,7 +35,10 @@ const Navbar = connect(null, dispatch => ({
 
       <Menu.Menu position='right'>
         <Menu.Item
+          active={true}
+          color="red"
           name='خروج'
+          icon='sign-out'
           onClick={logout}
         />
       </Menu.Menu>
