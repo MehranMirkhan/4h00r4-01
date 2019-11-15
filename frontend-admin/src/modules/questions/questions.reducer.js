@@ -75,7 +75,7 @@ export const fetchQuestion = id => (dispatch, _, API) => {
 export const newQuestion = entity => (dispatch, _, API) => {
   console.log("Creating question");
   if (!entity) return;
-  return API.post(`/register`, entity);
+  return API.post(`/admin/v1/questions`, entity);
 };
 
 export const updateQuestion = (id, entity) => (dispatch, _, API) => {

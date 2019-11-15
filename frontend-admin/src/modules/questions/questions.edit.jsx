@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Segment, Form, Button, Icon } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 import { withAlert } from 'react-alert';
@@ -7,11 +8,14 @@ import { withAlert } from 'react-alert';
 import Layout from 'src/components/Layout';
 import { Field_ } from 'src/utils';
 
-import { resetEntity, fetchQuestion, updateQuestion, newQuestion } from './questions.reducer';
-import Question from './question.model';
+import {
+  resetEntity, fetchQuestion,
+  updateQuestion, newQuestion,
+} from './questions.reducer';
+import Question from './questions.model';
 
 
-let QuestionEditForm = ({ handleSubmit, submitting, pristine, reset }) => {
+let QuestionEditForm = ({ initialValues, handleSubmit, submitting, pristine, reset }) => {
   return <Form onSubmit={handleSubmit}>
     <Field component={Field_} as={Form.Input}
       name="id" label={Question.id.label} type="text" disabled />
@@ -29,6 +33,11 @@ let QuestionEditForm = ({ handleSubmit, submitting, pristine, reset }) => {
       name="score" label={Question.score.label} type="text" />
     <Field component={Field_} as={Form.Input}
       name="tries" label={Question.tries.label} type="text" />
+    <div style={{ marginBottom: 16 }}>
+      <Button as={Link} to={`/solutions?question_id=${!!initialValues ? initialValues.id : '?'}`}>
+        پاسخ‌ها
+      </Button>
+    </div>
     <Button type='submit' color='green' disabled={pristine} loading={submitting}>
       <Icon name='check' />
       ذخیره
@@ -71,6 +80,53 @@ let QuestionNewForm = ({ handleSubmit, submitting, pristine, reset }) => {
 };
 
 QuestionNewForm = reduxForm({ form: 'questions/new' })(QuestionNewForm);
+
+
+// let Solutions = ({ question, newSolution, updateSolution, deleteSolution, alert }) => {
+//   const newButton =
+//     <Button icon color="green" onClick={() => newSolution({ question_id: question.id })}>
+//       <Icon name="plus" />
+//     </Button>;
+//   const updateButton = entity =>
+//     <Button icon primary onClick={() => updateSolution(entity.id, entity)}>
+//       <Icon name="save" />
+//     </Button>;
+//   const deleteButton = entity =>
+//     <Modal
+//       trigger={
+//         <Button icon color="red">
+//           <Icon name="times" />
+//         </Button>
+//       }
+//       header='هشدار!'
+//       content={`آیا از حذف پاسخ با ID ${entity.id} اطمینان دارید؟`}
+//       actions={[
+//         {
+//           key: 'yes', content: 'بله', negative: true,
+//           onClick: () => deleteSolution(!!entity ? entity.id : undefined)
+//             .then(() => alert.success("پاسخ با موفقیت حذف شد"))
+//         },
+//         { key: 'no', content: 'خیر' },
+//       ]}
+//     />;
+//   const actionButtons = entity =>
+//     <>
+//       {updateButton(entity)}
+//       {deleteButton(entity)}
+//     </>;
+//   const schema = [
+//     { key: "operations", header: "عملیات", render: actionButtons },
+//     { key: "id", header: Solution.id.label },
+//     { key: "text", header: Solution.text.label },
+//   ];
+//   return <Table schema={schema} data={data} pagination={pagination} />;
+// };
+
+// Solutions = withAlert()(connect(null, dispatch => ({
+//   newSolution: entity => dispatch(newSolution(entity)),
+//   updateSolution: (id, entity) => dispatch(updateSolution(id, entity)),
+//   deleteSolution: id => dispatch(deleteSolution(id)),
+// }))(Solutions));
 
 
 class QuestionEdit extends React.Component {

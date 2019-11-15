@@ -7,7 +7,7 @@ import qs from 'query-string';
 import { withAlert } from 'react-alert';
 
 import { fetchQuestions, deleteQuestion } from './questions.reducer';
-import Question from './question.model';
+import Question from './questions.model';
 
 import Layout from 'src/components/Layout';
 import Table from 'src/components/Table';
@@ -51,7 +51,7 @@ let QuestionSearchResult = ({ data, pagination, deleteQuestion, alert }) => {
         </Button>
       }
       header='هشدار!'
-      content={`آیا از حذف سؤال با ID «${entity.id}» اطمینان دارید؟`}
+      content={`آیا از حذف سؤال اطمینان دارید؟`}
       actions={[
         {
           key: 'yes', content: 'بله', negative: true,

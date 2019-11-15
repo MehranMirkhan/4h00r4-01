@@ -1,3 +1,4 @@
 [ ] Sorting
 [ ] Date picker
 [ ] Associations
+[ ] User model
