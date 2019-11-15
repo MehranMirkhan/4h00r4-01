@@ -6,31 +6,23 @@ import { Field, reduxForm, submit } from 'redux-form';
 import qs from 'query-string';
 import { withAlert } from 'react-alert';
 
-import { fetchUsers, deleteUser } from './users.reducer';
+import { fetchQuestions, deleteQuestion } from './questions.reducer';
 
 import Layout from 'src/components/Layout';
 import Table from 'src/components/Table';
-import { Field_, booleanOptions } from 'src/utils';
+import { Field_ } from 'src/utils';
 
 
-const UserSearchForm = reduxForm({ form: 'users/search' })(
+const QuestionSearchForm = reduxForm({ form: 'questions/search' })(
   ({ handleSubmit, submitting, pristine, reset }) =>
     <Form onSubmit={handleSubmit}>
       <Form.Group widths='equal'>
         <Field component={Field_} as={Form.Input}
           name="id" label="ID" type="text" />
         <Field component={Field_} as={Form.Input}
-          name="name" label="نام" type="text" />
+          name="text" label="متن" type="text" />
         <Field component={Field_} as={Form.Input}
-          name="phone" label="شماره همراه" type="text" />
-        <Field component={Field_} as={Form.Input}
-          name="email" label="ایمیل" type="text" />
-      </Form.Group>
-      <Form.Group widths='equal'>
-        <Field component={Field_} as={Form.Input}
-          name="role" label="نقش" type="text" />
-        <Field component={Field_} as={Form.Dropdown} selection
-          name="is_active" label="فعال" type="select" options={booleanOptions} />
+          name="time_type" label="نوع زمان" type="text" />
       </Form.Group>
       <Button type='submit' primary loading={submitting}>
         <Icon name='search' />
@@ -43,9 +35,9 @@ const UserSearchForm = reduxForm({ form: 'users/search' })(
     </Form>
 );
 
-let UserSearchResult = ({ data, pagination, deleteUser, alert }) => {
+let QuestionSearchResult = ({ data, pagination, deleteQuestion, alert }) => {
   const editButton = entity =>
-    <Button icon as={Link} to={`/users/${!!entity ? entity.id : '?'}`}>
+    <Button icon as={Link} to={`/questions/${!!entity ? entity.id : '?'}`}>
       <Icon name="edit" />
     </Button>;
   const deleteButton = entity =>
@@ -56,12 +48,12 @@ let UserSearchResult = ({ data, pagination, deleteUser, alert }) => {
         </Button>
       }
       header='هشدار!'
-      content={`آیا از حذف کاربر با نام «${entity.name}» اطمینان دارید؟`}
+      content={`آیا از حذف سؤال با ID «${entity.id}» اطمینان دارید؟`}
       actions={[
         {
           key: 'yes', content: 'بله', negative: true,
-          onClick: () => deleteUser(!!entity ? entity.id : undefined)
-            .then(() => alert.success("کاربر با موفقیت حذف شد"))
+          onClick: () => deleteQuestion(!!entity ? entity.id : undefined)
+            .then(() => alert.success("سؤال با موفقیت حذف شد"))
         },
         { key: 'no', content: 'خیر' },
       ]}
@@ -74,21 +66,20 @@ let UserSearchResult = ({ data, pagination, deleteUser, alert }) => {
   const schema = [
     { key: "operations", header: "عملیات", render: actionButtons },
     { key: "id", header: "ID" },
-    { key: "name", header: "نام" },
-    { key: "phone", header: "شماره همراه" },
-    { key: "email", header: "ایمیل" },
-    { key: "role", header: "نقش" },
-    { key: "is_active", header: "فعال", render: "boolean" },
+    { key: "text", header: "متن" },
+    { key: "time_type", header: "نوع زمان" },
+    { key: "start_time", header: "زمان شروع" },
+    { key: "end_time", header: "زمان پایان" },
   ];
   return <Table schema={schema} data={data} pagination={pagination} />;
 };
 
-UserSearchResult = withAlert()(connect(null, dispatch => ({
-  deleteUser: id => dispatch(deleteUser(id)),
-}))(UserSearchResult));
+QuestionSearchResult = withAlert()(connect(null, dispatch => ({
+  deleteQuestion: id => dispatch(deleteQuestion(id)),
+}))(QuestionSearchResult));
 
 
-class UserSelect extends React.Component {
+class QuestionSelect extends React.Component {
   state = {
     page: 1,
     page_size: 20,
@@ -98,7 +89,7 @@ class UserSelect extends React.Component {
   }
   onSubmit = values => {
     const params = qs.parse(this.props.location.search);
-    return this.props.fetchUsers({
+    return this.props.fetchQuestions({
       filter: { ...params, ...values },
       page: this.state.page,
       page_size: this.state.page_size
@@ -114,14 +105,14 @@ class UserSelect extends React.Component {
     const { data, current_page, last_page } = this.props.entityList;
     return <Layout>
       <Segment raised textAlign="center" color="blue" inverted>
-        <h1>کاربران</h1>
+        <h1>سؤالات</h1>
       </Segment>
       <Segment>
-        <UserSearchForm onSubmit={this.onSubmit} />
+        <QuestionSearchForm onSubmit={this.onSubmit} />
       </Segment>
       <Segment>
-        <Button color="green" icon as={Link} to="/users/new"><Icon name="plus" />جدید</Button>
-        <UserSearchResult data={data}
+        <Button color="green" icon as={Link} to="/questions/new"><Icon name="plus" />جدید</Button>
+        <QuestionSearchResult data={data}
           pagination={{
             current_page, last_page, per_page: this.state.page_size,
             setPage: this.setPage, setPageSize: this.setPageSize,
@@ -132,8 +123,8 @@ class UserSelect extends React.Component {
 }
 
 export default connect(state => ({
-  entityList: state.users.entityList,
+  entityList: state.questions.entityList,
 }), dispatch => ({
-  fetchUsers: searchParams => dispatch(fetchUsers(searchParams)),
-  search: () => dispatch(submit('users/search')),
-}))(UserSelect);
+  fetchQuestions: searchParams => dispatch(fetchQuestions(searchParams)),
+  search: () => dispatch(submit('questions/search')),
+}))(QuestionSelect);
