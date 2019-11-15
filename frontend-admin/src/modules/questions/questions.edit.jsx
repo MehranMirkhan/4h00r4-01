@@ -5,18 +5,30 @@ import { Field, reduxForm } from 'redux-form';
 import { withAlert } from 'react-alert';
 
 import Layout from 'src/components/Layout';
-import { resetEntity, fetchQuestion, updateQuestion, newQuestion } from './questions.reducer';
 import { Field_ } from 'src/utils';
+
+import { resetEntity, fetchQuestion, updateQuestion, newQuestion } from './questions.reducer';
+import Question from './question.model';
 
 
 let QuestionEditForm = ({ handleSubmit, submitting, pristine, reset }) => {
   return <Form onSubmit={handleSubmit}>
     <Field component={Field_} as={Form.Input}
-      name="id" label="ID" type="text" />
+      name="id" label={Question.id.label} type="text" disabled />
     <Field component={Field_} as={Form.Input}
-      name="text" label="متن" type="text" />
+      name="text" label={Question.text.label} type="text" />
+    <Field component={Field_} as={Form.Dropdown} selection options={Question.time_type.options}
+      name="time_type" label={Question.time_type.label} type="select" />
+    <Field component={Field_} as={Form.Dropdown} selection options={Question.answer_type.options}
+      name="answer_type" label={Question.answer_type.label} type="select" />
     <Field component={Field_} as={Form.Input}
-      name="time_type" label="نوع زمان" type="text" />
+      name="start_time" label={Question.start_time.label} type="text" />
+    <Field component={Field_} as={Form.Input}
+      name="end_time" label={Question.end_time.label} type="text" />
+    <Field component={Field_} as={Form.Input}
+      name="score" label={Question.score.label} type="text" />
+    <Field component={Field_} as={Form.Input}
+      name="tries" label={Question.tries.label} type="text" />
     <Button type='submit' color='green' disabled={pristine} loading={submitting}>
       <Icon name='check' />
       ذخیره
@@ -34,9 +46,19 @@ QuestionEditForm = reduxForm({ form: 'questions/edit', enableReinitialize: true 
 let QuestionNewForm = ({ handleSubmit, submitting, pristine, reset }) => {
   return <Form onSubmit={handleSubmit}>
     <Field component={Field_} as={Form.Input}
-      name="text" label="متن" type="text" />
+      name="text" label={Question.text.label} type="text" />
+    <Field component={Field_} as={Form.Dropdown} selection options={Question.time_type.options}
+      name="time_type" label={Question.time_type.label} type="select" />
+    <Field component={Field_} as={Form.Dropdown} selection options={Question.answer_type.options}
+      name="answer_type" label={Question.answer_type.label} type="select" />
     <Field component={Field_} as={Form.Input}
-      name="time_type" label="نوع زمان" type="text" />
+      name="start_time" label={Question.start_time.label} type="text" />
+    <Field component={Field_} as={Form.Input}
+      name="end_time" label={Question.end_time.label} type="text" />
+    <Field component={Field_} as={Form.Input}
+      name="score" label={Question.score.label} type="text" />
+    <Field component={Field_} as={Form.Input}
+      name="tries" label={Question.tries.label} type="text" />
     <Button type='submit' color='green' disabled={pristine} loading={submitting}>
       <Icon name='check' />
       ذخیره

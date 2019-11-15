@@ -7,6 +7,7 @@ import qs from 'query-string';
 import { withAlert } from 'react-alert';
 
 import { fetchQuestions, deleteQuestion } from './questions.reducer';
+import Question from './question.model';
 
 import Layout from 'src/components/Layout';
 import Table from 'src/components/Table';
@@ -18,11 +19,13 @@ const QuestionSearchForm = reduxForm({ form: 'questions/search' })(
     <Form onSubmit={handleSubmit}>
       <Form.Group widths='equal'>
         <Field component={Field_} as={Form.Input}
-          name="id" label="ID" type="text" />
+          name="id" label={Question.id.label} type="text" />
         <Field component={Field_} as={Form.Input}
-          name="text" label="متن" type="text" />
-        <Field component={Field_} as={Form.Input}
-          name="time_type" label="نوع زمان" type="text" />
+          name="text" label={Question.text.label} type="text" />
+        <Field component={Field_} as={Form.Dropdown} selection options={Question.time_type.options}
+          name="time_type" label={Question.time_type.label} type="select" />
+        <Field component={Field_} as={Form.Dropdown} selection options={Question.answer_type.options}
+          name="answer_type" label={Question.answer_type.label} type="select" />
       </Form.Group>
       <Button type='submit' primary loading={submitting}>
         <Icon name='search' />
@@ -65,11 +68,14 @@ let QuestionSearchResult = ({ data, pagination, deleteQuestion, alert }) => {
     </>;
   const schema = [
     { key: "operations", header: "عملیات", render: actionButtons },
-    { key: "id", header: "ID" },
-    { key: "text", header: "متن" },
-    { key: "time_type", header: "نوع زمان" },
-    { key: "start_time", header: "زمان شروع" },
-    { key: "end_time", header: "زمان پایان" },
+    { key: "id", header: Question.id.label },
+    { key: "text", header: Question.text.label },
+    { key: "time_type", header: Question.time_type.label },
+    { key: "answer_type", header: Question.answer_type.label },
+    { key: "start_time", header: Question.start_time.label },
+    { key: "end_time", header: Question.end_time.label },
+    { key: "score", header: Question.score.label },
+    { key: "tries", header: Question.tries.label },
   ];
   return <Table schema={schema} data={data} pagination={pagination} />;
 };
