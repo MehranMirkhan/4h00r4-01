@@ -15,6 +15,7 @@ class Question extends Model {
         'letters',
         'score',
         'tries',
+        'solutions',
     ];
     protected $casts    = [
         'start_time' => 'datetime',

@@ -16,7 +16,7 @@ class AuthController extends Controller {
         try {
             $user = (new User)->findForPassport($request->username);
         } catch (ModelNotFoundException $e) {
-            return response()->json('نام کاربری یا رمز عبور اشتباه است', 401);
+            return response()->json(['message' => 'نام کاربری یا رمز عبور اشتباه است'], 401);
         }
         try {
             $tokenRequest = Request::create('/oauth/token', 'post', [
@@ -31,10 +31,10 @@ class AuthController extends Controller {
             return $response;
         } catch (BadResponseException $e) {
             if ($e->getCode() === 400)
-                return response()->json('درخواست نامعتبر است. لطفاً نام کاربری و رمز عبور وارد کنید', $e->getCode());
+                return response()->json(['message' => 'درخواست نامعتبر است. لطفاً نام کاربری و رمز عبور وارد کنید'], $e->getCode());
             else if ($e->getCode() === 401)
-                return response()->json('نام کاربری یا رمز عبور اشتباه است', $e->getCode());
-            return response()->json('خطای نامشخص', $e->getCode());
+                return response()->json(['message' => 'نام کاربری یا رمز عبور اشتباه است'], $e->getCode());
+            return response()->json(['message' => 'خطای نامشخص'], $e->getCode());
         }
     }
 
@@ -47,7 +47,7 @@ class AuthController extends Controller {
         ]);
 
         if (!isset($request->email) && !isset($request->phone))
-            return response()->json('نام کاربری وارد نشده است', 400);
+            return response()->json(['message' => 'نام کاربری وارد نشده است'], 400);
 
         return User::create([
             'name'     => $request->name,
@@ -69,12 +69,12 @@ class AuthController extends Controller {
         ]);
         $response = app()->handle($attempt);
         if ($response->getStatusCode() != 200)
-            return response()->json('رمز عبور قدیمی صحیح نیست', 403);
+            return response()->json(['message' => 'رمز عبور قدیمی صحیح نیست'], 403);
         $user->update(['password' => Hash::make($request->new_password)]);
         $userTokens = $user->tokens;
         foreach ($userTokens as $token) {
             $token->revoke();
         }
-        return response()->json('رمز عبور تغییر کرد', 200);
+        return response()->json(['message' => 'رمز عبور تغییر کرد'], 200);
     }
 }

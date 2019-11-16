@@ -19,7 +19,8 @@ class QuestionController extends Controller {
     }
 
     public function show(Question $question) {
-        return $question;
+        // return $question;
+        return Question::query()->where('id', $question->id)->with('solutions')->firstOrFail();
     }
 
     public function update(Request $request, Question $question) {
@@ -30,9 +31,9 @@ class QuestionController extends Controller {
     public function destroy(Question $question) {
         try {
             $question->delete();
-            return response()->json('سؤال حذف شد', 200);
+            return response()->json(['message' => 'سؤال حذف شد'], 200);
         } catch (\Exception $e) {
-            return response()->json('خطای نامشخص', $e->getCode());
+            return response()->json(['message' => 'خطای نامشخص'], $e->getCode());
         }
     }
 

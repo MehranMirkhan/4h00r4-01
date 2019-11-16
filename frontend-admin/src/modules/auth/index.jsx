@@ -12,10 +12,10 @@ const checkMinLen6 = CHECKS.MIN_LEN(6);
 const LoginForm = reduxForm({ form: 'login' })(
   ({ handleSubmit, pristine, invalid, submitting }) =>
     <Form onSubmit={handleSubmit}>
-      <Field component={Field_} Comp={Form.Input}
+      <Field component={Field_} as={Form.Input}
         name="username" label="نام کاربری" type="text" inline fluid autoFocus
         required validate={CHECKS.REQUIRED} />
-      <Field component={Field_} Comp={Form.Input}
+      <Field component={Field_} as={Form.Input}
         name="password" label="رمز عبور" type="password" inline fluid
         required validate={[CHECKS.REQUIRED, checkMinLen6]} />
       <Button type='submit' primary

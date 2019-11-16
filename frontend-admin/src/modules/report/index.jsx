@@ -2,15 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Segment } from 'semantic-ui-react';
 
-import { fetchMe } from './report.reducer';
+import { getMe } from 'src/modules/auth/auth.reducer';
 
 import Layout from 'src/components/Layout';
 
 
 class Report extends React.Component {
-  componentDidMount() {
-    this.props.fetchMe();
-  }
   render() {
     const { me } = this.props;
     return <Layout>
@@ -25,7 +22,5 @@ class Report extends React.Component {
 }
 
 export default connect(state => ({
-  me: state.report.me,
-}), dispatch => ({
-  fetchMe: () => dispatch(fetchMe()),
+  me: getMe(state),
 }))(Report);

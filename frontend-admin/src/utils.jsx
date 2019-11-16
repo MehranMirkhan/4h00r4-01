@@ -6,8 +6,9 @@ export function Center({ children }) {
   </div>;
 }
 
-export const Field_ = ({ meta, Comp, ...props }) =>
-  <Comp {...props} error={(!!meta && meta.touched && meta.invalid) ? meta.error : false} />;
+export const Field_ = ({ meta, as: Comp, input, children, ...props }) =>
+  <Comp {...input} children={children} {...props} onChange={(e, {value}) => input.onChange(value)}
+    error={(!!meta && meta.touched && meta.invalid) ? meta.error : false} />;
 
 export const CHECKS = {
   REQUIRED: v => (!v || v === '') ? 'این فیلد را پر کنید' : undefined,
@@ -18,6 +19,7 @@ export const CHECKS = {
 };
 
 export const booleanOptions = [
-  {key: 'true', text: 'True', value: '1'},
-  {key: 'false', text: 'False', value: '0'},
+  { key: 'null', text: '', value: undefined },
+  { key: 'true', text: 'True', value: 1 },
+  { key: 'false', text: 'False', value: 0 },
 ];

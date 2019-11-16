@@ -28,9 +28,9 @@ class UserController extends Controller {
     public function destroy(User $user) {
         try {
             $user->delete();
-            return response()->json('کاربر حذف شد', 200);
+            return response()->json(['message' => 'کاربر حذف شد'], 200);
         } catch (\Exception $e) {
-            return response()->json('خطای نامشخص', $e->getCode());
+            return response()->json(['message' => 'خطای نامشخص'], $e->getCode());
         }
     }
 

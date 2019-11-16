@@ -29,9 +29,9 @@ class AnswerController extends Controller {
     public function destroy(Answer $answer) {
         try {
             $answer->delete();
-            return response()->json('پاسخ حذف شد', 200);
+            return response()->json(['message' => 'پاسخ حذف شد'], 200);
         } catch (\Exception $e) {
-            return response()->json('خطای نامشخص', $e->getCode());
+            return response()->json(['message' => 'خطای نامشخص'], $e->getCode());
         }
     }
 

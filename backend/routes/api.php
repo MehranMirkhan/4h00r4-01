@@ -21,6 +21,6 @@ Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'],
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
-        Route::get('/users/me', 'UserController@me');
+        Route::get('/me', 'UserController@me');
     });
 });
