@@ -37,7 +37,7 @@ const UnAuthRoute = connect(mapStateToProps)(
 
 function Routes({ fetchMe, logout, isAuthenticated, me }) {
   if (isAuthenticated) {
-    if (Object.keys(me).length === 0) {
+    if (!me || Object.keys(me).length === 0) {
       fetchMe();
       return <div />;
     } else if (me.role !== 'admin') {
