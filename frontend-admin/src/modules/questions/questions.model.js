@@ -24,3 +24,9 @@ const Question = {
 };
 
 export default Question;
+
+export const print = q => {
+  q.time_type = Question.time_type.options.find(x => x.value === q.time_type).text;
+  q.answer_type = Question.answer_type.options.find(x => x.value === q.answer_type).text;
+  return q;
+}
