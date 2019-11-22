@@ -8,6 +8,7 @@ import Answer from './answers.model';
 
 import { Field_, booleanOptions } from 'src/components/Common';
 import EditLayout from 'src/components/EditLayout';
+import { InputField, EntityField } from 'src/components/FormFields';
 
 
 function AnswerEdit(props) {
@@ -15,18 +16,15 @@ function AnswerEdit(props) {
     title="تلاش"
     entityName="answers"
     NewFields={formProps => <>
-      <Field component={Field_} as={Form.Input}
-        name="question_id" label={Answer.question_id.label} type="text" />
-      <Field component={Field_} as={Form.Input}
-        name="user_id" label={Answer.user_id.label} type="text" />
-      <Field component={Field_} as={Form.Input}
-        name="text" label={Answer.text.label} type="text" />
+      <Field component={EntityField} entityName="questions" name="question_id" label={Answer.question_id.label} />
+      <Field component={EntityField} entityName="users" name="user_id" label={Answer.user_id.label} />
+      <Field component={InputField} name="text" label={Answer.text.label} />
     </>}
     EditFields={formProps => <>
       <Field component={Field_} as={Form.Input}
         name="id" label={Answer.id.label} type="text" disabled />
       <Field component={Field_} as={Form.Input}
-        name="question_id" label={Answer.question_id.label} type="text" disabled />
+        name="question_id" label={Answer.question_id.label} type="text" />
       <Field component={Field_} as={Form.Input}
         name="user_id" label={Answer.user_id.label} type="text" />
       <Field component={Field_} as={Form.Input}

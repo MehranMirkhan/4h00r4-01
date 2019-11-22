@@ -1,3 +1,5 @@
+import { print } from "./solutions.model";
+
 export const SOLUTIONS_ACTIONS = {
   SET_ENTITY_LIST: 'solutions/SET_ENTITY_LIST',
   SET_ENTITY: 'solutions/SET_ENTITY',
@@ -12,6 +14,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SOLUTIONS_ACTIONS.SET_ENTITY_LIST:
+        action.payload.data = action.payload.data.map(print);
       return {
         ...state,
         entityList: action.payload,
