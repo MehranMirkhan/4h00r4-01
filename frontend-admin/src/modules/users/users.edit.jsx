@@ -12,6 +12,7 @@ import EditLayout from 'src/components/EditLayout';
 
 function UserEdit(props) {
   return <EditLayout {...props}
+    title="کاربر"
     entityName="users"
     NewFields={formProps => <>
       <Field component={Field_} as={Form.Input}

@@ -97,19 +97,19 @@ class SelectLayout extends React.Component {
   };
   render() {
     if (this.props.entityList === undefined) return null;
-    if (this.props.Fields && !this.SF) this.initForms();
+    if (this.props.SearchFields && !this.SF) this.initForms();
     const { data, current_page, last_page } = this.props.entityList;
     const { search } = this.props.location;
     const { title, entityName, tableSchema, deleteAction } = this.props;
     return <Layout>
-      <Segment raised textAlign="center" color="blue" inverted>
+      <Segment raised textAlign="center" color="blue" inverted attached="top">
         <h1>{title}</h1>
       </Segment>
-      <Segment>
+      <Segment attached>
         <BackButton history={this.props.history} />
-        {this.props.Fields && <this.SF onSubmit={this.onSubmit} />}
+        {this.props.SearchFields && <this.SF onSubmit={this.onSubmit} />}
       </Segment>
-      <Segment>
+      <Segment attached="bottom">
         <Button color="green" icon labelPosition="left"
           as={Link} to={`/${entityName}/new${search}`}>
           <Icon name="plus" />

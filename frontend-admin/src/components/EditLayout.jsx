@@ -60,14 +60,19 @@ class EditLayout extends React.Component {
     if (this.props.NewFields && !this.NF) this.initForms();
     if (this.props.EditFields && !this.EF) this.initForms();
     const { id } = this.props.match.params;
-    const { entity } = this.props;
+    const { title, entity } = this.props;
     return <Layout>
-      <Segment raised padded style={{ maxWidth: 600, margin: '0 auto' }}>
-        <BackButton history={this.props.history} />
-        {id
-          ? (this.props.EditFields && <this.EF onSubmit={this.updateEntity(id)} initialValues={entity} />)
-          : (this.props.NewFields && <this.NF onSubmit={this.newEntity} initialValues={entity} />)}
-      </Segment>
+      <div style={{ maxWidth: 600, margin: '0 auto' }}>
+        <Segment raised attached="top" textAlign="center" color="blue" inverted>
+          <h2>{title}</h2>
+        </Segment>
+        <Segment raised padded attached="bottom">
+          <BackButton history={this.props.history} />
+          {id
+            ? (this.props.EditFields && <this.EF onSubmit={this.updateEntity(id)} initialValues={entity} />)
+            : (this.props.NewFields && <this.NF onSubmit={this.newEntity} initialValues={entity} />)}
+        </Segment>
+      </div>
     </Layout>;
   }
 }

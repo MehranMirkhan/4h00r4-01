@@ -13,6 +13,7 @@ import EditLayout from 'src/components/EditLayout';
 
 function QuestionEdit(props) {
   return <EditLayout {...props}
+    title="سؤال"
     entityName="questions"
     NewFields={formProps => <>
       <Field component={Field_} as={Form.Input}

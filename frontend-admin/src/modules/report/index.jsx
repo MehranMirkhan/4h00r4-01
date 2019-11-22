@@ -12,7 +12,7 @@ class Report extends React.Component {
     const { me } = this.props;
     return <Layout>
       <Segment raised textAlign="center" color="blue" inverted style={{ margin: '16px 0' }}>
-        <h1>گزارشات</h1>
+        <h1>گزارش</h1>
       </Segment>
       <Segment compact>
         نام کاربری: {!!me && me.name}
