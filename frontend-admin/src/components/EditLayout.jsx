@@ -16,11 +16,13 @@ const EditForm = (entityName, Fields, isNew) =>
 
         {Fields(props)}
 
-        <Button type='submit' color='green' disabled={pristine} loading={submitting}>
+        <Button type='submit' color='green' icon labelPosition="left"
+          disabled={pristine} loading={submitting}>
           <Icon name='check' />
           ذخیره
         </Button>
-        <Button type='button' secondary disabled={pristine || submitting} onClick={reset}>
+        <Button type='button' secondary icon labelPosition="left"
+          disabled={pristine || submitting} onClick={reset}>
           <Icon name='refresh' />
           لغو تغییرات
         </Button>

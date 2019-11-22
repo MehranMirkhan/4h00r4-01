@@ -16,7 +16,7 @@ function SolutionEdit(props) {
     entityName="solutions"
     NewFields={formProps => <>
       <Field component={Field_} as={Form.Input}
-        name="question_id" label={Solution.question_id.label} type="text" disabled />
+        name="question_id" label={Solution.question_id.label} type="text" />
       <Field component={Field_} as={Form.Input}
         name="text" label={Solution.text.label} type="text" />
     </>}
@@ -24,7 +24,7 @@ function SolutionEdit(props) {
       <Field component={Field_} as={Form.Input}
         name="id" label={Solution.id.label} type="text" disabled />
       <Field component={Field_} as={Form.Input}
-        name="question_id" label={Solution.question_id.label} type="text" disabled />
+        name="question_id" label={Solution.question_id.label} type="text" />
       <Field component={Field_} as={Form.Input}
         name="text" label={Solution.text.label} type="text" />
     </>}

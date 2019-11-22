@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Utility;
 use App\Models\Answer;
+use App\Models\Solution;
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller {
@@ -13,6 +14,15 @@ class AnswerController extends Controller {
     }
 
     public function store(Request $request) {
+        try {
+            Solution::query()->where([
+                'question_id' => $request->question_id,
+                'text' => $request->text,
+            ])->firstOrFail();
+            $request['correct']  = true;
+        } catch(\Exception $e) {
+            $request['correct'] = false;
+        }
         $answer = Answer::create($request->all());
         return Answer::query()->where('id', $answer->id)->firstOrFail();
     }

@@ -12,6 +12,7 @@ import Report from 'src/modules/report';
 import Users from 'src/modules/users';
 import Questions from 'src/modules/questions';
 import Solutions from 'src/modules/solutions';
+import Answers from 'src/modules/answers';
 import Test from 'src/modules/Test';
 import NotFound from 'src/modules/NotFound';
 
@@ -53,6 +54,7 @@ function Routes({ fetchMe, logout, isAuthenticated, me }) {
         <AuthRoute path="/users" component={Users} />
         <AuthRoute path="/questions" component={Questions} />
         <AuthRoute path="/solutions" component={Solutions} />
+        <AuthRoute path="/answers" component={Answers} />
         <Route exact path="/test" component={Test} />
         <Route path="*" component={NotFound} />
       </Switch>
