@@ -1,7 +1,7 @@
 
 const Solution = {
-  id: { label: "ID" },
-  question_id: { label: "ID سؤال" },
+  id: { label: "شناسه" },
+  question_id: { label: "شناسه سؤال" },
   text: { label: "متن" },
 };
 

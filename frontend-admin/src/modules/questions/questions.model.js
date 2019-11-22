@@ -1,6 +1,6 @@
 
 const Question = {
-  id: { label: "ID" },
+  id: { label: "شناسه" },
   text: { label: "متن" },
   time_type: {
     label: "نوع زمان", options: [

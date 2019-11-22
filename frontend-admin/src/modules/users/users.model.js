@@ -1,6 +1,6 @@
 
 const User = {
-  id: { label: "ID" },
+  id: { label: "شناسه" },
   name: { label: "نام" },
   phone: { label: "شماره همراه" },
   email: { label: "ایمیل" },
