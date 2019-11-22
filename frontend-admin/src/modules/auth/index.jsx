@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Form, Segment } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
-import { Center, Field_, CHECKS } from 'src/utils';
+import { Center, Field_, CHECKS } from 'src/components/Common';
 import { login } from './auth.reducer';
 
 

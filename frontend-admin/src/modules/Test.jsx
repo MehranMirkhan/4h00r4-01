@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Button, Icon } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
-import { Field_, booleanOptions } from 'src/utils';
+import { Field_, booleanOptions } from 'src/components/Common';
 
 
 const TestForm = reduxForm({ form: 'test' })(

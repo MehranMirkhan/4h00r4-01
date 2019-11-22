@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, Icon } from 'semantic-ui-react';
 
 export function Center({ children }) {
   return <div style={{ minHeight: '100vh', display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -23,3 +24,11 @@ export const booleanOptions = [
   { key: 'true', text: 'True', value: 1 },
   { key: 'false', text: 'False', value: 0 },
 ];
+
+export const BackButton = ({ history }) =>
+  <div style={{ textAlign: "left" }}>
+    <Button icon labelPosition='right' onClick={history.goBack}>
+      بازگشت
+      <Icon name="chevron left" />
+    </Button>
+  </div>;

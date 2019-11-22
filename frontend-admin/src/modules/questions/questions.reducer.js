@@ -37,9 +37,9 @@ export const resetEntityList = () => ({
   payload: [],
 });
 
-export const resetEntity = () => ({
+export const resetEntity = params => ({
   type: QUESTIONS_ACTIONS.SET_ENTITY,
-  payload: undefined,
+  payload: params,
 });
 
 export const reset = () => ({

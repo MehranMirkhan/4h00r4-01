@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 
 import { store, persistor } from 'src/redux/store_config';
-import ErrorHandler, { AlertTemplate } from 'src/ErrorHandler';
+import ErrorHandler, { AlertTemplate } from 'src/components/ErrorHandler';
 import Routes from 'src/Routes';
 
 import 'src/font/fonts.css';

@@ -1,4 +1,4 @@
-[ ] Sorting
-[ ] Date picker
-[ ] Associations
-[ ] User model
+Sorting
+Date picker
+Associations
+users passwordConfirm
