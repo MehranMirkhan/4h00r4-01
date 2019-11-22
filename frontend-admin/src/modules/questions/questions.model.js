@@ -28,5 +28,7 @@ export default Question;
 export const print = q => {
   q.time_type = Question.time_type.options.find(x => x.value === q.time_type).text;
   q.answer_type = Question.answer_type.options.find(x => x.value === q.answer_type).text;
+  if (q.start_time) q.start_time = (new Date(q.start_time)).toDateString();
+  if (q.end_time) q.end_time = (new Date(q.end_time)).toDateString();
   return q;
 }
