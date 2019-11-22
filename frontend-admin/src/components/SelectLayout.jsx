@@ -19,11 +19,13 @@ const SearchForm = (entityName, Fields) =>
 
         {Fields(props)}
 
-        <Button type='submit' primary loading={submitting}>
+        <Button type='submit' icon labelPosition="left" primary
+          loading={submitting}>
           <Icon name='search' />
           جستجو
         </Button>
-        <Button type='button' secondary disabled={pristine || submitting} onClick={reset}>
+        <Button type='button' icon labelPosition="left" secondary
+          disabled={pristine || submitting} onClick={reset}>
           <Icon name='refresh' />
           پاک‌سازی فرم
         </Button>
@@ -34,15 +36,17 @@ const SearchForm = (entityName, Fields) =>
 
 const SearchResult = withAlert()(({ entityName, tableSchema, data, pagination, deleteAction, alert }) => {
   const editButton = entity =>
-    <Button icon as={Link} to={`/${entityName}/${!!entity ? entity.id : '?'}`}>
-      <Icon name="edit" />
-    </Button>;
+    // <Button icon as={Link} to={`/${entityName}/${!!entity ? entity.id : '?'}`}>
+    <Link to={`/${entityName}/${!!entity ? entity.id : '?'}`}>
+      <Icon name="edit" color="black" style={{ cursor: "pointer" }} />
+    </Link>
+  // </Button>;
   const deleteButton = entity =>
     <Modal
       trigger={
-        <Button icon color="red">
-          <Icon name="times" />
-        </Button>
+        // <Button icon color="red">
+        <Icon name="times" size="large" color="red" style={{ cursor: "pointer" }} />
+        // </Button>
       }
       header='هشدار!'
       content={`آیا از حذف اطمینان دارید؟`}
