@@ -27,7 +27,7 @@ function UserSelect(props) {
       </Form.Group>
       <Form.Group widths='equal'>
         <Field component={Field_} as={Form.Input}
-          name="role" label={User.email.label} type="text" />
+          name="role" label={User.role.label} type="text" />
         <Field component={Field_} as={Form.Dropdown} selection
           name="is_active" label={User.is_active.label} type="select" options={booleanOptions} />
       </Form.Group>
