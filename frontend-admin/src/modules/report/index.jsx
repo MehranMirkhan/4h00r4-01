@@ -2,25 +2,29 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Segment } from 'semantic-ui-react';
 
-import { getMe } from 'src/modules/auth/auth.reducer';
+import { fetchReport } from './report.reducer';
 
 import Layout from 'src/components/Layout';
 
 
 class Report extends React.Component {
+  componentDidMount() {
+    this.props.fetchReport();
+  }
   render() {
-    const { me } = this.props;
+    const { report } = this.props;
     return <Layout>
       <Segment raised textAlign="center" color="blue" inverted style={{ margin: '16px 0' }}>
         <h1>گزارش</h1>
       </Segment>
       <Segment compact>
-        نام کاربری: {!!me && me.name}
+        {JSON.stringify(report)}
       </Segment>
     </Layout>;
   }
 }
 
-export default connect(state => ({
-  me: getMe(state),
-}))(Report);
+export default connect(
+  state => ({ report: state.report }),
+  dispatch => ({ fetchReport: () => dispatch(fetchReport()) }),
+)(Report);

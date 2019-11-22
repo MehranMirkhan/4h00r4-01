@@ -11,6 +11,7 @@ Route::group(['namespace' => 'Auth'], function () {
 
 Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
+        Route::get('report', 'ReportController@index');
         Route::apiResource('users', 'UserController')->except(['store']);
         Route::apiResource('questions', 'QuestionController');
         Route::apiResource('solutions', 'SolutionController');
