@@ -8,6 +8,7 @@ import { resetEntity, fetchQuestion, updateQuestion, newQuestion } from './quest
 import Question from './questions.model';
 
 import { Field_ } from 'src/components/Common';
+import { DateTimePicker } from 'src/components/FormFields';
 import EditLayout from 'src/components/EditLayout';
 
 
@@ -22,10 +23,8 @@ function QuestionEdit(props) {
         name="time_type" label={Question.time_type.label} type="select" />
       <Field component={Field_} as={Form.Dropdown} selection options={Question.answer_type.options}
         name="answer_type" label={Question.answer_type.label} type="select" />
-      <Field component={Field_} as={Form.Input}
-        name="start_time" label={Question.start_time.label} type="text" />
-      <Field component={Field_} as={Form.Input}
-        name="end_time" label={Question.end_time.label} type="text" />
+      <Field component={DateTimePicker} name="start_time" label={Question.start_time.label}/>
+      <Field component={DateTimePicker} name="end_time" label={Question.end_time.label}/>
       <Field component={Field_} as={Form.Input}
         name="score" label={Question.score.label} type="text" />
       <Field component={Field_} as={Form.Input}

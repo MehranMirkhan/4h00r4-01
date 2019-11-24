@@ -11,6 +11,7 @@
     "axios": "^0.19.0",
     "query-string": "^6.9.0",
     "react": "^16.11.0",
+    "react-advance-jalaali-datepicker": "^1.2.2",
     "react-alert": "^6.0.0",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.1",
