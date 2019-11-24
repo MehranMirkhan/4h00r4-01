@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "moment-jalaali": "^0.9.1",
     "query-string": "^6.9.0",
     "react": "^16.11.0",
     "react-advance-jalaali-datepicker": "^1.2.2",
