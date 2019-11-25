@@ -1,4 +1,3 @@
 Sorting
-Date picker
 Associations
 users passwordConfirm

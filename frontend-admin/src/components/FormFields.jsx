@@ -56,23 +56,26 @@ export function DatePicker({ input, meta, children, ...props }) {
   const jalaaliFormat = 'jYYYY/jMM/jDD';
   const regex = /\d{4}\/\d{2}\/\d{2}/g;
 
-  const initText = !!input.value
-    ? moment(input.value).format(jalaaliFormat)
-    : "";
-  const [text, setText] = React.useState(initText);
-  const [isCorrect, setIsCorrect] = React.useState(false);
-  React.useEffect(() => setText(initText), [initText]);
-  React.useEffect(() => setIsCorrect(regex.test(text)), [text, regex]);
-  React.useEffect(() => {
-    console.log("in change:", text, isCorrect, regex.test(text));
-    if (regex.test(text)) {
-      console.log("valid");
-      input.onChange(moment(text, jalaaliFormat).format(miladiFormat));
-    }
-  }, [regex, text, input]);
+  const toJalaali = x => !!x ? moment(input.value).format(jalaaliFormat) : "";
+  const toMilaadi = x => !!x ? moment(text, jalaaliFormat).format(miladiFormat) : "";
+  const isCorrect = x => regex.test(x);
 
-  const correctIcon = <Icon name={isCorrect ? "check" : "times"}
-    color={isCorrect ? "green" : "red"} />;
+  const [text, setText] = React.useState(toJalaali(input.value));
+  const [correct, setCorrect] = React.useState(false);
+
+  React.useEffect(() => {
+    // console.log("input.value changed:", input.value);
+    setText(toJalaali(input.value));
+  }, [input.value]);
+  React.useEffect(() => {
+    // console.log("text changed:", text);
+    setCorrect(isCorrect(text));
+    if (isCorrect(text))
+      input.onChange(toMilaadi(text));
+  }, [text]);
+
+  const correctIcon = <Icon name={correct ? "check" : "times"}
+    color={correct ? "green" : "red"} />;
 
   return <Form.Input {...props} value={text} children={children}
     error={(!!meta && meta.touched && meta.invalid) ? meta.error : false}
