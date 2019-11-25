@@ -14,6 +14,7 @@ import Questions from 'src/modules/questions';
 import Solutions from 'src/modules/solutions';
 import Answers from 'src/modules/answers';
 import Test from 'src/modules/Test';
+import Test2 from 'src/modules/Test2';
 import NotFound from 'src/modules/NotFound';
 
 
@@ -56,6 +57,7 @@ function Routes({ fetchMe, logout, isAuthenticated, me }) {
         <AuthRoute path="/solutions" component={Solutions} />
         <AuthRoute path="/answers" component={Answers} />
         <Route exact path="/test" component={Test} />
+        <Route exact path="/test2" component={Test2} />
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>

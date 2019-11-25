@@ -16,7 +16,7 @@ function SolutionSelect(props) {
     entityName="solutions"
     SearchFields={formProps => <>
       <Form.Group widths='equal'>
-        <Field component={EntityField} entityName="questions"
+        <Field component={EntityField} entityName="questions" formName="solutions/search"
           name="question_id" label={Solution.question_id.label} />
       </Form.Group>
     </>}

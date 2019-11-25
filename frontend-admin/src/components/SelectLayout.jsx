@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { Segment, Form, Button, Icon, Modal } from 'semantic-ui-react';
 import { reduxForm, submit } from 'redux-form';
 import qs from 'query-string';
@@ -9,6 +9,8 @@ import { withAlert } from 'react-alert';
 import Layout from 'src/components/Layout';
 import Table from 'src/components/Table';
 import { BackButton } from 'src/components/Common';
+
+import { setSelected } from 'src/redux/flow.reducer';
 
 
 const SearchForm = (entityName, Fields) =>
@@ -33,8 +35,16 @@ const SearchForm = (entityName, Fields) =>
     }
   );
 
-
-const SearchResult = withAlert()(({ entityName, tableSchema, data, pagination, deleteAction, alert }) => {
+const SearchResult = withAlert()(({
+  history, entityName, tableSchema, data, pagination, deleteAction, alert
+}) => {
+  const flow = useSelector(state => state.flow);
+  const dispatch = useDispatch();
+  const selectButton = entity =>
+    <Icon name="check" color="green" style={{ cursor: "pointer" }} onClick={() => {
+      dispatch(setSelected(entity));
+      history.goBack();
+    }} />
   const editButton = entity =>
     <Link to={`/${entityName}/${!!entity ? entity.id : '?'}`}>
       <Icon name="edit" color="black" style={{ cursor: "pointer" }} />
@@ -57,6 +67,7 @@ const SearchResult = withAlert()(({ entityName, tableSchema, data, pagination, d
     />;
   const actionButtons = entity =>
     <>
+      {flow.isSelecting && selectButton(entity)}
       {editButton(entity)}
       {deleteButton(entity)}
     </>;
@@ -118,6 +129,7 @@ class SelectLayout extends React.Component {
         <SearchResult entityName={entityName}
           tableSchema={tableSchema}
           data={data}
+          history={this.props.history}
           pagination={{
             current_page, last_page, per_page: this.state.page_size,
             setPage: this.setPage, setPageSize: this.setPageSize,

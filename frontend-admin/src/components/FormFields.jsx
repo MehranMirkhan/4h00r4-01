@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, Icon } from 'semantic-ui-react';
 // import { DateTimePicker as JalaliDateTimePicker } from "react-advance-jalaali-datepicker";
 import moment from 'moment-jalaali';
+import { getFormValues, initialize } from 'redux-form';
+
+import { transit, reset } from 'src/redux/flow.reducer';
 
 
 export const CHECKS = {
@@ -33,13 +37,28 @@ export const booleanOptions = [
   { key: 'false', text: 'False', value: 0 },
 ];
 
-export const EntityField = ({ input, meta, children, entityName, ...props }) =>
-  <Form.Input {...props}
+export function EntityField({ input, meta, children, entityName, formName, ...props }) {
+  const flow = useSelector(state => state.flow);
+  const dispatch = useDispatch();
+  // const values = useSelector(state => getFormValues(formName)(state));
+  const values = useSelector(state => state.form[formName]);
+  console.log("values:", values);
+  const actionButton = <Button icon="search"
+    as={Link} to={`/${entityName}`}
+    onClick={() => dispatch(transit(entityName, values))} />;
+  if (!flow.isSelecting && flow.selectionCode === entityName && !!flow.selectedEntity) {
+    console.log("carry:", flow.carry);
+    dispatch(initialize(formName, flow.carry));
+    input.onChange(flow.selectedEntity.id);
+    dispatch(reset());
+  }
+  return <Form.Input {...props}
     {...input} children={children}
-    action={<Button icon="search" as={Link} to={`/${entityName}/select`} />}
+    action={actionButton}
     onChange={(e, { value }) => input.onChange(value)}
     error={(!!meta && meta.touched && meta.invalid) ? meta.error : false}
   />;
+};
 
 // export const DateTimePicker = ({ input, meta, children, ...props }) =>
 //   <>
