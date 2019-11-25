@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Icon } from 'semantic-ui-react';
 // import { DateTimePicker as JalaliDateTimePicker } from "react-advance-jalaali-datepicker";
 import moment from 'moment-jalaali';
 
@@ -60,13 +60,22 @@ export function DatePicker({ input, meta, children, ...props }) {
     ? moment(input.value).format(jalaaliFormat)
     : "";
   const [text, setText] = React.useState(initText);
+  const [isCorrect, setIsCorrect] = React.useState(false);
   React.useEffect(() => setText(initText), [initText]);
+  React.useEffect(() => setIsCorrect(regex.test(text)), [text, regex]);
   React.useEffect(() => {
-    if (regex.test(text))
+    console.log("in change:", text, isCorrect, regex.test(text));
+    if (regex.test(text)) {
+      console.log("valid");
       input.onChange(moment(text, jalaaliFormat).format(miladiFormat));
+    }
   }, [regex, text, input]);
+
+  const correctIcon = <Icon name={isCorrect ? "check" : "times"}
+    color={isCorrect ? "green" : "red"} />;
 
   return <Form.Input {...props} value={text} children={children}
     error={(!!meta && meta.touched && meta.invalid) ? meta.error : false}
-    onChange={(e, { value }) => setText(value)} />;
+    onChange={(e, { value }) => setText(value)}
+    icon={correctIcon} />;
 }
