@@ -1,14 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'semantic-ui-react';
 import { Field } from 'redux-form';
 
 import { resetEntity, fetchAnswer, updateAnswer, newAnswer } from './answers.reducer';
 import Answer from './answers.model';
 
-import { Field_, booleanOptions } from 'src/components/Common';
 import EditLayout from 'src/components/EditLayout';
-import { InputField, EntityField } from 'src/components/FormFields';
+import { InputField, EntityField, SelectField, booleanOptions } from 'src/components/FormFields';
 
 
 function AnswerEdit(props) {
@@ -21,16 +19,12 @@ function AnswerEdit(props) {
       <Field component={InputField} name="text" label={Answer.text.label} />
     </>}
     EditFields={formProps => <>
-      <Field component={Field_} as={Form.Input}
-        name="id" label={Answer.id.label} type="text" disabled />
-      <Field component={Field_} as={Form.Input}
-        name="question_id" label={Answer.question_id.label} type="text" />
-      <Field component={Field_} as={Form.Input}
-        name="user_id" label={Answer.user_id.label} type="text" />
-      <Field component={Field_} as={Form.Input}
-        name="text" label={Answer.text.label} type="text" />
-      <Field component={Field_} as={Form.Dropdown} selection
-        name="correct" label={Answer.correct.label} type="select" options={booleanOptions} />
+      <Field component={InputField} name="id" label={Answer.id.label} disabled />
+      <Field component={InputField} name="question_id" label={Answer.question_id.label} />
+      <Field component={InputField} name="user_id" label={Answer.user_id.label} />
+      <Field component={InputField} name="text" label={Answer.text.label} />
+      <Field component={SelectField} name="correct" label={Answer.correct.label}
+        options={booleanOptions} />
     </>}
   />;
 }

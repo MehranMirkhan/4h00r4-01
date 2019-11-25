@@ -6,8 +6,8 @@ import { Field } from 'redux-form';
 import { fetchAnswers, deleteAnswer } from './answers.reducer';
 import Answer from './answers.model';
 
-import { Field_, booleanOptions } from 'src/components/Common';
 import SelectLayout from 'src/components/SelectLayout';
+import { InputField, SelectField, booleanOptions, EntityField } from 'src/components/FormFields';
 
 
 function AnswerSelect(props) {
@@ -16,14 +16,13 @@ function AnswerSelect(props) {
     entityName="answers"
     SearchFields={formProps => <>
       <Form.Group widths='equal'>
-        <Field component={Field_} as={Form.Input}
-          name="question_id" label={Answer.question_id.label} type="text" />
-        <Field component={Field_} as={Form.Input}
-          name="user_id" label={Answer.user_id.label} type="text" />
-        <Field component={Field_} as={Form.Input}
-          name="text" label={Answer.text.label} type="text" />
-        <Field component={Field_} as={Form.Dropdown} selection
-          name="correct" label={Answer.correct.label} type="select" options={booleanOptions} />
+        <Field component={EntityField} entityName="questions"
+          name="question_id" label={Answer.question_id.label} />
+        <Field component={EntityField} entityName="users"
+          name="user_id" label={Answer.user_id.label} />
+        <Field component={InputField} name="text" label={Answer.text.label} />
+        <Field component={SelectField} name="correct" label={Answer.correct.label}
+          options={booleanOptions} />
       </Form.Group>
     </>}
     tableSchema={[
@@ -41,5 +40,3 @@ export default connect(state => ({
   fetchMethod: searchParams => dispatch(fetchAnswers(searchParams)),
   deleteAction: id => dispatch(deleteAnswer(id)),
 }))(AnswerSelect);
-
-

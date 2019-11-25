@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'semantic-ui-react';
 import { Field } from 'redux-form';
 
 import { resetEntity, fetchSolution, updateSolution, newSolution } from './solutions.reducer';
 import Solution from './solutions.model';
 
-import { Field_ } from 'src/components/Common';
+import { InputField, EntityField } from 'src/components/FormFields';
 import EditLayout from 'src/components/EditLayout';
 
 
@@ -15,18 +14,15 @@ function SolutionEdit(props) {
     title="پاسخ"
     entityName="solutions"
     NewFields={formProps => <>
-      <Field component={Field_} as={Form.Input}
-        name="question_id" label={Solution.question_id.label} type="text" />
-      <Field component={Field_} as={Form.Input}
-        name="text" label={Solution.text.label} type="text" />
+      <Field component={EntityField} entityName="questions"
+        name="question_id" label={Solution.question_id.label} />
+      <Field component={InputField} name="text" label={Solution.text.label} />
     </>}
     EditFields={formProps => <>
-      <Field component={Field_} as={Form.Input}
-        name="id" label={Solution.id.label} type="text" disabled />
-      <Field component={Field_} as={Form.Input}
-        name="question_id" label={Solution.question_id.label} type="text" />
-      <Field component={Field_} as={Form.Input}
-        name="text" label={Solution.text.label} type="text" />
+      <Field component={InputField} name="id" label={Solution.id.label} disabled />
+      <Field component={EntityField} entityName="questions"
+        name="question_id" label={Solution.question_id.label} />
+      <Field component={InputField} name="text" label={Solution.text.label} />
     </>}
   />;
 }

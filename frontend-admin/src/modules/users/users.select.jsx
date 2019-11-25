@@ -6,7 +6,7 @@ import { Field } from 'redux-form';
 import { fetchUsers, deleteUser } from './users.reducer';
 import User from './users.model';
 
-import { Field_, booleanOptions } from 'src/components/Common';
+import { InputField, SelectField, booleanOptions } from 'src/components/FormFields';
 import SelectLayout from 'src/components/SelectLayout';
 
 
@@ -16,20 +16,15 @@ function UserSelect(props) {
     entityName="users"
     SearchFields={formProps => <>
       <Form.Group widths='equal'>
-        <Field component={Field_} as={Form.Input}
-          name="id" label={User.id.label} type="text" />
-        <Field component={Field_} as={Form.Input}
-          name="name" label={User.name.label} type="text" />
-        <Field component={Field_} as={Form.Input}
-          name="phone" label={User.phone.label} type="text" />
-        <Field component={Field_} as={Form.Input}
-          name="email" label={User.email.label} type="text" />
+        <Field component={InputField} name="id" label={User.id.label} />
+        <Field component={InputField} name="name" label={User.name.label} />
+        <Field component={InputField} name="phone" label={User.phone.label} />
+        <Field component={InputField} name="email" label={User.email.label} />
       </Form.Group>
       <Form.Group widths='equal'>
-        <Field component={Field_} as={Form.Input}
-          name="role" label={User.role.label} type="text" />
-        <Field component={Field_} as={Form.Dropdown} selection
-          name="is_active" label={User.is_active.label} type="select" options={booleanOptions} />
+        <Field component={InputField} name="role" label={User.role.label} />
+        <Field component={SelectField} name="is_active" label={User.is_active.label}
+          options={booleanOptions} />
       </Form.Group>
     </>}
     tableSchema={[

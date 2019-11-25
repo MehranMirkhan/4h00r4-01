@@ -7,7 +7,7 @@ import { Field } from 'redux-form';
 import { fetchQuestions, deleteQuestion } from './questions.reducer';
 import Question from './questions.model';
 
-import { Field_ } from 'src/components/Common';
+import { InputField, SelectField } from 'src/components/FormFields';
 import SelectLayout from 'src/components/SelectLayout';
 
 
@@ -17,14 +17,12 @@ function QuestionSelect(props) {
     entityName="questions"
     SearchFields={formProps => <>
       <Form.Group widths='equal'>
-        <Field component={Field_} as={Form.Input}
-          name="id" label={Question.id.label} type="text" />
-        <Field component={Field_} as={Form.Input}
-          name="text" label={Question.text.label} type="text" />
-        <Field component={Field_} as={Form.Dropdown} selection options={Question.time_type.options}
-          name="time_type" label={Question.time_type.label} type="select" />
-        <Field component={Field_} as={Form.Dropdown} selection options={Question.answer_type.options}
-          name="answer_type" label={Question.answer_type.label} type="select" />
+        <Field component={InputField} name="id" label={Question.id.label} />
+        <Field component={InputField} name="text" label={Question.text.label} />
+        <Field component={SelectField} options={Question.time_type.options}
+          name="time_type" label={Question.time_type.label} />
+        <Field component={SelectField} options={Question.answer_type.options}
+          name="answer_type" label={Question.answer_type.label} />
       </Form.Group>
     </>}
     tableSchema={[
@@ -46,5 +44,3 @@ export default connect(state => ({
   fetchMethod: searchParams => dispatch(fetchQuestions(searchParams)),
   deleteAction: id => dispatch(deleteQuestion(id)),
 }))(QuestionSelect);
-
-
