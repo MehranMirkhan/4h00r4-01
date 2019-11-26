@@ -16,9 +16,9 @@ function AnswerSelect(props) {
     entityName="answers"
     SearchFields={formProps => <>
       <Form.Group widths='equal'>
-        <Field component={EntityField} entityName="questions"
+        <Field component={EntityField} entityName="questions" formName="answers/search"
           name="question_id" label={Answer.question_id.label} />
-        <Field component={EntityField} entityName="users"
+        <Field component={EntityField} entityName="users" formName="answers/search"
           name="user_id" label={Answer.user_id.label} />
         <Field component={InputField} name="text" label={Answer.text.label} />
         <Field component={SelectField} name="correct" label={Answer.correct.label}

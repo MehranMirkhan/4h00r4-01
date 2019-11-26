@@ -14,13 +14,13 @@ function SolutionEdit(props) {
     title="پاسخ"
     entityName="solutions"
     NewFields={formProps => <>
-      <Field component={EntityField} entityName="questions"
+      <Field component={EntityField} entityName="questions" formName="solutions/new"
         name="question_id" label={Solution.question_id.label} />
       <Field component={InputField} name="text" label={Solution.text.label} />
     </>}
     EditFields={formProps => <>
       <Field component={InputField} name="id" label={Solution.id.label} disabled />
-      <Field component={EntityField} entityName="questions"
+      <Field component={EntityField} entityName="questions" formName="solutions/edit"
         name="question_id" label={Solution.question_id.label} />
       <Field component={InputField} name="text" label={Solution.text.label} />
     </>}

@@ -10,7 +10,7 @@ import Layout from 'src/components/Layout';
 import Table from 'src/components/Table';
 import { BackButton } from 'src/components/Common';
 
-import { setSelected } from 'src/redux/flow.reducer';
+import { setSelected, SELECTION_STATES } from 'src/redux/flow.reducer';
 
 
 const SearchForm = (entityName, Fields) =>
@@ -67,7 +67,7 @@ const SearchResult = withAlert()(({
     />;
   const actionButtons = entity =>
     <>
-      {flow.isSelecting && selectButton(entity)}
+      {flow.selectionState === SELECTION_STATES.SELECTING && selectButton(entity)}
       {editButton(entity)}
       {deleteButton(entity)}
     </>;

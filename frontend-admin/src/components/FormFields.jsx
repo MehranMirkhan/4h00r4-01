@@ -6,7 +6,7 @@ import { Form, Button, Icon } from 'semantic-ui-react';
 import moment from 'moment-jalaali';
 import { getFormValues, initialize } from 'redux-form';
 
-import { transit, reset } from 'src/redux/flow.reducer';
+import { transit, selectionReceived, SELECTION_STATES } from 'src/redux/flow.reducer';
 
 
 export const CHECKS = {
@@ -40,17 +40,15 @@ export const booleanOptions = [
 export function EntityField({ input, meta, children, entityName, formName, ...props }) {
   const flow = useSelector(state => state.flow);
   const dispatch = useDispatch();
-  // const values = useSelector(state => getFormValues(formName)(state));
-  const values = useSelector(state => state.form[formName]);
-  console.log("values:", values);
+  const values = useSelector(state => getFormValues(formName)(state));
+  const code = formName + "/" + entityName;
   const actionButton = <Button icon="search"
     as={Link} to={`/${entityName}`}
-    onClick={() => dispatch(transit(entityName, values))} />;
-  if (!flow.isSelecting && flow.selectionCode === entityName && !!flow.selectedEntity) {
-    console.log("carry:", flow.carry);
-    dispatch(initialize(formName, flow.carry));
+    onClick={() => dispatch(transit(code, values))} />;
+  if (flow.selectionState === SELECTION_STATES.SELECTED && flow.selectionCode === code) {
+    dispatch(initialize(formName, flow.selectionCarry));
     input.onChange(flow.selectedEntity.id);
-    dispatch(reset());
+    dispatch(selectionReceived());
   }
   return <Form.Input {...props}
     {...input} children={children}
