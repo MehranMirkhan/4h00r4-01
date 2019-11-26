@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch  } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 
-import { transit, setSelected, reset } from 'src/redux/flow.reducer';
+import { setSelected } from 'src/redux/flow.reducer';
 
 
 export default function Test2({ history }) {

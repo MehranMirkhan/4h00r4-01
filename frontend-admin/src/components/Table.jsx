@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Icon, Menu, Statistic, Dropdown } from 'semantic-ui-react';
 
 
@@ -26,6 +26,18 @@ const Row = schema => (entity, index) => {
     key: index,
     cells: schema.map(col => c(col)),
   };
+};
+
+const Header = (schema, sortCol, sortDir, handleSort) => {
+  return schema.map(col => ({
+    key: col.key,
+    sorted: sortCol === col.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : null,
+    onClick: () => {
+      if (col.sortable)
+        handleSort(col.key, sortCol === col.key ? (sortDir === 'asc' ? 'desc' : 'asc') : 'asc');
+    },
+    children: col.header,
+  }));
 };
 
 const Pagination = (colSpan, pagination) => {
@@ -63,10 +75,10 @@ const Pagination = (colSpan, pagination) => {
   );
 };
 
-export default function MyTable({ schema, data, pagination }) {
+export default function MyTable({ schema, data, pagination, sortCol, sortDir, onSort }) {
   if (!data) data = [];
-  return <Table celled
-    headerRow={schema.map(col => col.header)}
+  return <Table celled sortable
+    headerRow={Header(schema, sortCol, sortDir, onSort)}
     renderBodyRow={Row(schema)}
     footerRow={Pagination(schema.length, pagination)}
     tableData={data} />;

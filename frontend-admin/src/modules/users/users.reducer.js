@@ -48,6 +48,7 @@ export const reset = () => ({
 
 export const fetchUsers = (searchParams) => (dispatch, _, API) => {
   console.log("Fetching all users");
+  console.log(searchParams);
   let params = {};
   if (searchParams && searchParams.filter && Object.entries(searchParams.filter).length !== 0)
     params.filter = Object.keys(searchParams.filter).map(k => `${k}:${searchParams.filter[k]}`).join(',');
@@ -55,11 +56,13 @@ export const fetchUsers = (searchParams) => (dispatch, _, API) => {
     params.page = searchParams.page;
   if (searchParams && searchParams.page_size)
     params.page_size = searchParams.page_size;
+  if (searchParams && searchParams.sortCol)
+    params.sort = (searchParams.sortDir === "asc" ? "" : "-") + searchParams.sortCol;
   return API.get('/admin/v1/users', { params })
-    .then(resp => dispatch({
+    .then(resp => {console.log(resp);dispatch({
       type: USERS_ACTIONS.SET_ENTITY_LIST,
       payload: !!resp ? resp.data : undefined,
-    }));
+    })});
 };
 
 export const fetchUser = id => (dispatch, _, API) => {

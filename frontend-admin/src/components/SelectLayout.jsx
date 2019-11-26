@@ -36,7 +36,7 @@ const SearchForm = (entityName, Fields) =>
   );
 
 const SearchResult = withAlert()(({
-  history, entityName, tableSchema, data, pagination, deleteAction, alert
+  history, entityName, tableSchema, data, pagination, deleteAction, alert, sortCol, sortDir, onSort
 }) => {
   const flow = useSelector(state => state.flow);
   const dispatch = useDispatch();
@@ -75,7 +75,8 @@ const SearchResult = withAlert()(({
     { key: "operations", header: "عملیات", render: actionButtons },
     ...tableSchema,
   ];
-  return <Table schema={schema} data={data} pagination={pagination} />;
+  return <Table schema={schema} data={data} pagination={pagination}
+    sortCol={sortCol} sortDir={sortDir} onSort={onSort} />;
 });
 
 
@@ -83,6 +84,8 @@ class SelectLayout extends React.Component {
   state = {
     page: 1,
     page_size: 20,
+    sortCol: null,
+    sortDir: null,
   };
   SF = undefined;
   componentDidMount() {
@@ -96,7 +99,9 @@ class SelectLayout extends React.Component {
     return this.props.fetchMethod({
       filter: { ...params, ...values },
       page: this.state.page,
-      page_size: this.state.page_size
+      page_size: this.state.page_size,
+      sortCol: this.state.sortCol,
+      sortDir: this.state.sortDir,
     });
   };
   search = () => this.props.search(`${this.props.entityName}/search`);
@@ -129,6 +134,9 @@ class SelectLayout extends React.Component {
         <SearchResult entityName={entityName}
           tableSchema={tableSchema}
           data={data}
+          sortCol={this.state.sortCol}
+          sortDir={this.state.sortDir}
+          onSort={(sortCol, sortDir) => this.setState({ sortCol, sortDir }, this.search)}
           history={this.props.history}
           pagination={{
             current_page, last_page, per_page: this.state.page_size,

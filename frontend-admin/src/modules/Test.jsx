@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 
-import { transit, setSelected, reset } from 'src/redux/flow.reducer';
+import { transit } from 'src/redux/flow.reducer';
 
 export default function Test() {
   const flow = useSelector(state => state.flow);

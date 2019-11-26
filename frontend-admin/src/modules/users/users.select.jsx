@@ -28,10 +28,10 @@ function UserSelect(props) {
       </Form.Group>
     </>}
     tableSchema={[
-      { key: "id", header: User.id.label },
-      { key: "name", header: User.name.label },
-      { key: "phone", header: User.phone.label },
-      { key: "email", header: User.email.label },
+      { key: "id", sortable: true, header: User.id.label },
+      { key: "name", sortable: true, header: User.name.label },
+      { key: "phone", sortable: true, header: User.phone.label },
+      { key: "email", sortable: true, header: User.email.label },
       { key: "role", header: User.role.label },
       { key: "is_active", header: User.is_active.label, render: "boolean" },
     ]}
