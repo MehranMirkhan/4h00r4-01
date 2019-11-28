@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class QuestionImageController extends Controller {
     public function index(Request $request) {
-        return Utility::richRetrieve($request, QuestionImage::query());
+        $questionImages = Utility::richRetrieve($request, QuestionImage::query());
+        foreach ($questionImages as $questionImage)
+            $questionImage->file = asset(Storage::url($questionImage->file));
+        return $questionImages;
     }
 
     public function store(Request $request) {
@@ -18,7 +21,7 @@ class QuestionImageController extends Controller {
                 $request->question_id . '/' .
                 $request->file('file')->getClientOriginalName();
         Storage::put(
-            $path,
+            'public/' . $path,
             file_get_contents($request->file('file')->getRealPath())
         );
         $questionImage = QuestionImage::create([
@@ -26,19 +29,19 @@ class QuestionImageController extends Controller {
             'file' => $path,
         ]);
         $questionImage = QuestionImage::query()->where('id', $questionImage->id)->firstOrFail();
-        $questionImage->file = Storage::url($questionImage->file);
+        $questionImage->file = asset(Storage::url($questionImage->file));
         return $questionImage;
     }
 
     public function show(QuestionImage $questionImage) {
-        $questionImage->file = Storage::url($questionImage->file);
+        $questionImage->file = asset(Storage::url($questionImage->file));
         return $questionImage;
     }
 
     public function destroy(QuestionImage $questionImage) {
         try {
             $questionImage->delete();
-            Storage::delete($questionImage->file);
+            Storage::delete('public/' . $questionImage->file);
             return response()->json(['message' => 'تصویر حذف شد'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'خطای نامشخص'], $e->getCode());
