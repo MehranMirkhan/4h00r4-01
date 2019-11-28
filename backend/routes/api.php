@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'],
         Route::get('report', 'ReportController@index');
         Route::apiResource('users', 'UserController')->except(['store']);
         Route::apiResource('questions', 'QuestionController');
+        Route::apiResource('question_images', 'QuestionImageController');
         Route::apiResource('solutions', 'SolutionController');
         Route::apiResource('answers', 'AnswerController');
     });

@@ -20,7 +20,7 @@ class QuestionController extends Controller {
 
     public function show(Question $question) {
         // return $question;
-        return Question::query()->where('id', $question->id)->with('solutions')->firstOrFail();
+        return Question::query()->where('id', $question->id)->with(['solutions', 'images'])->firstOrFail();
     }
 
     public function update(Request $request, Question $question) {
