@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Button, Icon } from 'semantic-ui-react';
+import { Form, Button, Icon, Image } from 'semantic-ui-react';
 // import { DateTimePicker as JalaliDateTimePicker } from "react-advance-jalaali-datepicker";
 import moment from 'moment-jalaali';
 import { getFormValues, initialize } from 'redux-form';
@@ -98,4 +98,35 @@ export function DatePicker({ input, meta, children, ...props }) {
     error={(!!meta && meta.touched && meta.invalid) ? meta.error : false}
     onChange={(e, { value }) => setText(value)}
     icon={correctIcon} />;
+}
+
+export function FilePicker({ input, meta, children, ...props }) {
+  const inputEl = useRef(null);
+  const [text, setText] = useState("");
+  const [image, setImage] = useState(null);
+  const onClick = e => {
+    e.preventDefault();
+    if (inputEl && inputEl.current)
+      inputEl.current.click();
+  };
+  const onChange = e => {
+    e.preventDefault();
+    const files = e.target.files;
+    if (files && files[0]) {
+      setText(files[0].name);
+      let reader = new FileReader();
+      reader.onload = ev => setImage(ev.target.result);
+      reader.readAsDataURL(files[0]);
+      input.onChange(files[0]);
+    } else {
+      setImage(null);
+    }
+  };
+  return <>
+    <Form.Input {...props} value={text} children={children}
+      error={(!!meta && meta.touched && meta.invalid) ? meta.error : false}
+      action={<Button icon="file" onClick={onClick} />} />
+    <input ref={inputEl} type="file" accept="image/*" hidden onChange={onChange} />
+    <Image hidden={!image} src={image} size="large" style={{ marginBottom: 16 }} />
+  </>;
 }

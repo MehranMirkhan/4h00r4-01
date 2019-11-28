@@ -11,6 +11,7 @@ import Auth from 'src/modules/auth';
 import Report from 'src/modules/report';
 import Users from 'src/modules/users';
 import Questions from 'src/modules/questions';
+import QuestionImages from 'src/modules/question_images';
 import Solutions from 'src/modules/solutions';
 import Answers from 'src/modules/answers';
 import Test from 'src/modules/Test';
@@ -54,6 +55,7 @@ function Routes({ fetchMe, logout, isAuthenticated, me }) {
         <AuthRoute exact path="/report" component={Report} />
         <AuthRoute path="/users" component={Users} />
         <AuthRoute path="/questions" component={Questions} />
+        <AuthRoute path="/question_images" component={QuestionImages} />
         <AuthRoute path="/solutions" component={Solutions} />
         <AuthRoute path="/answers" component={Answers} />
         <Route exact path="/test" component={Test} />

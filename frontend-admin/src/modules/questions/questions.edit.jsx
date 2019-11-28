@@ -44,6 +44,13 @@ function QuestionEdit(props) {
           پاسخ‌ها
         </Button>
       </div>
+      <div style={{ marginBottom: 16 }}>
+        <Button
+          as={Link}
+          to={`/question_images?question_id=${!!formProps.initialValues ? formProps.initialValues.id : '?'}`}>
+          تصاویر
+        </Button>
+      </div>
     </>}
   />;
 }

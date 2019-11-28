@@ -7,9 +7,11 @@ import Axios from 'axios';
 import reducer from 'src/redux/reducer';
 import { isAuthenticated, getAccessToken } from 'src/modules/auth/auth.reducer';
 
+import config from 'src/app.config.json';
+
 
 const persistConfig = {
-  key: 'puzzles_ugQzdLOtUd',
+  key: config.persist_key,
   storage,
   whitelist: ['auth'],
 };
@@ -17,8 +19,8 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const API = Axios.create({
-  baseURL: 'http://localhost/4h00r4-01/backend/public/api',
-  timeout: 5000,
+  baseURL: config.server_url,
+  timeout: config.request_timeout,
   headers: { "Accept": "application/json", "Content-Type": "application/json" },
 });
 

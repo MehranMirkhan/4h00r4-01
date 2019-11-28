@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
-import { Table, Icon, Menu, Statistic, Dropdown } from 'semantic-ui-react';
+import React from 'react';
+import { Table, Icon, Menu, Statistic, Dropdown, Image } from 'semantic-ui-react';
 
 
 const Column = (entity, index) => col => {
   let c = { key: col.key + index };
+  const value = entity[col.key];
   if (!!col.render) {
     if (typeof col.render === 'string') {
-      if (col.render === 'boolean') {
-        const trueIcon = <Icon name="check" size="large" color="green" />;
-        const falseIcon = <Icon name="times" size="large" color="red" />;
-        c.children = !!entity[col.key] ? trueIcon : falseIcon;
+      switch (col.render) {
+        case 'boolean':
+          const trueIcon = <Icon name="check" size="large" color="green" />;
+          const falseIcon = <Icon name="times" size="large" color="red" />;
+          c.children = !!value ? trueIcon : falseIcon;
+          break;
+        case 'image':
+          c.children = <Image src={value} size="large"/>;
       }
     } else {
       c.children = col.render(entity);
     }
   } else {
-    c.children = entity[col.key];
+    c.children = value;
   }
   return c;
 };
