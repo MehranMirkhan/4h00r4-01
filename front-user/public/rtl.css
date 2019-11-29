@@ -1,3 +1,8 @@
 :root {
   direction: rtl;
 }
+
+.alert-radio-icon.sc-ion-alert-md {
+  left: unset;
+  right: 26px;
+}
