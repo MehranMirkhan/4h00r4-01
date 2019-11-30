@@ -10,8 +10,9 @@ import { AppPage } from './declarations';
 import Menu from './components/Menu';
 import Home from './pages/Home';
 // import List from './pages/List';
+import Auth from './pages/Auth';
 import Settings from './pages/Settings';
-import { home, settings } from 'ionicons/icons';
+import { home, settings, logIn } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -42,6 +43,11 @@ const appPages: AppPage[] = [
     icon: home
   },
   {
+    title: 'ورود / ثبت‌نام',
+    url: '/auth',
+    icon: logIn
+  },
+  {
     title: 'تنظیمات',
     url: '/settings',
     icon: settings,
@@ -59,6 +65,7 @@ const App: React.FC = () => {
                 <Menu appPages={appPages} />
                 <IonRouterOutlet id="main">
                   <Route exact path="/home" component={Home} />
+                  <Route path="/auth" component={Auth} />
                   <Route exact path="/settings" component={Settings} />
                   <Route path="/" render={() => <Redirect to="/home" exact />} />
                 </IonRouterOutlet>
