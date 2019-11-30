@@ -9,9 +9,9 @@ import { AppPage } from './declarations';
 
 import Menu from './components/Menu';
 import Home from './pages/Home';
-import List from './pages/List';
+// import List from './pages/List';
 import Settings from './pages/Settings';
-import { home, list, settings } from 'ionicons/icons';
+import { home, settings } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -37,17 +37,12 @@ import { store, persistor } from './redux/store_config';
 
 const appPages: AppPage[] = [
   {
-    title: 'Home',
+    title: 'صفحه اصلی',
     url: '/home',
     icon: home
   },
   {
-    title: 'List',
-    url: '/list',
-    icon: list
-  },
-  {
-    title: 'Settings',
+    title: 'تنظیمات',
     url: '/settings',
     icon: settings,
   },
@@ -64,7 +59,6 @@ const App: React.FC = () => {
                 <Menu appPages={appPages} />
                 <IonRouterOutlet id="main">
                   <Route exact path="/home" component={Home} />
-                  <Route exact path="/list" component={List} />
                   <Route exact path="/settings" component={Settings} />
                   <Route path="/" render={() => <Redirect to="/home" exact />} />
                 </IonRouterOutlet>

@@ -4,7 +4,7 @@ export enum SettingsActions {
 };
 
 const initialState = {
-  lang: "en",
+  lang: "fa",
 };
 
 export default (state = initialState, action: any) => {

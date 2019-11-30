@@ -25,11 +25,11 @@ const HomePage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="dark">
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Home</IonTitle>
+          <IonTitle>صفحه اصلی</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

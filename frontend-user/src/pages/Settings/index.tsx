@@ -14,14 +14,14 @@ const SettingsPage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="dark">
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
           <IonButtons slot="end">
             <IonBackButton defaultHref="/home" />
           </IonButtons>
-          <IonTitle>Settings</IonTitle>
+          <IonTitle>تنظیمات</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -46,8 +46,8 @@ const SettingsItems = () => {
   return (
     <IonList>
       <IonItem>
-        <IonLabel position="floating">Language</IonLabel>
-        <IonSelect onIonChange={onLangChange}>
+        <IonLabel position="floating">زبان</IonLabel>
+        <IonSelect onIonChange={onLangChange} okText="انتخاب" cancelText="انصراف">
           <IonSelectOption {...langProps('en')}>English</IonSelectOption>
           <IonSelectOption {...langProps('fa')}>فارسی</IonSelectOption>
         </IonSelect>

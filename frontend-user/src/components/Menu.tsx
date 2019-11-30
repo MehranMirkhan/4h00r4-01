@@ -23,11 +23,11 @@ const Menu: React.FunctionComponent<MenuProps> = ({ appPages }) => {
   const settings = useSelector((state: any) => state.settings);
   return (
     <IonMenu contentId="main" type="overlay" side={settings.lang === 'fa' ? "end" : "start"}>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Menu</IonTitle>
+      {/* <IonHeader>
+        <IonToolbar color="dark">
+          <IonTitle>منو</IonTitle>
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
       <IonContent>
         <IonList>
           {appPages.map((appPage, index) => {
