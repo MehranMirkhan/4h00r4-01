@@ -14,17 +14,22 @@ function UserEdit(props) {
     title="کاربر"
     entityName="users"
     NewFields={formProps => <>
-      <Field component={InputField} name="name" label={User.name.label} />
+      <Field component={InputField} name="name" label={User.name.label}
+        required validate={CHECKS.REQUIRED} />
       <Field component={InputField} name="phone" label={User.phone.label} />
       <Field component={InputField} name="email" label={User.email.label} />
-      <Field component={InputField} name="password" label={User.password.label} type="password" />
-      <Field component={InputField} name="passwordConfirm" label={User.passwordConfirm.label} type="password" />
+      <Field component={InputField} name="password" label={User.password.label} type="password"
+        required validate={CHECKS.REQUIRED} />
+      <Field component={InputField} name="passwordConfirm" label={User.passwordConfirm.label} type="password"
+        required validate={CHECKS.REQUIRED} />
     </>}
     EditFields={formProps => <>
-      <Field component={InputField} name="name" label={User.name.label} />
+      <Field component={InputField} name="name" label={User.name.label} 
+        required validate={CHECKS.REQUIRED}/>
       <Field component={InputField} name="phone" label={User.phone.label} />
       <Field component={InputField} name="email" label={User.email.label} />
-      <Field component={InputField} name="role" label={User.email.label} />
+      <Field component={InputField} name="role" label={User.email.label}
+        required validate={CHECKS.REQUIRED} />
       <Field component={SelectField} name="is_active" label={User.is_active.label}
         options={booleanOptions} />
     </>}

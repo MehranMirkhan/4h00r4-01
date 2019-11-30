@@ -15,14 +15,18 @@ function SolutionEdit(props) {
     entityName="solutions"
     NewFields={formProps => <>
       <Field component={EntityField} entityName="questions" formName="solutions/new"
+        required validate={CHECKS.REQUIRED}
         name="question_id" label={Solution.question_id.label} />
-      <Field component={InputField} name="text" label={Solution.text.label} />
+      <Field component={InputField} name="text" label={Solution.text.label}
+        required validate={CHECKS.REQUIRED} />
     </>}
     EditFields={formProps => <>
       <Field component={InputField} name="id" label={Solution.id.label} disabled />
       <Field component={EntityField} entityName="questions" formName="solutions/edit"
+        required validate={CHECKS.REQUIRED}
         name="question_id" label={Solution.question_id.label} />
-      <Field component={InputField} name="text" label={Solution.text.label} />
+      <Field component={InputField} name="text" label={Solution.text.label}
+        required validate={CHECKS.REQUIRED} />
     </>}
   />;
 }
