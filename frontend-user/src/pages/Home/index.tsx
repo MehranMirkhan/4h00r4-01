@@ -7,17 +7,12 @@ import {
   IonTitle, IonToolbar, IonPage
 } from '@ionic/react';
 import { book, build, colorFill, grid } from 'ionicons/icons';
-import React, { useState } from 'react';
+import React from 'react';
 
 import './Home.css';
-import { useSelector } from 'react-redux';
-import Storage from '../../Storage';
 
 
 const HomePage: React.FC = () => {
-  const settings = useSelector((state: any) => state.settings);
-  const [lang, setLang] = useState(null);
-  Storage.get("lang").then((v: any) => setLang(v));
   return (
     <IonPage>
       <IonHeader>
@@ -32,9 +27,8 @@ const HomePage: React.FC = () => {
         <IonCard className="welcome-card">
           <img src="/assets/shapes.svg" alt="" />
           <IonCardHeader>
-            <IonCardSubtitle>زبان انتخاب شده</IonCardSubtitle>
-            <IonCardTitle>Redux: {settings.lang}</IonCardTitle>
-            <IonCardTitle>Storage: {lang}</IonCardTitle>
+            <IonCardSubtitle>Get Started</IonCardSubtitle>
+            <IonCardTitle>Welcome to Ionic</IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
             <p>
