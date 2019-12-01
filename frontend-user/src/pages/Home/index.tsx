@@ -1,25 +1,16 @@
 import {
-  IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenuButton,
-  IonPage,
-  IonTitle,
-  IonToolbar
-  } from '@ionic/react';
+  IonButtons, IonCard, IonCardContent,
+  IonCardHeader, IonCardSubtitle, IonCardTitle,
+  IonContent, IonHeader, IonIcon,
+  IonItem, IonLabel, IonList,
+  IonListHeader, IonMenuButton,
+  IonTitle, IonToolbar, IonPage
+} from '@ionic/react';
 import { book, build, colorFill, grid } from 'ionicons/icons';
 import React from 'react';
+
 import './Home.css';
+
 
 const HomePage: React.FC = () => {
   return (
@@ -34,7 +25,7 @@ const HomePage: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonCard className="welcome-card">
-          <img src="/assets/shapes.svg" alt=""/>
+          <img src="/assets/shapes.svg" alt="" />
           <IonCardHeader>
             <IonCardSubtitle>Get Started</IonCardSubtitle>
             <IonCardTitle>Welcome to Ionic</IonCardTitle>

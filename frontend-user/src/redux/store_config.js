@@ -1,7 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import Axios from 'axios';
 
 import reducer from './reducer';
@@ -10,14 +8,6 @@ import reducer from './reducer';
 import config from '../app.config.json';
 
 
-const persistConfig = {
-  key: config.persist_key,
-  storage,
-  whitelist: ['settings'],
-};
-
-const persistedReducer = persistReducer(persistConfig, reducer);
-
 export const API = Axios.create({
   baseURL: config.server_url,
   timeout: config.request_timeout,
@@ -25,11 +15,10 @@ export const API = Axios.create({
 });
 
 const store = createStore(
-  persistedReducer,
+  reducer,
   applyMiddleware(thunk.withExtraArgument(API)));
-const persistor = persistStore(store);
 
-export { store, persistor };
+export { store };
 
 // API.interceptors.request.use(
 //   config => {

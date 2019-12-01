@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { Provider, useSelector } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
+import { Provider, useSelector, useDispatch } from 'react-redux';
+// import { PersistGate } from 'redux-persist/integration/react';
 
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -33,7 +33,9 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-import { store, persistor } from './redux/store_config';
+import { store } from './redux/store_config';
+import { setLang } from './pages/Settings/Settings.reducer';
+import Storage from './Storage';
 
 
 const appPages: AppPage[] = [
@@ -58,21 +60,19 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <LangHandler>
-            <IonReactRouter>
-              <IonSplitPane contentId="main">
-                <Menu appPages={appPages} />
-                <IonRouterOutlet id="main">
-                  <Route exact path="/home" component={Home} />
-                  <Route path="/auth" component={Auth} />
-                  <Route exact path="/settings" component={Settings} />
-                  <Route path="/" render={() => <Redirect to="/home" exact />} />
-                </IonRouterOutlet>
-              </IonSplitPane>
-            </IonReactRouter>
-          </LangHandler>
-        </PersistGate>
+        <LangHandler>
+          <IonReactRouter>
+            <IonSplitPane contentId="main">
+              <Menu appPages={appPages} />
+              <IonRouterOutlet id="main">
+                <Route exact path="/home" component={Home} />
+                <Route path="/auth" component={Auth} />
+                <Route exact path="/settings" component={Settings} />
+                <Route path="/" render={() => <Redirect to="/home" exact />} />
+              </IonRouterOutlet>
+            </IonSplitPane>
+          </IonReactRouter>
+        </LangHandler>
       </Provider>
     </IonApp>
   );
@@ -80,6 +80,11 @@ const App: React.FC = () => {
 
 const LangHandler = ({ children }: any) => {
   const settings = useSelector((state: any) => state.settings);
+  const dispatch = useDispatch();
+  Storage.get("lang").then((v: any) => {
+    if (v !== settings.lang)
+      dispatch(setLang(v));
+  });
   return <>
     {settings.lang === 'fa' &&
       <link rel="stylesheet" type="text/css" href="rtl.css" />}

@@ -1,7 +1,11 @@
+
+import Storage from '../../Storage';
+
 export enum SettingsActions {
   SET_LANG = "settings/SET_LANG",
   RESET = "settings/RESET",
 };
+
 
 const initialState = {
   lang: "fa",
@@ -10,6 +14,7 @@ const initialState = {
 export default (state = initialState, action: any) => {
   switch (action.type) {
     case SettingsActions.SET_LANG:
+      Storage.set("lang", action.payload);
       return {
         ...state,
         lang: action.payload,
