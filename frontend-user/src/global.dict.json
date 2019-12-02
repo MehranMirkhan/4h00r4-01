@@ -1,0 +1,21 @@
+{
+    "pages": {
+        "home": {
+            "title": ["Home", "صفحه اصلی"]
+        },
+        "settings": {
+            "title": ["Settings", "تنظیمات"],
+            "lang": ["Language", "زبان"]
+        }
+    },
+    "menu": {
+        "home": ["Home", "صفحه اصلی"],
+        "auth": ["Login / Register", "ورود / ثبت نام"],
+        "settings": ["Settings", "تنظیمات"]
+    },
+    "yes": ["Yes", "بله"],
+    "no": ["No", "خیر"],
+    "choose": ["Choose", "انتخاب"],
+    "ok": ["OK", "قبول"],
+    "cancel": ["Cancel", "انصراف"]
+}

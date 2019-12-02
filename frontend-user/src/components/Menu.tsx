@@ -7,6 +7,7 @@ import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { AppPage } from '../declarations';
 import { useSelector } from 'react-redux';
+import { Translate } from 'react-localize-redux';
 
 interface MenuProps extends RouteComponentProps {
   appPages: AppPage[];
@@ -28,7 +29,7 @@ const Menu: React.FunctionComponent<MenuProps> = ({ appPages }) => {
               <IonMenuToggle key={index} autoHide={false}>
                 <IonItem routerLink={appPage.url} routerDirection="none">
                   <IonIcon slot="start" icon={appPage.icon} />
-                  <IonLabel>{appPage.title}</IonLabel>
+                  <IonLabel><Translate id={appPage.title}/></IonLabel>
                 </IonItem>
               </IonMenuToggle>
             );

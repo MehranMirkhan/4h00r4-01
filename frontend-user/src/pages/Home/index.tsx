@@ -10,6 +10,7 @@ import { book, build, colorFill, grid } from 'ionicons/icons';
 import React from 'react';
 
 import './Home.css';
+import { Translate } from 'react-localize-redux';
 
 
 const HomePage: React.FC = () => {
@@ -20,7 +21,7 @@ const HomePage: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>صفحه اصلی</IonTitle>
+          <IonTitle><Translate id="pages.home.title"/></IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

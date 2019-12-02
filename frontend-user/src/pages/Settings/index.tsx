@@ -6,8 +6,11 @@ import {
   IonItem, IonLabel, IonSelect, IonSelectOption
 } from '@ionic/react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setLang } from './Settings.reducer';
 import { SelectChangeEventDetail } from '@ionic/core';
+import { Translate } from 'react-localize-redux';
+
+import { setLang } from './Settings.reducer';
+import config from '../../app.config.json';
 
 
 const SettingsPage: React.FC = () => {
@@ -21,7 +24,7 @@ const SettingsPage: React.FC = () => {
           <IonButtons slot="end">
             <IonBackButton defaultHref="/home" />
           </IonButtons>
-          <IonTitle>تنظیمات</IonTitle>
+          <IonTitle><Translate id="pages.settings.title" /></IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -46,10 +49,9 @@ const SettingsItems = () => {
   return (
     <IonList>
       <IonItem>
-        <IonLabel position="floating">زبان</IonLabel>
-        <IonSelect onIonChange={onLangChange} okText="انتخاب" cancelText="انصراف">
-          <IonSelectOption {...langProps('en')}>English</IonSelectOption>
-          <IonSelectOption {...langProps('fa')}>فارسی</IonSelectOption>
+        <IonLabel position="floating"><Translate id="pages.settings.lang" /></IonLabel>
+        <IonSelect onIonChange={onLangChange}>
+          {config.languages.map(l => <IonSelectOption key={l.code} {...langProps(l.code)}>{l.name}</IonSelectOption>)}
         </IonSelect>
       </IonItem>
     </IonList>

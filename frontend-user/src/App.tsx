@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 // import { PersistGate } from 'redux-persist/integration/react';
 
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { LocalizeProvider, withLocalize } from "react-localize-redux";
 import { AppPage } from './declarations';
 
 import Menu from './components/Menu';
@@ -17,6 +18,8 @@ import { home, settings, logIn } from 'ionicons/icons';
 import { store } from './redux/store_config';
 import { setLang } from './pages/Settings/Settings.reducer';
 import Storage from './Storage';
+import config from './app.config.json';
+import globalDictionary from './global.dict.json';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -43,58 +46,73 @@ import './theme/font/fonts.css';
 
 const appPages: AppPage[] = [
   {
-    title: 'صفحه اصلی',
+    title: 'menu.home',
     url: '/home',
     icon: home
   },
   {
-    title: 'ورود / ثبت‌نام',
+    title: 'menu.auth',
     url: '/auth',
     icon: logIn
   },
   {
-    title: 'تنظیمات',
+    title: 'menu.settings',
     url: '/settings',
     icon: settings,
   },
 ];
 
+const localizationConfig: any = {
+  languages: config.languages,
+  translation: globalDictionary,
+  options: {
+    defaultLanguage: config.defaultLanguage,
+    renderToStaticMarkup: false,
+  },
+};
+
 const App: React.FC = () => {
   return (
     <IonApp>
       <Provider store={store}>
-        <LangHandler>
-          <IonReactRouter>
-            <IonSplitPane contentId="main">
-              <Menu appPages={appPages} />
-              <IonRouterOutlet id="main">
-                <Route exact path="/home" component={Home} />
-                <Route path="/auth" component={Auth} />
-                <Route exact path="/settings" component={Settings} />
-                <Route path="/" render={() => <Redirect to="/home" exact />} />
-              </IonRouterOutlet>
-            </IonSplitPane>
-          </IonReactRouter>
-        </LangHandler>
+        <LocalizeProvider initialize={localizationConfig}>
+          <LangHandler>
+            <IonReactRouter>
+              <IonSplitPane contentId="main">
+                <Menu appPages={appPages} />
+                <IonRouterOutlet id="main">
+                  <Route exact path="/home" component={Home} />
+                  <Route path="/auth" component={Auth} />
+                  <Route exact path="/settings" component={Settings} />
+                  <Route path="/" render={() => <Redirect to="/home" exact />} />
+                </IonRouterOutlet>
+              </IonSplitPane>
+            </IonReactRouter>
+          </LangHandler>
+        </LocalizeProvider>
       </Provider>
     </IonApp>
   );
 };
 
-const LangHandler = ({ children }: any) => {
+const LangHandler = withLocalize(({ children, activeLanguage, setActiveLanguage }: any) => {
   const settings = useSelector((state: any) => state.settings);
   const dispatch = useDispatch();
-  Storage.get("lang").then((v: any) => {
-    if (!v)
-      dispatch(setLang("fa"));
-    else if (v !== settings.lang)
-      dispatch(setLang(v));
-  });
+  useEffect(() => {
+    Storage.get("lang").then((v: any) => {
+      if (!v)
+        dispatch(setLang("fa"));
+      else if (v !== settings.lang)
+        dispatch(setLang(v));
+    });
+    if (activeLanguage.code !== settings.lang)
+      setActiveLanguage(settings.lang);
+  }, [dispatch, settings.lang, activeLanguage.code, setActiveLanguage]);
   return <>
     {settings.lang === 'fa' &&
       <link rel="stylesheet" type="text/css" href="rtl.css" />}
     {children}
   </>;
-};
+});
 
 export default App;

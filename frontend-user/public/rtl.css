@@ -10,3 +10,7 @@
   left: unset;
   right: 26px;
 }
+
+.label-floating.sc-ion-label-md-h {
+  transform-origin: right top;
+}
