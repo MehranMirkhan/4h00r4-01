@@ -82,7 +82,9 @@ const LangHandler = ({ children }: any) => {
   const settings = useSelector((state: any) => state.settings);
   const dispatch = useDispatch();
   Storage.get("lang").then((v: any) => {
-    if (v !== settings.lang)
+    if (!v)
+      dispatch(setLang("fa"));
+    else if (v !== settings.lang)
       dispatch(setLang(v));
   });
   return <>
