@@ -2,6 +2,10 @@
   direction: rtl;
 }
 
+* {
+  font-family: 'Vazir' !important;
+}
+
 .alert-radio-icon.sc-ion-alert-md {
   left: unset;
   right: 26px;

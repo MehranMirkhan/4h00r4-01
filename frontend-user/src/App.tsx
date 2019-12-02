@@ -14,6 +14,10 @@ import Auth from './pages/Auth';
 import Settings from './pages/Settings';
 import { home, settings, logIn } from 'ionicons/icons';
 
+import { store } from './redux/store_config';
+import { setLang } from './pages/Settings/Settings.reducer';
+import Storage from './Storage';
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -33,9 +37,8 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-import { store } from './redux/store_config';
-import { setLang } from './pages/Settings/Settings.reducer';
-import Storage from './Storage';
+/* Fonts */
+import './theme/font/fonts.css';
 
 
 const appPages: AppPage[] = [
