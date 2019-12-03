@@ -11,6 +11,7 @@ import { Translate } from 'react-localize-redux';
 
 import { setLang } from './Settings.reducer';
 import config from '../../app.config.json';
+import { translate } from '../../utils';
 
 
 const SettingsPage: React.FC = () => {
@@ -50,7 +51,9 @@ const SettingsItems = () => {
     <IonList>
       <IonItem>
         <IonLabel position="floating"><Translate id="pages.settings.lang" /></IonLabel>
-        <IonSelect onIonChange={onLangChange}>
+        <IonSelect onIonChange={onLangChange}
+          okText={translate(settings.lang, "ok")}
+          cancelText={translate(settings.lang, "cancel")}>
           {config.languages.map(l => <IonSelectOption key={l.code} {...langProps(l.code)}>{l.name}</IonSelectOption>)}
         </IonSelect>
       </IonItem>
