@@ -1,15 +1,19 @@
-import React from 'react';
-import { Route } from 'react-router';
+import React, { useState } from 'react';
 import {
   IonPage, IonHeader, IonToolbar,
   IonButtons, IonMenuButton, IonTitle,
-  IonContent, IonBackButton, IonTabs,
-  IonTabBar, IonTabButton, IonIcon,
-  IonLabel, IonRouterOutlet
+  IonContent, IonBackButton, IonCard,
+  IonLabel, IonSegment, IonSegmentButton,
+  IonCardContent,
+  IonInput,
+  IonItem,
+  IonButton
 } from '@ionic/react';
+import { Translate } from 'react-localize-redux';
 
 
 const AuthPage: React.FC = () => {
+  const [tab, setTab] = useState("login");
   return (
     <IonPage>
       <IonHeader>
@@ -20,40 +24,45 @@ const AuthPage: React.FC = () => {
           <IonButtons slot="end">
             <IonBackButton defaultHref="/home" />
           </IonButtons>
-          <IonTitle>ورود / ثبت نام</IonTitle>
+          <IonTitle><Translate id="pages.auth.title" /></IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent>
-        <IonTabs>
-          <IonRouterOutlet>
-            <Route path='/auth/:tab(login)' component={Login} exact />
-            <Route path='/auth/:tab(signup)' component={Signup} exact />
-            {/* <Route path="/" render={() => <Redirect to="/auth/login" />} /> */}
-            {/* <Redirect from='/auth' to='/auth/login' /> */}
-          </IonRouterOutlet>
-
-          <IonTabBar slot="top">
-            <IonTabButton tab="login" href="/auth/login">
-              <IonIcon name="login" />
-              <IonLabel>login</IonLabel>
-            </IonTabButton>
-
-            <IonTabButton tab="signup" href="/auth/signup">
-              <IonIcon name="signup" />
-              <IonLabel>signup</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
+        <IonSegment onIonChange={e => setTab(e.detail.value as string)}>
+          <IonSegmentButton value="login" checked={tab === "login"}>
+            <IonLabel><Translate id="pages.auth.login" /></IonLabel>
+          </IonSegmentButton>
+          <IonSegmentButton value="signup" checked={tab === "signup"}>
+            <IonLabel><Translate id="pages.auth.signup" /></IonLabel>
+          </IonSegmentButton>
+        </IonSegment>
+        {tab === "login" ? <Login /> : <Signup />}
       </IonContent>
     </IonPage>
   );
 };
 
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <>
-      <h1>LOG IN</h1>
+      <div style={{ marginTop: '30%' }}>
+        <IonItem>
+          <IonLabel position="floating"><Translate id="pages.auth.username" /></IonLabel>
+          <IonInput type="number" autofocus value={username}
+            onIonChange={e => setUsername(e.detail.value as string)} />
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating"><Translate id="pages.auth.password" /></IonLabel>
+          <IonInput type="password" value={password}
+            onIonChange={e => setPassword(e.detail.value as string)} />
+        </IonItem>
+        <IonButton type="submit" color="primary" expand="block" style={{ marginTop: 16 }}>
+          <Translate id="pages.auth.login" />
+        </IonButton>
+      </div>
     </>
   );
 };
