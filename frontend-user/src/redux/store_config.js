@@ -3,9 +3,11 @@ import thunk from 'redux-thunk';
 import Axios from 'axios';
 
 import reducer from './reducer';
-// import { isAuthenticated, getAccessToken } from 'src/modules/auth/auth.reducer';
+import { isAuthenticated, getAccessToken } from '../pages/Auth/Auth.reducer';
 
 import config from '../app.config.json';
+import { initialLoad as initializeAuth } from '../pages/Auth/Auth.reducer';
+import { initialLoad as initializeSettings } from '../pages/Settings/Settings.reducer';
 
 
 export const API = Axios.create({
@@ -20,14 +22,29 @@ const store = createStore(
 
 export { store };
 
-// API.interceptors.request.use(
-//   config => {
-//     if (!config.headers.Authorization) {
-//       const state = store.getState();
-//       if (isAuthenticated(state))
-//         config.headers.Authorization = `Bearer ${getAccessToken(state)}`;
-//     }
+API.interceptors.request.use(
+  request => {
+    if (!request.headers.Authorization) {
+      const state = store.getState();
+      if (isAuthenticated(state))
+        request.headers.Authorization = `Bearer ${getAccessToken(state)}`;
+    }
 
-//     return config;
-//   },
-// );
+    return request;
+  },
+);
+
+if (config.log) {
+  API.interceptors.request.use(request => {
+    console.log('Request:', request);
+    return request;
+  });
+  API.interceptors.response.use(response => {
+    console.log('Response:', response);
+    return response;
+  });
+}
+
+// Initializing states
+store.dispatch(initializeAuth());
+store.dispatch(initializeSettings());

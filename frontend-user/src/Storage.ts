@@ -11,6 +11,13 @@ export default {
     const ret = await Storage.get({ key });
     return ret.value;
   },
+  setObject: async (key: string, value: object) => {
+    await Storage.set({ key, value: JSON.stringify(value) });
+  },
+  getObject: async (key: string) => {
+    const ret: any = await Storage.get({ key });
+    return JSON.parse(ret.value);
+  },
   remove: async (key: string) => {
     await Storage.remove({ key });
   },

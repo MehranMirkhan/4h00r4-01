@@ -10,6 +10,7 @@
         "auth": {
           "title": ["Login / Register", "ورود / ثبت نام"],
           "login": ["Login", "ورود"],
+          "logout": ["Logout", "خروج"],
           "signup": ["Register", "ثبت نام"],
           "username": ["Phone", "نام کاربری"],
           "password": ["Password", "رمز عبور"],

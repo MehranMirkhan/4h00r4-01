@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { Provider, useSelector, useDispatch } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 // import { PersistGate } from 'redux-persist/integration/react';
 
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
@@ -16,8 +16,6 @@ import Settings from './pages/Settings';
 import { home, settings, logIn } from 'ionicons/icons';
 
 import { store } from './redux/store_config';
-import { setLang } from './pages/Settings/Settings.reducer';
-import Storage from './Storage';
 import config from './app.config.json';
 import globalDictionary from './global.dict.json';
 
@@ -97,17 +95,10 @@ const App: React.FC = () => {
 
 const LangHandler = withLocalize(({ children, activeLanguage, setActiveLanguage }: any) => {
   const settings = useSelector((state: any) => state.settings);
-  const dispatch = useDispatch();
   useEffect(() => {
-    Storage.get("lang").then((v: any) => {
-      if (!v)
-        dispatch(setLang("fa"));
-      else if (v !== settings.lang)
-        dispatch(setLang(v));
-    });
     if (activeLanguage.code !== settings.lang)
       setActiveLanguage(settings.lang);
-  }, [dispatch, settings.lang, activeLanguage.code, setActiveLanguage]);
+  }, [settings.lang, activeLanguage.code, setActiveLanguage]);
   return <>
     {settings.lang === 'fa' &&
       <link rel="stylesheet" type="text/css" href="rtl.css" />}

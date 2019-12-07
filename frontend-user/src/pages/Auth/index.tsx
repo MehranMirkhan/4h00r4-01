@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   IonPage, IonHeader, IonToolbar,
   IonButtons, IonMenuButton, IonTitle,
-  IonContent, IonBackButton, IonCard,
+  IonContent, IonBackButton, IonInput,
   IonLabel, IonSegment, IonSegmentButton,
-  IonCardContent,
-  IonInput,
-  IonItem,
-  IonButton
+  IonItem, IonButton,
 } from '@ionic/react';
 import { Translate } from 'react-localize-redux';
+import { login, getMe } from './Auth.reducer';
 
 
 const AuthPage: React.FC = () => {
+  const me = useSelector(getMe);
   const [tab, setTab] = useState("login");
+
+  const hasMe = !!me && Object.keys(me).length > 0;
+  if (hasMe) return <Redirect to="/home" exact />;
+
   return (
     <IonPage>
       <IonHeader>
@@ -46,6 +51,7 @@ const AuthPage: React.FC = () => {
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   return (
     <>
       <div style={{ marginTop: '30%' }}>
@@ -59,7 +65,8 @@ const Login = () => {
           <IonInput type="password" value={password}
             onIonChange={e => setPassword(e.detail.value as string)} />
         </IonItem>
-        <IonButton type="submit" color="primary" expand="block" style={{ marginTop: 16 }}>
+        <IonButton type="submit" color="primary" expand="block" style={{ marginTop: 16 }}
+          onClick={() => dispatch(login(username, password))}>
           <Translate id="pages.auth.login" />
         </IonButton>
       </div>

@@ -12,26 +12,42 @@ const initialState = {
 };
 
 export default (state = initialState, action: any) => {
+  let newState;
   switch (action.type) {
     case SettingsActions.SET_LANG:
-      Storage.set("lang", action.payload);
-      return {
+      newState = {
         ...state,
         lang: action.payload,
       };
+      Storage.setObject("settings", newState);
+      break;
     case SettingsActions.RESET:
-      return {
-        ...initialState
+      newState = {
+        ...initialState,
+        ...(action.payload ? action.payload : {}),
       };
+      Storage.setObject("settings", newState);
+      break;
     default:
-      return state;
+      newState = state;
   }
+  return newState;
 };
 
 // Actions
 
-export const reset = () => ({
+export const initialLoad = () => (dispatch: any) => {
+  return Storage.getObject("settings").then((v: any) => {
+    if (!!v) {
+      console.log("Settings loaded:", v);
+      dispatch(reset(v));
+    }
+  });
+};
+
+export const reset = (state?: any) => ({
   type: SettingsActions.RESET,
+  payload: state ? state : undefined,
 });
 
 export const setLang = (lang: String) => ({
