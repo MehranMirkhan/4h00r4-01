@@ -70,7 +70,7 @@ export const login = (username: string, password: string) =>
       });
   };
 
-export const signup = (name: string, phone: string, email: string, password: string) =>
+export const register = (name: string, phone: string, email: string, password: string) =>
   (dispatch: any, _: any, API: any) => {
     return API.post('/register', { name, phone, email, password })
       .then((resp: any) => {

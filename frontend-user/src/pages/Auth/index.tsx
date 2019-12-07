@@ -9,7 +9,7 @@ import {
   IonItem, IonButton,
 } from '@ionic/react';
 import { Translate } from 'react-localize-redux';
-import { login, getMe } from './Auth.reducer';
+import { login, getMe, register } from './Auth.reducer';
 
 
 const AuthPage: React.FC = () => {
@@ -42,7 +42,7 @@ const AuthPage: React.FC = () => {
             <IonLabel><Translate id="pages.auth.signup" /></IonLabel>
           </IonSegmentButton>
         </IonSegment>
-        {tab === "login" ? <Login /> : <Signup />}
+        {tab === "login" ? <Login /> : <Register />}
       </IonContent>
     </IonPage>
   );
@@ -54,15 +54,16 @@ const Login = () => {
   const dispatch = useDispatch();
   return (
     <>
-      <div style={{ marginTop: '30%' }}>
+      {/* <div style={{ marginTop: '30%' }}> */}
+      <div>
         <IonItem>
           <IonLabel position="floating"><Translate id="pages.auth.username" /></IonLabel>
-          <IonInput type="number" autofocus value={username}
+          <IonInput type="number" autofocus value={username} required
             onIonChange={e => setUsername(e.detail.value as string)} />
         </IonItem>
         <IonItem>
           <IonLabel position="floating"><Translate id="pages.auth.password" /></IonLabel>
-          <IonInput type="password" value={password}
+          <IonInput type="password" value={password} required
             onIonChange={e => setPassword(e.detail.value as string)} />
         </IonItem>
         <IonButton type="submit" color="primary" expand="block" style={{ marginTop: 16 }}
@@ -74,10 +75,47 @@ const Login = () => {
   );
 };
 
-const Signup = () => {
+const Register = () => {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const dispatch = useDispatch();
   return (
     <>
-      <h1>SIGN UP</h1>
+      {/* <div style={{ marginTop: '30%' }}> */}
+      <div>
+        <IonItem>
+          <IonLabel position="floating"><Translate id="pages.auth.name" /></IonLabel>
+          <IonInput type="text" autofocus value={name}
+            onIonChange={e => setName(e.detail.value as string)} />
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating"><Translate id="pages.auth.phone" /></IonLabel>
+          <IonInput type="number" autofocus value={phone}
+            onIonChange={e => setPhone(e.detail.value as string)} />
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating"><Translate id="pages.auth.email" /></IonLabel>
+          <IonInput type="text" autofocus value={email}
+            onIonChange={e => setEmail(e.detail.value as string)} />
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating"><Translate id="pages.auth.password" /></IonLabel>
+          <IonInput type="password" value={password}
+            onIonChange={e => setPassword(e.detail.value as string)} />
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating"><Translate id="pages.auth.passwordConfirm" /></IonLabel>
+          <IonInput type="password" value={passwordConfirm}
+            onIonChange={e => setPasswordConfirm(e.detail.value as string)} />
+        </IonItem>
+        <IonButton type="submit" color="primary" expand="block" style={{ marginTop: 16 }}
+          onClick={() => dispatch(register(name, phone, email, password))}>
+          <Translate id="pages.auth.signup" />
+        </IonButton>
+      </div>
     </>
   );
 };
