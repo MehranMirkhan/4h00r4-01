@@ -7,6 +7,7 @@ import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { LocalizeProvider, withLocalize } from "react-localize-redux";
 import { AppPage } from './declarations';
+import AlertController from './components/AlertController';
 
 import Menu from './components/Menu';
 import Home from './pages/Home';
@@ -75,17 +76,19 @@ const App: React.FC = () => {
       <Provider store={store}>
         <LocalizeProvider initialize={localizationConfig}>
           <LangHandler>
-            <IonReactRouter>
-              <IonSplitPane contentId="main">
-                <Menu appPages={appPages} />
-                <IonRouterOutlet id="main">
-                  <Route exact path="/home" component={Home} />
-                  <Route path="/auth" component={Auth} />
-                  <Route exact path="/settings" component={Settings} />
-                  <Route path="/" render={() => <Redirect to="/home" exact />} />
-                </IonRouterOutlet>
-              </IonSplitPane>
-            </IonReactRouter>
+            <AlertController>
+              <IonReactRouter>
+                <IonSplitPane contentId="main">
+                  <Menu appPages={appPages} />
+                  <IonRouterOutlet id="main">
+                    <Route exact path="/home" component={Home} />
+                    <Route path="/auth" component={Auth} />
+                    <Route exact path="/settings" component={Settings} />
+                    <Route path="/" render={() => <Redirect to="/home" exact />} />
+                  </IonRouterOutlet>
+                </IonSplitPane>
+              </IonReactRouter>
+            </AlertController>
           </LangHandler>
         </LocalizeProvider>
       </Provider>

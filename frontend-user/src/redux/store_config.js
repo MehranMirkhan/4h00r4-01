@@ -32,7 +32,21 @@ API.interceptors.request.use(
 
     return request;
   },
+  // error => {
+  //   alert("Network error");
+  // }
 );
+
+// API.interceptors.response.use(
+//   res => res,
+//   error => {
+//     alert("Intercept error");
+//     console.log(error);
+//     if (!!error.response && !!error.response.data && !!error.response.data.message) {
+//       alert(JSON.stringify(error.response.data.message));
+//     }
+//   }
+// );
 
 if (config.log) {
   API.interceptors.request.use(request => {

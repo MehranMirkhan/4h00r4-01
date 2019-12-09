@@ -62,11 +62,13 @@ export const login = (username: string, password: string) =>
   (dispatch: any, _: any, API: any) => {
     return API.post('/login', { username, password })
       .then((resp: any) => {
-        dispatch({
-          type: AuthActions.SET_TOKEN,
-          payload: !!resp ? resp.data : undefined,
-        });
-        dispatch(fetchMe());
+        if (!!resp && resp.statusCode === 200) {
+          dispatch({
+            type: AuthActions.SET_TOKEN,
+            payload: !!resp ? resp.data : undefined,
+          });
+          dispatch(fetchMe());
+        }
       });
   };
 
@@ -85,10 +87,13 @@ export const logout = () => ({
 
 export const fetchMe = () => (dispatch: any, _: any, API: any) => {
   return API.get('/v1/me')
-    .then((resp: any) => dispatch({
-      type: AuthActions.SET_ME,
-      payload: !!resp ? resp.data : undefined,
-    }));
+    .then((resp: any) => {
+      if (!!resp && resp.statusCode === 200)
+        dispatch({
+          type: AuthActions.SET_ME,
+          payload: !!resp ? resp.data : undefined,
+        });
+    });
 };
 
 // --------- STATES ---------
