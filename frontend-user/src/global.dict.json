@@ -29,6 +29,17 @@
     "title": ["Error", "خطا"],
     "networkError": ["Network Error", "خطا در برقراری ارتباط با سرور"]
   },
+  "server": {
+    "auth": {
+      "wrongCredentials": ["Wrong username or password", "نام کاربری یا رمز عبور اشتباه است"],
+      "badRequest": ["Wrong username or password", "نام کاربری یا رمز عبور اشتباه است"],
+      "emptyUsername": ["Please enter your phone number", "لطفاً شماره همراه خود را وارد نمایید"],
+      "wrongOldPassword": ["Old password is wrong", "رمز عبور قدیمی اشتباه است"],
+      "passwordChanged": ["Password successfully changed", "رمز عبور با موفقیت تغییر کرد"]
+    },
+    "unknown": ["Uknown Error", "خطای نامشخص"],
+    "deleted": ["Record deleted", "رکورد حذف شد"]
+  },
   "yes": ["Yes", "بله"],
   "no": ["No", "خیر"],
   "choose": ["Choose", "انتخاب"],

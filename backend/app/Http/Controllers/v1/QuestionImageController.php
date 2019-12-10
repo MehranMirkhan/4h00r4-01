@@ -42,9 +42,9 @@ class QuestionImageController extends Controller {
         try {
             $questionImage->delete();
             Storage::delete('public/' . $questionImage->file);
-            return response()->json(['message' => 'تصویر حذف شد'], 200);
+            return response()->json(['message' => 'deleted'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'خطای نامشخص'], $e->getCode());
+            return response()->json(['message' => 'unknown'], $e->getCode());
         }
     }
 }
