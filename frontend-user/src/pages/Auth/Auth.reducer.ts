@@ -62,8 +62,6 @@ export const login = (username: string, password: string) =>
   (dispatch: any, _: any, API: any) => {
     return API.post('/login', { username, password })
       .then((resp: any) => {
-        console.log("in login then");
-        console.log(resp);
         if (!!resp && resp.statusCode === 200) {
           dispatch({
             type: AuthActions.SET_TOKEN,
@@ -71,10 +69,6 @@ export const login = (username: string, password: string) =>
           });
           dispatch(fetchMe());
         }
-      })
-      .catch((resp: any) => {
-        console.log("in login catch");
-        console.log(JSON.stringify(resp));
       });
   };
 

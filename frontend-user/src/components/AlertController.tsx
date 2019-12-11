@@ -29,19 +29,17 @@ class AlertController extends React.Component<IAlertControllerProps, IAlertContr
     this.responseInterceptor = API.interceptors.response.use(
       res => res,
       error => {
-        console.log(JSON.stringify(error));
-        console.log(error.code);
         if (error.code === "ECONNABORTED") {
           this.setMessage(this.props.translate("alert.networkError"));
-          this.open();
-        } if (!!error.response && !!error.response.data && !!error.response.data.message) {
-          this.setMessage(this.props.translate("server." + error.response.data.message));
           this.open();
         } else if (error.message === "Network Error") {
           this.setMessage(this.props.translate("alert.networkError"));
           this.open();
-        } else if (error.code === 401) {
-          this.setMessage(this.props.translate("server.wrongCredentials"));
+        } else if (error.response.status === 401) {
+          this.setMessage(this.props.translate("server.auth.wrongCredentials"));
+          this.open();
+        } if (!!error.response && !!error.response.data && !!error.response.data.message) {
+          this.setMessage(this.props.translate("server." + error.response.data.message));
           this.open();
         } 
       }

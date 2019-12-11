@@ -28,10 +28,7 @@ class AuthController extends Controller {
                 'scope'         => $user->role,
             ]);
             $response = app()->handle($tokenRequest);
-            // if ($response->getName() === "Error")
-            //     return response()->json(['message' => 'auth.wrongCredentials'], 401);
             return $response;
-            // return $response->keys();
         } catch (Exception $e) {
             if ($e->getCode() === 400)
                 return response()->json(['message' => 'auth.badRequest'], $e->getCode());
