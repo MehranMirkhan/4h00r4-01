@@ -2,6 +2,10 @@
   direction: rtl;
 }
 
+ion-split-pane {
+  flex-direction: row-reverse;
+}
+
 * {
   font-family: 'Vazir' !important;
 }
