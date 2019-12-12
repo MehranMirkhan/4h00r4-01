@@ -2,3 +2,19 @@
   max-height: 35vh;
   overflow: hidden;
 }
+
+
+.slider {
+  padding-bottom: 36px;
+  background-color: #444;
+  --bullet-background-active: yellow;
+}
+
+.slider img {
+  width: 100%;
+}
+
+.main-button {
+  padding: 0 10px;
+  margin: 10px 0;
+}

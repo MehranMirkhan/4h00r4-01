@@ -1,12 +1,10 @@
 import {
-  IonButtons, IonCard, IonCardContent,
-  IonCardHeader, IonCardSubtitle, IonCardTitle,
-  IonContent, IonHeader, IonIcon,
-  IonItem, IonLabel, IonList,
-  IonListHeader, IonMenuButton,
-  IonTitle, IonToolbar, IonPage
+  IonButtons, IonGrid, IonRow, IonCol,
+  IonContent, IonHeader, IonMenuButton,
+  IonTitle, IonToolbar, IonPage, IonSlides,
+  IonSlide, IonButton, IonIcon, IonItem
 } from '@ionic/react';
-import { book, build, colorFill, grid } from 'ionicons/icons';
+import { settings, logIn, apps } from 'ionicons/icons';
 import React from 'react';
 
 import './Home.css';
@@ -21,48 +19,82 @@ const HomePage: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle><Translate id="pages.home.title"/></IonTitle>
+          <IonTitle><Translate id="pages.home.title" /></IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonCard className="welcome-card">
-          <img src="/assets/shapes.svg" alt="" />
-          <IonCardHeader>
-            <IonCardSubtitle>Get Started</IonCardSubtitle>
-            <IonCardTitle>Welcome to Ionic</IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            <p>
-              Now that your app has been created, you'll want to start building out features and
-              components. Check out some of the resources below for next steps.
-            </p>
-          </IonCardContent>
-        </IonCard>
-
-        <IonList lines="none">
-          <IonListHeader>
-            <IonLabel>Resources</IonLabel>
-          </IonListHeader>
-          <IonItem href="https://ionicframework.com/docs/" target="_blank">
-            <IonIcon slot="start" color="medium" icon={book} />
-            <IonLabel>Ionic Documentation</IonLabel>
-          </IonItem>
-          <IonItem href="https://ionicframework.com/docs/building/scaffolding" target="_blank">
-            <IonIcon slot="start" color="medium" icon={build} />
-            <IonLabel>Scaffold Out Your App</IonLabel>
-          </IonItem>
-          <IonItem href="https://ionicframework.com/docs/layout/structure" target="_blank">
-            <IonIcon slot="start" color="medium" icon={grid} />
-            <IonLabel>Change Your App Layout</IonLabel>
-          </IonItem>
-          <IonItem href="https://ionicframework.com/docs/theming/basics" target="_blank">
-            <IonIcon slot="start" color="medium" icon={colorFill} />
-            <IonLabel>Theme Your App</IonLabel>
-          </IonItem>
-        </IonList>
+        <HeroSlide />
+        <MainButtons />
+        <FooterButtons />
       </IonContent>
     </IonPage>
   );
 };
+
+const HeroSlide: React.FC = () => {
+  const options = {
+    initialSlide: 0,
+    speed: 400,
+    pager: true,
+    paginationClickable: true,
+    loop: true,
+    spaceBetween: 20,
+  };
+  return (
+    <IonSlides pager options={options} className="slider">
+      <IonSlide>
+        <img src="/assets/shapes.svg" alt="" />
+      </IonSlide>
+      <IonSlide>
+        <img src="/assets/shapes.svg" alt="" />
+      </IonSlide>
+      <IonSlide>
+        <img src="/assets/shapes.svg" alt="" />
+      </IonSlide>
+    </IonSlides>
+  );
+}
+
+const MainButtons: React.FC = () => {
+  const btns = [
+    { url: "/level", text: "pages.home.level" },
+    { url: "/daily", text: "pages.home.daily" },
+    { url: "/weekly", text: "pages.home.weekly" },
+  ];
+  return <>
+    {btns.map((btn, i) =>
+      <IonButton key={i} className="main-button"
+        expand="block" size="large"
+        routerLink={btn.url} routerDirection="forward"
+      >
+        <Translate id={btn.text} />
+      </IonButton>
+    )}
+  </>;
+}
+
+const FooterButtons: React.FC = () => {
+  const btns = [
+    { url: "/settings", icon: settings },
+    { url: "/auth", icon: logIn },
+    { url: "/settings", icon: settings },
+    { url: "/auth", icon: logIn },
+  ];
+  return (
+    <>
+      <IonGrid>
+        <IonRow style={{ textAlign: "center" }}>
+          {btns.map((btn, i) =>
+            <IonCol key={i}>
+              <IonButton routerLink={btn.url} routerDirection="forward" size="large">
+                <IonIcon icon={btn.icon} />
+              </IonButton>
+            </IonCol>
+          )}
+        </IonRow>
+      </IonGrid>
+    </>
+  );
+}
 
 export default HomePage;

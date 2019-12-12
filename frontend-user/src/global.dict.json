@@ -1,7 +1,10 @@
 {
   "pages": {
     "home": {
-      "title": ["Home", "صفحه اصلی"]
+      "title": ["Home", "صفحه اصلی"],
+      "level": ["LEVEL", "مرحله‌ای"],
+      "daily": ["DAILY", "روزانه"],
+      "weekly": ["WEEKLY", "هفتگی"]
     },
     "settings": {
       "title": ["Settings", "تنظیمات"],
@@ -27,7 +30,7 @@
   },
   "alert": {
     "title": ["Error", "خطا"],
-    "networkError": ["Network Error", "خطا در برقراری ارتباط با سرور"]
+    "networkError": ["Network Error<br/>Please try again", "خطا در برقراری ارتباط با سرور<br/>لطفا دوباره تلاش کنید"]
   },
   "server": {
     "auth": {
