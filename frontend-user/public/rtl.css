@@ -6,6 +6,10 @@ ion-split-pane {
   flex-direction: row-reverse;
 }
 
+ion-back-button {
+  transform: rotate(180deg);
+}
+
 * {
   font-family: 'Vazir' !important;
 }

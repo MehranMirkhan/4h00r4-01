@@ -21,6 +21,12 @@
       "name": ["Name", "نام"],
       "phone": ["Phone", "شماره همراه"],
       "email": ["Email", "ایمیل"]
+    },
+    "level": {
+      "title": ["Levels", "مرحله‌ای"]
+    },
+    "question": {
+      "title": ["Question", "معما"]
     }
   },
   "menu": {
@@ -47,5 +53,6 @@
   "no": ["No", "خیر"],
   "choose": ["Choose", "انتخاب"],
   "ok": ["OK", "قبول"],
-  "cancel": ["Cancel", "انصراف"]
+  "cancel": ["Cancel", "انصراف"],
+  "days": ["Days", "روز"]
 }

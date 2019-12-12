@@ -1,11 +1,11 @@
+import React from 'react';
 import {
   IonButtons, IonGrid, IonRow, IonCol,
   IonContent, IonHeader, IonMenuButton,
   IonTitle, IonToolbar, IonPage, IonSlides,
-  IonSlide, IonButton, IonIcon, IonItem
+  IonSlide, IonButton, IonIcon
 } from '@ionic/react';
-import { settings, logIn, apps } from 'ionicons/icons';
-import React from 'react';
+import { settings, logIn } from 'ionicons/icons';
 
 import './Home.css';
 import { Translate } from 'react-localize-redux';
@@ -58,8 +58,8 @@ const HeroSlide: React.FC = () => {
 const MainButtons: React.FC = () => {
   const btns = [
     { url: "/level", text: "pages.home.level" },
-    { url: "/daily", text: "pages.home.daily" },
-    { url: "/weekly", text: "pages.home.weekly" },
+    { url: "/question?type=daily", text: "pages.home.daily" },
+    { url: "/question?type=weekly", text: "pages.home.weekly" },
   ];
   return <>
     {btns.map((btn, i) =>

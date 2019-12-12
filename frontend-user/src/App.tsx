@@ -14,6 +14,8 @@ import Home from './pages/Home';
 // import List from './pages/List';
 import Auth from './pages/Auth';
 import Settings from './pages/Settings';
+import Level from './pages/Level';
+import Question from './pages/Question';
 import { home, settings, logIn } from 'ionicons/icons';
 
 import { store } from './redux/store_config';
@@ -84,6 +86,8 @@ const App: React.FC = () => {
                     <Route exact path="/home" component={Home} />
                     <Route path="/auth" component={Auth} />
                     <Route exact path="/settings" component={Settings} />
+                    <Route exact path="/level" component={Level} />
+                    <Route path="/question" component={Question} />
                     <Route path="/" render={() => <Redirect to="/home" exact />} />
                   </IonRouterOutlet>
                 </IonSplitPane>
