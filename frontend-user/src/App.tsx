@@ -15,6 +15,7 @@ import Home from './pages/Home';
 import Auth from './pages/Auth';
 import Settings from './pages/Settings';
 import Level from './pages/Level';
+import QuestionList from './pages/QuestionList';
 import Question from './pages/Question';
 import { home, settings, logIn } from 'ionicons/icons';
 
@@ -87,6 +88,7 @@ const App: React.FC = () => {
                     <Route path="/auth" component={Auth} />
                     <Route exact path="/settings" component={Settings} />
                     <Route exact path="/level" component={Level} />
+                    <Route path="/question_list" component={QuestionList} />
                     <Route path="/question" component={Question} />
                     <Route path="/" render={() => <Redirect to="/home" exact />} />
                   </IonRouterOutlet>

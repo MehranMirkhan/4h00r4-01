@@ -73,9 +73,10 @@ const QuestionTimer: React.FC<IQuestionTimer> = ({ deadline }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(deadline));
 
   useEffect(() => {
-    setTimeout(() => {
+    let v = setTimeout(() => {
       setTimeLeft(calculateTimeLeft(deadline));
     }, 1000);
+    return () => clearTimeout(v);
   });
 
   const daysLeft = moment.duration(timeLeft).days();

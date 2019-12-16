@@ -58,8 +58,8 @@ const HeroSlide: React.FC = () => {
 const MainButtons: React.FC = () => {
   const btns = [
     { url: "/level", text: "pages.home.level" },
-    { url: "/question?type=daily", text: "pages.home.daily" },
-    { url: "/question?type=weekly", text: "pages.home.weekly" },
+    { url: "/question_list?type=daily", text: "pages.home.daily" },
+    { url: "/question_list?type=weekly", text: "pages.home.weekly" },
   ];
   return <>
     {btns.map((btn, i) =>
