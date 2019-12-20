@@ -11,3 +11,14 @@ export function translate(lang: string, id: string): string {
   if (langIndex >= config.languages.length) return "Unknown";
   return _.get(globalDictionary, id)[langIndex];
 }
+
+export function getURLParams(search: string) {
+  const s: string = search.substr(1);
+  const a: string[] = s.split("&");
+  let params: { [key: string]: string } = {};
+  a.forEach(e => {
+    const x: string[] = e.split("=");
+    params[x[0]] = x[1];
+  });
+  return params;
+}

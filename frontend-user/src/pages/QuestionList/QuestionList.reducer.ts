@@ -1,5 +1,6 @@
-import { TimeType, Question } from "../../declarations";
+import { TimeType } from "../../declarations";
 import { Dispatch } from "redux";
+import { API } from "../../data";
 
 export enum QuestionListActions {
   RESET = "QuestionList/RESET",
@@ -31,12 +32,8 @@ export const reset = () => ({
 });
 
 export const fetch = (type: TimeType) => (dispatch: Dispatch) => {
-  const data: Question[] = [
-    { id: 1, text: "3 + 4 = ?" },
-    { id: 2, text: "is 3301 prime?" },
-  ];
   dispatch({
     type: QuestionListActions.SET,
-    payload: data,
+    payload: API.getQuestions(type),
   });
 }

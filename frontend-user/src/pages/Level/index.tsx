@@ -26,7 +26,7 @@ const LevelPage: React.FC = () => {
       <IonContent>
         <div className="level-container">
           {levels.map((level, i) =>
-            <IonButton size="large" className="level-item"
+            <IonButton key={i} size="large" className="level-item"
               routerLink={`/question?type=level&id=${level.id}`} routerDirection="forward"
               color={level.solved ? "success" : "primary"}
               disabled={i > 0 && !levels[i - 1].solved}>

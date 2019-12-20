@@ -1,13 +1,15 @@
-import { Question } from "../../declarations";
 import { Dispatch } from "redux";
+import { API } from "../../data";
 
 export enum QuestionActions {
   RESET = "Question/RESET",
   SET = "Question/SET",
+  SET_ANSWER = "Question/SET_ANSWER",
 }
 
 const initialState = {
   entity: undefined,
+  answerResult: undefined,
 };
 
 export default (state = initialState, action: any) => {
@@ -15,7 +17,12 @@ export default (state = initialState, action: any) => {
     case QuestionActions.SET:
       return {
         ...state,
-        data: action.payload,
+        entity: action.payload,
+      };
+    case QuestionActions.SET_ANSWER:
+      return {
+        ...state,
+        answerResult: action.payload,
       };
     case QuestionActions.RESET:
       return initialState;
@@ -25,15 +32,22 @@ export default (state = initialState, action: any) => {
 }
 
 export const entitySelector = (state: any) => state.question.entity;
+export const answerResultSelector = (state: any) => state.question.answerResult;
 
 export const reset = () => ({
   type: QuestionActions.RESET,
 });
 
 export const fetch = (id: number) => (dispatch: Dispatch) => {
-  const entity: Question = { id: 2, text: "is 3301 prime?" };
   dispatch({
     type: QuestionActions.SET,
-    payload: entity,
+    payload: API.getQuestion(id),
   });
-}
+};
+
+export const answer = (id: number, answer: string) => (dispatch: Dispatch) => {
+  dispatch({
+    type: QuestionActions.SET_ANSWER,
+    payload: API.postAnswer(id, answer),
+  });
+};

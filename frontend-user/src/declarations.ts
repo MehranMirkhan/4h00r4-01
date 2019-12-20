@@ -19,10 +19,11 @@ export interface Question {
   answer_type?: AnswerType,
   start_time?: Date,
   end_time?: Date,
-  letters?: string,
   score?: number,
   tries?: number,
   images?: string[],
+  letters?: string[],
+  choices?: string[],
 }
 
 export enum TimeType { DAILY = 0, WEEKLY = 1 }

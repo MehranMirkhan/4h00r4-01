@@ -89,7 +89,7 @@ const App: React.FC = () => {
                     <Route exact path="/settings" component={Settings} />
                     <Route exact path="/level" component={Level} />
                     <Route path="/question_list" component={QuestionList} />
-                    <Route path="/question" component={Question} />
+                    <Route path="/question/:id" component={Question} />
                     <Route path="/" render={() => <Redirect to="/home" exact />} />
                   </IonRouterOutlet>
                 </IonSplitPane>

@@ -2,17 +2,18 @@ import React, { useEffect } from 'react';
 import {
   IonButtons, IonButton, IonBackButton,
   IonContent, IonHeader, IonMenuButton,
-  IonTitle, IonToolbar, IonPage,
+  IonToolbar, IonPage,
 } from '@ionic/react';
 import { useSelector, useDispatch } from 'react-redux';
-import { dataSelector, fetch } from './QuestionList.reducer';
-import { Question, TimeType } from '../../declarations';
 
-// import { Translate } from 'react-localize-redux';
+import { dataSelector, fetch } from './QuestionList.reducer';
+
+import { Question, TimeType } from '../../declarations';
+import { getURLParams } from '../../utils';
 
 
 const QuestionListPage: React.FC = ({ location }: any) => {
-  const type: string = location.search.substr(1).split('=')[1];
+  const type = getURLParams(location.search)['type'];
   const converter: { [key: string]: TimeType } = {
     daily: TimeType.DAILY,
     weekly: TimeType.WEEKLY,
