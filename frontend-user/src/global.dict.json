@@ -26,7 +26,10 @@
       "title": ["Levels", "مرحله‌ای"]
     },
     "question": {
-      "title": ["Question", "معما"]
+      "title": ["Question", "معما"],
+      "send": ["Send", "ارسال"],
+      "correct": ["Correct", "پاسخ درست است"],
+      "wrong": ["Wrong", "پاسخ اشتباه است"]
     }
   },
   "menu": {

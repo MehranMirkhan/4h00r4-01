@@ -48,7 +48,7 @@ const QuestionList: React.FC<IQuestionList> = ({ timeType }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetch(timeType));
-  }, []);
+  }, [dispatch, timeType]);
   return (
     <div>
       {data.map((item: Question, index: number) => <QuestionItem key={index} question={item} />)}

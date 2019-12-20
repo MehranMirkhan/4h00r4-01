@@ -58,5 +58,5 @@ export const API = {
   getQuestions: (type: TimeType) => questions.filter(q => q.time_type === type),
   getQuestion: (id: number) => questions.find(q => q.id === id),
   postAnswer: (id: number, answer: string) =>
-    !!solutions.filter(s => s.question_id === id).find(s => s.text === answer),
+    !!solutions.filter(s => s.question_id === id).find(s => s.text === answer.toLowerCase()),
 };

@@ -45,7 +45,7 @@ export const fetch = (id: number) => (dispatch: Dispatch) => {
   });
 };
 
-export const answer = (id: number, answer: string) => (dispatch: Dispatch) => {
+export const postAnswer = (id: number, answer: string) => (dispatch: Dispatch) => {
   dispatch({
     type: QuestionActions.SET_ANSWER,
     payload: API.postAnswer(id, answer),

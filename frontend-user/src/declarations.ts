@@ -1,10 +1,10 @@
-export interface AppPage {
+export type AppPage = {
   url: string;
   icon: object;
   title: string;
 }
 
-export interface User {
+export type User = {
   id: number,
   name?: string,
   email?: string,
@@ -12,7 +12,7 @@ export interface User {
   level?: number,
 }
 
-export interface Question {
+export type Question = {
   id: number,
   text?: string,
   time_type?: TimeType,
@@ -29,12 +29,12 @@ export interface Question {
 export enum TimeType { DAILY = 0, WEEKLY = 1 }
 export enum AnswerType { CHOICE = 0, TEXT = 1, LETTER = 2 }
 
-export interface Solution {
+export type Solution = {
   question_id: number,
   text: string,
 }
 
-export interface Answer {
+export type Answer = {
   user_id: number,
   question_id: number,
   text: string,
