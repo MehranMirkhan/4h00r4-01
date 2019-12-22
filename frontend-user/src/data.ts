@@ -7,8 +7,8 @@ export const questions: Question[] = [
     text: "is 3301 prime?",
     time_type: TimeType.DAILY,
     answer_type: AnswerType.CHOICE,
-    start_time: new Date("2019-12-20T00:00:00Z"),
-    end_time: new Date("2019-12-21T00:00:00Z"),
+    start_time: new Date("2019-12-22T00:00:00Z"),
+    end_time: new Date("2019-12-23T00:00:00Z"),
     images: [
       "/assets/shapes.svg",
       "/assets/shapes.svg",
@@ -21,8 +21,8 @@ export const questions: Question[] = [
     text: "The president of USA",
     time_type: TimeType.DAILY,
     answer_type: AnswerType.TEXT,
-    start_time: new Date("2019-12-21T00:00:00Z"),
-    end_time: new Date("2019-12-22T00:00:00Z"),
+    start_time: new Date("2019-12-23T00:00:00Z"),
+    end_time: new Date("2019-12-24T00:00:00Z"),
     images: [
       "/assets/shapes.svg",
       "/assets/shapes.svg",
@@ -42,6 +42,7 @@ export const questions: Question[] = [
       "/assets/shapes.svg",
     ],
     letters: ["r", "i", "i", "s", "p", "e", "z", "a"],
+    letters_num: 5,
   },
 ];
 

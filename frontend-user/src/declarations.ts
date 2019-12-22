@@ -23,11 +23,12 @@ export type Question = {
   tries?: number,
   images?: string[],
   letters?: string[],
+  letters_num?: number,
   choices?: string[],
 }
 
 export enum TimeType { DAILY = 0, WEEKLY = 1 }
-export enum AnswerType { CHOICE = 0, TEXT = 1, LETTER = 2 }
+export enum AnswerType { TEXT = 0, CHOICE = 1, LETTER = 2 }
 
 export type Solution = {
   question_id: number,

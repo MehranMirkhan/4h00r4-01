@@ -41,3 +41,16 @@
   height: 30vw;
   margin: 8px;
 }
+
+.letters-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 8px 0;
+}
+
+.letter-item {
+  width: 10vw;
+  height: 10vw;
+  margin: 2px;
+}
