@@ -35,6 +35,8 @@
   "menu": {
     "home": ["Home", "صفحه اصلی"],
     "auth": ["Login / Register", "ورود / ثبت نام"],
+    "profile": ["Profile", "صفحه کاربری"],
+    "logout": ["Logout", "خروج"],
     "settings": ["Settings", "تنظیمات"]
   },
   "alert": {
