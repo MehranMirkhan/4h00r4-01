@@ -17,13 +17,15 @@
       "signup": ["Register", "ثبت نام"],
       "username": ["Phone", "نام کاربری"],
       "password": ["Password", "رمز عبور"],
-      "passwordConfirm": ["Confirm Password", "تکرار رمز عبور"],
-      "name": ["Name", "نام"],
-      "phone": ["Phone", "شماره همراه"],
-      "email": ["Email", "ایمیل"]
+      "passwordConfirm": ["Confirm Password", "تکرار رمز عبور"]
     },
     "profile": {
-      "title": ["Profile", "اطلاعات کاربری"]
+      "title": ["Profile", "اطلاعات کاربری"],
+      "editTitle": ["Edit Profile", "ویرایش اطلاعات کاربری"],
+      "pcTitle": ["Change Password", "تغییر رمز عبور"],
+      "edit": ["Edit", "ویرایش"],
+      "passwordChange": ["Change Password", "تغییر رمز عبور"],
+      "oldPassword": ["Old Password", "رمز عبور قدیمی"]
     },
     "level": {
       "title": ["Levels", "مرحله‌ای"]
@@ -57,10 +59,17 @@
     "unknown": ["Uknown Error", "خطای نامشخص"],
     "deleted": ["Record deleted", "رکورد حذف شد"]
   },
+  "user": {
+    "name": ["Name", "نام"],
+    "phone": ["Phone", "شماره همراه"],
+    "email": ["Email", "ایمیل"],
+    "level": ["Level", "مرحله"]
+  },
   "yes": ["Yes", "بله"],
   "no": ["No", "خیر"],
   "choose": ["Choose", "انتخاب"],
   "ok": ["OK", "قبول"],
   "cancel": ["Cancel", "انصراف"],
-  "days": ["Days", "روز"]
+  "days": ["Days", "روز"],
+  "submit": ["Submit", "تأیید"]
 }

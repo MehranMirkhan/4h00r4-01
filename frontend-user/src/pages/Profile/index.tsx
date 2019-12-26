@@ -1,15 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
+import { Redirect, Route } from 'react-router';
 
-import {
-  IonPage, IonHeader, IonContent,
-} from '@ionic/react';
+import { IonRouterOutlet } from '@ionic/react';
 
 import { getMe } from '../Auth/Auth.reducer';
 
-import './Profile.css';
-import Toolbar from '../../components/Toolbar';
+import View from './View';
+import Edit from './Edit';
+import PasswordChange from './PasswordChange';
 
 
 const ProfilePage: React.FC = () => {
@@ -19,14 +18,11 @@ const ProfilePage: React.FC = () => {
   if (!hasMe) return <Redirect to="/home" exact />;
 
   return (
-    <IonPage>
-      <IonHeader>
-        <Toolbar title="pages.profile.title"/>
-      </IonHeader>
-
-      <IonContent>
-      </IonContent>
-    </IonPage>
+    <IonRouterOutlet>
+      <Route exact path="/profile" component={View} />
+      <Route exact path="/profile/edit" component={Edit} />
+      <Route exact path="/profile/password-change" component={PasswordChange} />
+    </IonRouterOutlet>
   );
 }
 

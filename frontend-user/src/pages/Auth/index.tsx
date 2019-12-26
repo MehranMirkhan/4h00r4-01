@@ -46,7 +46,6 @@ const Login = () => {
   const dispatch = useDispatch();
   return (
     <>
-      {/* <div style={{ marginTop: '30%' }}> */}
       <div>
         <IonItem>
           <IonLabel position="floating"><Translate id="pages.auth.username" /></IonLabel>
@@ -76,20 +75,19 @@ const Register = () => {
   const dispatch = useDispatch();
   return (
     <>
-      {/* <div style={{ marginTop: '30%' }}> */}
       <div>
         <IonItem>
-          <IonLabel position="floating"><Translate id="pages.auth.name" /></IonLabel>
+          <IonLabel position="floating"><Translate id="user.name" /></IonLabel>
           <IonInput type="text" autofocus value={name}
             onIonChange={e => setName(e.detail.value as string)} />
         </IonItem>
         <IonItem>
-          <IonLabel position="floating"><Translate id="pages.auth.phone" /></IonLabel>
+          <IonLabel position="floating"><Translate id="user.phone" /></IonLabel>
           <IonInput type="number" autofocus value={phone}
             onIonChange={e => setPhone(e.detail.value as string)} />
         </IonItem>
         <IonItem>
-          <IonLabel position="floating"><Translate id="pages.auth.email" /></IonLabel>
+          <IonLabel position="floating"><Translate id="user.email" /></IonLabel>
           <IonInput type="text" autofocus value={email}
             onIonChange={e => setEmail(e.detail.value as string)} />
         </IonItem>
