@@ -39,7 +39,7 @@ export default (state = initialState, action: any) => {
 export const initialLoad = () => (dispatch: any) => {
   return Storage.getObject("settings").then((v: any) => {
     if (!!v) {
-      console.log("Settings loaded:", v);
+      // console.log("Settings loaded:", v);
       dispatch(reset(v));
     }
   });

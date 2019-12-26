@@ -4,7 +4,7 @@ import {
   IonContent, IonHeader, IonMenuButton,
   IonTitle, IonToolbar, IonPage,
   IonSlides, IonSlide, IonChip, IonIcon,
-  IonLabel, IonInput, IonButton, IonItem, IonReorder,
+  IonLabel, IonInput, IonButton,
 } from '@ionic/react';
 import moment from 'moment';
 import { Translate } from 'react-localize-redux';
@@ -177,7 +177,7 @@ const QuestionLetterBody = ({ entity }: QuestionComponent) => {
     for (let i = 0; i < n; i++)
       x.push(undefined);
     setAnswer(x);
-  }, [entity]);
+  }, [entity, letters_num]);
   if (!letters || !letters_num) return null;
 
   const isLetterUsed = (index: number) => answer.find(a => a === index) !== undefined;
