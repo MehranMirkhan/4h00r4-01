@@ -25,32 +25,32 @@ const Menu: React.FunctionComponent<MenuProps> = ({ appPages }) => {
   const dispatch = useDispatch();
   return (
     <IonMenu contentId="main" type="overlay" side={settings.lang === 'fa' ? "end" : "start"}>
-      {hasMe ?
-        <IonHeader>
-          {/* <IonToolbar color="dark">
-          <IonTitle>منو</IonTitle>
-        </IonToolbar> */}
-          <div className="center">
-            <IonIcon icon={contact} className="avatar" />
-            <div>{me.name}</div>
-          </div>
-          <div className="center">
-            <IonButton routerLink="/profile" routerDirection="none">
-              <IonIcon slot="start" icon={contact} color="light" />
-              <Translate id="menu.profile" />
-            </IonButton>
-          </div>
-          <div className="center">
-            <IonButton type="submit" color="danger"
-              onClick={() => dispatch(logout())}>
-              <IonIcon slot="start" icon={exit} color="light" />
-              <Translate id="menu.logout" />
-            </IonButton>
-          </div>
-        </IonHeader>
-        : null}
       <IonContent>
-        <IonList>
+        {hasMe ?
+          <>
+            <div className="center">
+              <IonIcon icon={contact} className="avatar" />
+              <div>{me.name}</div>
+            </div>
+            <div className="center">
+              <IonMenuToggle autoHide={false}>
+                <IonButton routerLink="/profile" routerDirection="forward">
+                  <IonIcon slot="start" icon={contact} color="light" />
+                  <Translate id="menu.profile" />
+                </IonButton>
+              </IonMenuToggle>
+            </div>
+            <div className="center">
+              <IonButton type="submit" color="danger"
+                onClick={() => dispatch(logout())}>
+                <IonIcon slot="start" icon={exit} color="light" />
+                <Translate id="menu.logout" />
+              </IonButton>
+            </div>
+          </>
+          : null
+        }
+        <IonList className="menu-list">
           {appPages.map((appPage, index) => {
             if (appPage.title === 'menu.auth' && hasMe) return null;
             return (

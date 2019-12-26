@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  IonButtons, IonBackButton,
-  IonContent, IonHeader, IonMenuButton,
-  IonTitle, IonToolbar, IonPage,
+  IonContent, IonHeader, IonPage,
   IonSlides, IonSlide, IonChip, IonIcon,
   IonLabel, IonInput, IonButton,
 } from '@ionic/react';
@@ -15,6 +13,7 @@ import './Question.css';
 import { entitySelector, answerResultSelector, fetch, postAnswer, reset } from './Question.reducer';
 
 import { Question, AnswerType } from '../../declarations';
+import Toolbar from '../../components/Toolbar';
 
 
 const QuestionPage: React.FC = ({ match }: any) => {
@@ -28,15 +27,7 @@ const QuestionPage: React.FC = ({ match }: any) => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="dark">
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonBackButton defaultHref="/home" />
-          </IonButtons>
-          <IonTitle><Translate id="pages.question.title" /></IonTitle>
-        </IonToolbar>
+        <Toolbar title="pages.question.title"/>
       </IonHeader>
       <IonContent>
         <QuestionImages entity={entity} />

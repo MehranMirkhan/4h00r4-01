@@ -2,3 +2,9 @@
 .avatar {
   font-size: 128pt;
 }
+
+.menu-list {
+  padding-top: 0;
+  margin-top: 8px;
+  border-top: 1px solid #ddd;
+}

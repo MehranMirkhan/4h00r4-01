@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  IonPage, IonHeader, IonToolbar,
-  IonButtons, IonMenuButton, IonTitle,
-  IonContent, IonBackButton, IonInput,
+  IonPage, IonHeader,
+  IonContent, IonInput,
   IonLabel, IonSegment, IonSegmentButton,
   IonItem, IonButton,
 } from '@ionic/react';
 import { Translate } from 'react-localize-redux';
 import { login, getMe, register } from './Auth.reducer';
+import Toolbar from '../../components/Toolbar';
 
 
 const AuthPage: React.FC = () => {
@@ -22,15 +22,7 @@ const AuthPage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="dark">
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonBackButton defaultHref="/home" />
-          </IonButtons>
-          <IonTitle><Translate id="pages.auth.title" /></IonTitle>
-        </IonToolbar>
+        <Toolbar title="pages.auth.title"/>
       </IonHeader>
 
       <IonContent>

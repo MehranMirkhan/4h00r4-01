@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  IonButtons, IonButton, IonBackButton,
-  IonContent, IonHeader, IonMenuButton,
-  IonToolbar, IonPage,
+  IonButton, IonContent, IonHeader, IonPage,
 } from '@ionic/react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -10,6 +8,7 @@ import { dataSelector, fetch } from './QuestionList.reducer';
 
 import { Question, TimeType } from '../../declarations';
 import { getURLParams } from '../../utils';
+import Toolbar from '../../components/Toolbar';
 
 
 const QuestionListPage: React.FC = ({ location }: any) => {
@@ -22,15 +21,7 @@ const QuestionListPage: React.FC = ({ location }: any) => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="dark">
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonBackButton defaultHref="/home" />
-          </IonButtons>
-          {/* <IonTitle><Translate id="pages.level.title" /></IonTitle> */}
-        </IonToolbar>
+        <Toolbar />
       </IonHeader>
       <IonContent>
         <QuestionList timeType={timeType} />

@@ -13,6 +13,7 @@ import Menu from './components/Menu';
 import Home from './pages/Home';
 // import List from './pages/List';
 import Auth from './pages/Auth';
+import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Level from './pages/Level';
 import QuestionList from './pages/QuestionList';
@@ -87,6 +88,7 @@ const App: React.FC = () => {
                   <IonRouterOutlet id="main">
                     <Route exact path="/home" component={Home} />
                     <Route path="/auth" component={Auth} />
+                    <Route exact path="/profile" component={Profile} />
                     <Route exact path="/settings" component={Settings} />
                     <Route exact path="/level" component={Level} />
                     <Route path="/question_list" component={QuestionList} />

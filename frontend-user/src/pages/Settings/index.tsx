@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-  IonPage, IonHeader, IonToolbar,
-  IonButtons, IonMenuButton, IonTitle,
-  IonContent, IonBackButton, IonList,
+  IonPage, IonHeader,
+  IonContent, IonList,
   IonItem, IonLabel, IonSelect, IonSelectOption
 } from '@ionic/react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,21 +11,14 @@ import { Translate } from 'react-localize-redux';
 import { setLang } from './Settings.reducer';
 import config from '../../app.config.json';
 import { translate } from '../../utils';
+import Toolbar from '../../components/Toolbar';
 
 
 const SettingsPage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="dark">
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonBackButton defaultHref="/home" />
-          </IonButtons>
-          <IonTitle><Translate id="pages.settings.title" /></IonTitle>
-        </IonToolbar>
+        <Toolbar title="pages.settings.title"/>
       </IonHeader>
 
       <IonContent>

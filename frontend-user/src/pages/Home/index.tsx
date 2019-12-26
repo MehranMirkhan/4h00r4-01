@@ -1,26 +1,21 @@
 import React from 'react';
 import {
-  IonButtons, IonGrid, IonRow, IonCol,
-  IonContent, IonHeader, IonMenuButton,
-  IonTitle, IonToolbar, IonPage, IonSlides,
-  IonSlide, IonButton, IonIcon
+  IonGrid, IonRow, IonCol,
+  IonContent, IonHeader, IonPage, IonSlides,
+  IonSlide, IonButton, IonIcon,
 } from '@ionic/react';
 import { settings, logIn } from 'ionicons/icons';
 
 import './Home.css';
 import { Translate } from 'react-localize-redux';
+import Toolbar from '../../components/Toolbar';
 
 
 const HomePage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="dark">
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle><Translate id="pages.home.title" /></IonTitle>
-        </IonToolbar>
+        <Toolbar title="pages.home.title"/>
       </IonHeader>
       <IonContent>
         <HeroSlide />

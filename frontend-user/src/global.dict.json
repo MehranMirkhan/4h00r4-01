@@ -22,6 +22,9 @@
       "phone": ["Phone", "شماره همراه"],
       "email": ["Email", "ایمیل"]
     },
+    "profile": {
+      "title": ["Profile", "اطلاعات کاربری"]
+    },
     "level": {
       "title": ["Levels", "مرحله‌ای"]
     },

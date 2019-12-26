@@ -1,27 +1,18 @@
 import React from 'react';
 import {
-  IonButtons, IonButton, IonBackButton,
-  IonContent, IonHeader, IonMenuButton,
-  IonTitle, IonToolbar, IonPage,
+  IonButton, IonContent, IonHeader, IonPage,
 } from '@ionic/react';
 
+import Toolbar from '../../components/Toolbar';
+
 import './Level.css';
-import { Translate } from 'react-localize-redux';
 
 
 const LevelPage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="dark">
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonButtons slot="end">
-            <IonBackButton defaultHref="/home" />
-          </IonButtons>
-          <IonTitle><Translate id="pages.level.title" /></IonTitle>
-        </IonToolbar>
+        <Toolbar title="pages.level.title"/>
       </IonHeader>
       <IonContent>
         <div className="level-container">
