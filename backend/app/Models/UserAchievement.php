@@ -4,20 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Answer extends Model {
-    protected $table    = 'answers';
+class UserAchievement extends Model {
+    protected $table    = 'user_achievements';
     protected $fillable = [
         'user_id',
-        'question_id',
-        'text',
-        'correct',
+        'achievement_id',
     ];
 
     public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function question() {
-        return $this->belongsTo(Question::class);
+    public function achievement() {
+        return $this->belongsTo(Achievement::class);
     }
 }

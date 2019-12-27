@@ -11,12 +11,13 @@ Route::group(['namespace' => 'Auth'], function () {
 
 Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
+        Route::post('/file', 'FileController@store');
+        Route::delete('/file', 'FileController@destroy');
         Route::get('report', 'ReportController@index');
         Route::apiResource('users', 'UserController')->except(['store']);
         Route::apiResource('questions', 'QuestionController');
-        Route::apiResource('question_images', 'QuestionImageController');
-        Route::apiResource('solutions', 'SolutionController');
         Route::apiResource('answers', 'AnswerController');
+        Route::apiResource('hints', 'HintController');
     });
 });
 

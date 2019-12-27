@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class QuestionImage extends Model {
-    protected $table    = 'question_images';
+class Hint extends Model {
+    protected $table    = 'hints';
     protected $fillable = [
         'question_id',
-        'file',
+        'type',
+        'value',
+        'price',
     ];
 
     public function question() {

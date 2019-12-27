@@ -14,8 +14,7 @@ class User extends Authenticatable {
     protected $fillable = [
         'name', 'email', 'phone', 'password', 'role',
         'is_active', 'coin_1', 'coin_2', 'score_daily',
-        'score_weekly', 'profile_pic', 'daily_solved_count',
-        'weekly_solved_count', 'level',
+        'score_weekly', 'level', 'profile_pic',
     ];
 
     protected $hidden = [
@@ -23,6 +22,7 @@ class User extends Authenticatable {
     ];
 
     protected $casts = [
+        'phone_verified_at' => 'datetime',
         'email_verified_at' => 'datetime',
     ];
 
@@ -36,7 +36,11 @@ class User extends Authenticatable {
         return $this->hasMany(Answer::class);
     }
 
-    public function solves() {
-        return $this->hasMany(Solve::class);
+    public function hints() {
+        return $this->hasMany(UserHint::class);
+    }
+
+    public function achievements() {
+        return $this->hasMany(UserAchievement::class);
     }
 }

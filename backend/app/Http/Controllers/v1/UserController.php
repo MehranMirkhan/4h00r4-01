@@ -33,13 +33,4 @@ class UserController extends Controller {
             return response()->json(['message' => 'unknown'], $e->getCode());
         }
     }
-
-    //----------  Sub Routes  ----------
-    public function answers(User $user) {
-        return $user->answers();
-    }
-
-    public function solves(User $user) {
-        return $user->solves();
-    }
 }

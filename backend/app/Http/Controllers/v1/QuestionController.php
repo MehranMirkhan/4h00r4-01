@@ -20,7 +20,7 @@ class QuestionController extends Controller {
 
     public function show(Question $question) {
         // return $question;
-        return Question::query()->where('id', $question->id)->with(['solutions', 'images'])->firstOrFail();
+        return Question::query()->where('id', $question->id)->firstOrFail();
     }
 
     public function update(Request $request, Question $question) {
@@ -35,10 +35,5 @@ class QuestionController extends Controller {
         } catch (\Exception $e) {
             return response()->json(['message' => 'unknown'], $e->getCode());
         }
-    }
-
-    //----------  Sub Routes  ----------
-    public function solutions(Question $question) {
-        return $question->solutions();
     }
 }
