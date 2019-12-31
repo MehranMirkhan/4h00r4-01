@@ -15,6 +15,9 @@ const Column = (entity, index) => col => {
           break;
         case 'image':
           c.children = <Image src={value} size="large"/>;
+          break;
+        default:
+          c.children = null;
       }
     } else {
       c.children = col.render(entity);

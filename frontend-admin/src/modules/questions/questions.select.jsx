@@ -18,7 +18,7 @@ function QuestionSelect(props) {
     SearchFields={formProps => <>
       <Form.Group widths='equal'>
         <Field component={InputField} name="id" label={Question.id.label} />
-        <Field component={InputField} name="text" label={Question.text.label} />
+        <Field component={InputField} name="title" label={Question.title.label} />
         <Field component={SelectField} options={Question.time_type.options}
           name="time_type" label={Question.time_type.label} />
         <Field component={SelectField} options={Question.answer_type.options}
@@ -27,7 +27,7 @@ function QuestionSelect(props) {
     </>}
     tableSchema={[
       { key: "id", header: Question.id.label },
-      { key: "text", header: Question.text.label },
+      { key: "title", header: Question.title.label },
       { key: "time_type", header: Question.time_type.label },
       { key: "answer_type", header: Question.answer_type.label },
       { key: "start_time", header: Question.start_time.label },

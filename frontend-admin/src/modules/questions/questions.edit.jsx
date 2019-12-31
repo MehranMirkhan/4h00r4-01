@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
+// import { Link } from 'react-router-dom';
+// import { Button } from 'semantic-ui-react';
 import { Field } from 'redux-form';
 
 import { resetEntity, fetchQuestion, updateQuestion, newQuestion } from './questions.reducer';
 import Question from './questions.model';
 
-import { InputField, SelectField, DatePicker } from 'src/components/FormFields';
+import { InputField, SelectField, DatePicker, MultiInputField } from 'src/components/FormFields';
 import EditLayout from 'src/components/EditLayout';
 
 
@@ -16,7 +16,7 @@ function QuestionEdit(props) {
     title="سؤال"
     entityName="questions"
     NewFields={formProps => <>
-      <Field component={InputField} name="text" label={Question.text.label} />
+      <Field component={InputField} name="title" label={Question.title.label} />
       <Field component={SelectField} options={Question.time_type.options}
         name="time_type" label={Question.time_type.label} />
       <Field component={SelectField} options={Question.answer_type.options}
@@ -28,7 +28,7 @@ function QuestionEdit(props) {
     </>}
     EditFields={formProps => <>
       <Field component={InputField} name="id" label={Question.id.label} disabled />
-      <Field component={InputField} name="text" label={Question.text.label} />
+      <Field component={InputField} name="title" label={Question.title.label} />
       <Field component={SelectField} options={Question.time_type.options}
         name="time_type" label={Question.time_type.label} />
       <Field component={SelectField} options={Question.answer_type.options}
@@ -37,7 +37,12 @@ function QuestionEdit(props) {
       <Field component={DatePicker} name="end_time" label={Question.end_time.label} />
       <Field component={InputField} name="score" label={Question.score.label} />
       <Field component={InputField} name="tries" label={Question.tries.label} />
-      <div style={{ marginBottom: 16 }}>
+
+      <Field component={MultiInputField} name="choices" label={Question.choices.label} />
+      <Field component={MultiInputField} name="letters" label={Question.letters.label} />
+      <Field component={MultiInputField} name="solutions" label={Question.solutions.label} />
+
+      {/* <div style={{ marginBottom: 16 }}>
         <Button
           as={Link}
           to={`/solutions?question_id=${!!formProps.initialValues ? formProps.initialValues.id : '?'}`}>
@@ -50,7 +55,7 @@ function QuestionEdit(props) {
           to={`/question_images?question_id=${!!formProps.initialValues ? formProps.initialValues.id : '?'}`}>
           تصاویر
         </Button>
-      </div>
+      </div> */}
     </>}
   />;
 }

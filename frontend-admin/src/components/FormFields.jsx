@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Button, Icon, Image } from 'semantic-ui-react';
+import { Form, Button, Icon, Image, Segment, Input } from 'semantic-ui-react';
 // import { DateTimePicker as JalaliDateTimePicker } from "react-advance-jalaali-datepicker";
 import moment from 'moment-jalaali';
 import { getFormValues, initialize } from 'redux-form';
@@ -23,6 +23,43 @@ export const InputField = ({ input, meta, children, ...props }) =>
     onChange={(e, { value }) => input.onChange(value)}
     error={(!!meta && meta.touched && meta.invalid) ? meta.error : false}
   />;
+
+export const MultiInputField = ({ input, meta, children, ...props }) => {
+  const values = JSON.parse(!!input.value ? input.value : "[]");
+  const N = !!values ? values.length : 0;
+  let result = [];
+  for (let i = 0; i < N; i++) {
+    result.push(<Input key={i}
+      name={props.name + " " + i}
+      value={values[i]}
+      onChange={(e, { value }) => {
+        values[i] = value;
+        input.onChange(JSON.stringify(values));
+      }}
+      action={{ icon: "minus", color: "red", onClick: (e) => {
+        e.preventDefault();
+        values.splice(i, 1);
+        input.onChange(JSON.stringify(values));
+      } }}
+      fluid
+      style={{ marginTop: i > 0 ? 16 : 0 }}
+    />);
+  }
+  return <>
+    <Segment raised attached="top" color="blue" inverted>
+      <h4 style={{ display: "inline" }}>{props.label}</h4>
+      <Icon name="add" circular inverted color="green" size="small"
+        style={{ cursor: "pointer", float: "left" }}
+        onClick={() => {
+          values.push("");
+          input.onChange(JSON.stringify(values));
+        }} />
+    </Segment>
+    <Segment raised attached="bottom">
+      {result}
+    </Segment>
+  </>;
+}
 
 export const SelectField = ({ input, meta, children, ...props }) =>
   <Form.Dropdown {...props} selection
@@ -128,5 +165,43 @@ export function FilePicker({ input, meta, children, ...props }) {
       action={<Button icon="file" onClick={onClick} />} />
     <input ref={inputEl} type="file" accept="image/*" hidden onChange={onChange} />
     <Image hidden={!image} src={image} size="large" style={{ marginBottom: 16 }} />
+  </>;
+}
+
+export const MultiFilePicker = ({ input, meta, children, ...props }) => {
+  const values = JSON.parse(!!input.value ? input.value : "[]");
+  const N = !!values ? values.length : 0;
+  let result = [];
+  for (let i = 0; i < N; i++) {
+    result.push(<FilePicker key={i}
+      name={props.name + " " + i}
+      value={values[i]}
+      onChange={(e, { value }) => {
+        values[i] = value;
+        input.onChange(JSON.stringify(values));
+      }}
+      meta={meta}
+      action={{ icon: "minus", color: "red", onClick: (e) => {
+        e.preventDefault();
+        values.splice(i, 1);
+        input.onChange(JSON.stringify(values));
+      } }}
+      fluid
+      style={{ marginTop: i > 0 ? 16 : 0 }}
+    />);
+  }
+  return <>
+    <Segment raised attached="top" color="blue" inverted>
+      <h4 style={{ display: "inline" }}>{props.label}</h4>
+      <Icon name="add" circular inverted color="green" size="small"
+        style={{ cursor: "pointer", float: "left" }}
+        onClick={() => {
+          values.push("");
+          input.onChange(JSON.stringify(values));
+        }} />
+    </Segment>
+    <Segment raised attached="bottom">
+      {result}
+    </Segment>
   </>;
 }
