@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { resetEntity, fetchSolution, updateSolution, newSolution } from './solutions.reducer';
 import Solution from './solutions.model';
 
-import { InputField, EntityField } from 'src/components/FormFields';
+import { CHECKS, InputField, EntityField } from 'src/components/FormFields';
 import EditLayout from 'src/components/EditLayout';
 
 

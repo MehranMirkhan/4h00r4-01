@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { resetEntity, fetchUser, updateUser, newUser } from './users.reducer';
 import User from './users.model';
 
-import { InputField, SelectField, booleanOptions } from 'src/components/FormFields';
+import { CHECKS, InputField, SelectField, booleanOptions } from 'src/components/FormFields';
 import EditLayout from 'src/components/EditLayout';
 
 
@@ -24,7 +24,7 @@ function UserEdit(props) {
         required validate={CHECKS.REQUIRED} />
     </>}
     EditFields={formProps => <>
-      <Field component={InputField} name="name" label={User.name.label} 
+      <Field component={InputField} name="name" label={User.name.label}
         required validate={CHECKS.REQUIRED}/>
       <Field component={InputField} name="phone" label={User.phone.label} />
       <Field component={InputField} name="email" label={User.email.label} />
