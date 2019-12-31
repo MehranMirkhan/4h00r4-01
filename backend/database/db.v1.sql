@@ -28,6 +28,7 @@ CREATE TABLE users
 CREATE TABLE questions
 (
     id          BIGINT                            NOT NULL AUTO_INCREMENT,
+    title       VARCHAR(256)                      NULL DEFAULT NULL,
     images      TEXT                              NULL DEFAULT NULL,
     start_time  TIMESTAMP                         NULL DEFAULT NULL,
     end_time    TIMESTAMP                         NULL DEFAULT NULL,
