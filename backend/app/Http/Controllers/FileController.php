@@ -12,7 +12,10 @@ class FileController extends Controller {
             'path' => 'required|string',
         ]);
         $file_name = $request->file('file')->getClientOriginalName();
+        $ext = explode('.', $file_name);
+        $ext = $ext[sizeof($ext) - 1];
         $file_name = hash('md5', $file_name . '-' . Carbon::now()->toIso8601String());
+        $file_name = $file_name . '.' . $ext;
         $path = $request->path .
                 (substr($request->path, -1) === '/' ? '' : '/') .
                 $file_name;

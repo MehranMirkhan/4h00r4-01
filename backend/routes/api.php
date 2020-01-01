@@ -11,8 +11,6 @@ Route::group(['namespace' => 'Auth'], function () {
 
 Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
-        Route::post('/file', 'FileController@store');
-        Route::delete('/file', 'FileController@destroy');
         Route::get('report', 'ReportController@index');
         Route::apiResource('users', 'UserController')->except(['store']);
         Route::apiResource('questions', 'QuestionController');
@@ -22,6 +20,8 @@ Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'],
 });
 
 Route::group(['middleware' => 'auth:api'], function () {
+    Route::post('/files', 'FileController@store');
+    Route::delete('/files', 'FileController@destroy');
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
         Route::get('/me', 'UserController@me');
     });
