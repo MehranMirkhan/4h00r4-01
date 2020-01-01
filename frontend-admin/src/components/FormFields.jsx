@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Button, Icon, Image, Segment, Input } from 'semantic-ui-react';
+import { Form, Button, Icon, Image, Segment, Input, Modal } from 'semantic-ui-react';
 // import { DateTimePicker as JalaliDateTimePicker } from "react-advance-jalaali-datepicker";
 import moment from 'moment-jalaali';
 import { getFormValues, initialize } from 'redux-form';
 
 import { transit, selectionReceived, SELECTION_STATES } from 'src/redux/flow.reducer';
+import { API } from 'src/redux/store_config';
+import config from 'src/app.config.json';
 
 
 export const CHECKS = {
@@ -36,11 +38,13 @@ export const MultiInputField = ({ input, meta, children, ...props }) => {
         values[i] = value;
         input.onChange(JSON.stringify(values));
       }}
-      action={{ icon: "minus", color: "red", onClick: (e) => {
-        e.preventDefault();
-        values.splice(i, 1);
-        input.onChange(JSON.stringify(values));
-      } }}
+      action={{
+        icon: "minus", color: "red", onClick: (e) => {
+          e.preventDefault();
+          values.splice(i, 1);
+          input.onChange(JSON.stringify(values));
+        }
+      }}
       fluid
       style={{ marginTop: i > 0 ? 16 : 0 }}
     />);
@@ -168,40 +172,67 @@ export function FilePicker({ input, meta, children, ...props }) {
   </>;
 }
 
-export const MultiFilePicker = ({ input, meta, children, ...props }) => {
+export const MultiFilePicker = ({ input, meta, children, path, ...props }) => {
+  const [file, setFile] = useState(null);
+  const [open, setOpen] = useState(false);
+  const close = () => setOpen(false);
   const values = JSON.parse(!!input.value ? input.value : "[]");
   const N = !!values ? values.length : 0;
   let result = [];
   for (let i = 0; i < N; i++) {
-    result.push(<FilePicker key={i}
-      name={props.name + " " + i}
-      value={values[i]}
-      onChange={(e, { value }) => {
-        values[i] = value;
-        input.onChange(JSON.stringify(values));
-      }}
-      meta={meta}
-      action={{ icon: "minus", color: "red", onClick: (e) => {
-        e.preventDefault();
-        values.splice(i, 1);
-        input.onChange(JSON.stringify(values));
-      } }}
-      fluid
-      style={{ marginTop: i > 0 ? 16 : 0 }}
-    />);
+    result.push(<div>
+      <Image src={`${config.server_url}storage/${values[i]}`}
+        style={{ maxWidth: "90%", display: "inline-block" }} />
+      <Icon name="times" color="red" circular inverted style={{ marginRight: 8 }}
+        onClick={(e) => {
+          e.preventDefault();
+          deleteFile(values[i]);
+          values.splice(i, 1);
+          input.onChange(JSON.stringify(values));
+        }} />
+    </div>);
   }
   return <>
     <Segment raised attached="top" color="blue" inverted>
       <h4 style={{ display: "inline" }}>{props.label}</h4>
-      <Icon name="add" circular inverted color="green" size="small"
-        style={{ cursor: "pointer", float: "left" }}
-        onClick={() => {
-          values.push("");
-          input.onChange(JSON.stringify(values));
-        }} />
+      <Modal trigger={
+        <Icon name="add" circular inverted color="green" size="small"
+          onClick={() => setOpen(true)}
+          style={{ cursor: "pointer", float: "left" }} />
+      }
+        open={open} onClose={close}>
+        <Modal.Header>انتخاب فایل</Modal.Header>
+        <Modal.Content>
+          <FilePicker input={{ onChange: setFile }} />
+          <Button type='submit' color='green' icon labelPosition="left"
+            disabled={!file} onClick={() => {
+              saveFile(file, path)
+                .then(res => {
+                  if (!res) return;
+                  values.push(res.data.relative_path);
+                  input.onChange(JSON.stringify(values));
+                })
+                .finally(close);
+            }}>
+            <Icon name='check' />
+            ذخیره
+        </Button>
+        </Modal.Content>
+      </Modal>
     </Segment>
     <Segment raised attached="bottom">
       {result}
     </Segment>
   </>;
+}
+
+function saveFile(file, path) {
+  let formData = new FormData();
+  formData.append("file", file);
+  formData.append("path", path);
+  return API.post("files", formData);
+}
+
+function deleteFile(url) {
+  return API.delete("files", { data: { path: url } });
 }

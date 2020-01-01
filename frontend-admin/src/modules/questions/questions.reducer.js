@@ -14,12 +14,14 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case QUESTIONS_ACTIONS.SET_ENTITY_LIST:
+      if (!action.payload) return state;
       action.payload.data = action.payload.data.map(print);
       return {
         ...state,
         entityList: action.payload,
       };
     case QUESTIONS_ACTIONS.SET_ENTITY:
+      if (!action.payload) return state;
       return {
         ...state,
         entity: action.payload,

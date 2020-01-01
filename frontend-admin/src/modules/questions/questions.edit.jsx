@@ -4,10 +4,16 @@ import { connect } from 'react-redux';
 // import { Button } from 'semantic-ui-react';
 import { Field } from 'redux-form';
 
-import { resetEntity, fetchQuestion, updateQuestion, newQuestion } from './questions.reducer';
+import {
+  resetEntity, fetchQuestion,
+  updateQuestion, newQuestion
+} from './questions.reducer';
 import Question from './questions.model';
 
-import { InputField, SelectField, DatePicker, MultiInputField } from 'src/components/FormFields';
+import {
+  InputField, SelectField, DatePicker,
+  MultiInputField, MultiFilePicker
+} from 'src/components/FormFields';
 import EditLayout from 'src/components/EditLayout';
 
 
@@ -41,6 +47,8 @@ function QuestionEdit(props) {
       <Field component={MultiInputField} name="choices" label={Question.choices.label} />
       <Field component={MultiInputField} name="letters" label={Question.letters.label} />
       <Field component={MultiInputField} name="solutions" label={Question.solutions.label} />
+
+      <Field component={MultiFilePicker} name="images" label={Question.images.label} path="question_images" />
 
       {/* <div style={{ marginBottom: 16 }}>
         <Button

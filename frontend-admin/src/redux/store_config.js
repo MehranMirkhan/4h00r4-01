@@ -19,7 +19,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const API = Axios.create({
-  baseURL: config.server_url,
+  baseURL: config.server_url + "api",
   timeout: config.request_timeout,
   headers: { "Accept": "application/json", "Content-Type": "application/json" },
 });
