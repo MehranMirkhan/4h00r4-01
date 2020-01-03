@@ -7,6 +7,7 @@ import report from 'src/modules/report/report.reducer';
 import users from 'src/modules/users/users.reducer';
 import questions from 'src/modules/questions/questions.reducer';
 import answers from 'src/modules/answers/answers.reducer';
+import hints from 'src/modules/hints/hints.reducer';
 
 export default combineReducers({
   form: formReducer,
@@ -16,4 +17,5 @@ export default combineReducers({
   users,
   questions,
   answers,
+  hints,
 });
