@@ -2,17 +2,24 @@ import moment from 'moment-jalaali';
 
 const Question = {
   id: { label: "شناسه" },
+  locale: {
+    label: "زبان", options: [
+      { key: "null", text: "", value: null },
+      { key: "en", text: "انگلیسی", value: "en" },
+      { key: "fa", text: "فارسی", value: "fa" },
+    ]
+  },
   title: { label: "عنوان" },
   time_type: {
     label: "نوع زمان", options: [
-      { key: "null", text: "", value: undefined },
+      { key: "null", text: "", value: null },
       { key: "daily", text: "روزانه", value: "daily" },
       { key: "weekly", text: "هفتگی", value: "weekly" },
     ]
   },
   answer_type: {
     label: "نوع پاسخ", options: [
-      { key: "null", text: "", value: undefined },
+      { key: "null", text: "", value: null },
       { key: "text", text: "متنی", value: "text" },
       { key: "choice", text: "گزینه‌ای", value: "choice" },
       { key: "letter", text: "حروفی", value: "letter" },
@@ -26,7 +33,6 @@ const Question = {
   choices: { label: "گزینه‌ها" },
   letters: { label: "حروف" },
   solutions: { label: "جواب‌ها" },
-  locale: { label: "زبان" },
 };
 
 export default Question;

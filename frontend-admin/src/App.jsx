@@ -9,6 +9,8 @@ import ErrorHandler, { AlertTemplate } from 'src/components/ErrorHandler';
 import Routes from 'src/Routes';
 
 import 'src/font/fonts.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import './App.css';
 
 
 export default function App() {

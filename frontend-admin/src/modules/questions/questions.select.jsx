@@ -19,6 +19,10 @@ function QuestionSelect(props) {
       <Form.Group widths='equal'>
         <Field component={InputField} name="id" label={Question.id.label} />
         <Field component={InputField} name="title" label={Question.title.label} />
+      </Form.Group>
+      <Form.Group widths='equal'>
+        <Field component={SelectField} options={Question.locale.options}
+          name="locale" label={Question.locale.label} />
         <Field component={SelectField} options={Question.time_type.options}
           name="time_type" label={Question.time_type.label} />
         <Field component={SelectField} options={Question.answer_type.options}
@@ -27,6 +31,7 @@ function QuestionSelect(props) {
     </>}
     tableSchema={[
       { key: "id", header: Question.id.label },
+      { key: "locale", header: Question.locale.label },
       { key: "title", header: Question.title.label },
       { key: "time_type", header: Question.time_type.label },
       { key: "answer_type", header: Question.answer_type.label },
