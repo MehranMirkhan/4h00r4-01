@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, Icon, Image, Segment, Input, Modal, Label } from 'semantic-ui-react';
 // import { DateTimePicker as JalaliDateTimePicker } from "react-advance-jalaali-datepicker";
-// import moment from 'moment-jalaali';
+import moment from 'moment-jalaali';
 import DatePicker from "react-datepicker";
 import { getFormValues, initialize } from 'redux-form';
 
@@ -143,12 +143,14 @@ export function EntityField({ input, meta, children, entityName, formName, ...pr
 // }
 
 export function Timestamp({ input, meta, children, ...props }) {
-  const date = !!input.value ? new Date(input.value) : undefined;
+  const date = !!input.value ? moment(input.value, 'YYYY-MM-DD HH:mm:ss').toDate() : undefined;
   return <>
     <Label>{props.label}</Label>
     <DatePicker
       selected={date}
-      onChange={d => input.onChange(d.toISOString())}
+      onChange={d => {
+        input.onChange(moment(d).format('YYYY-MM-DD HH:mm:ss'));
+      }}
       showTimeSelect
       dateFormat="yyyy MMMM d, HH:mm"
       timeFormat="HH:mm"
