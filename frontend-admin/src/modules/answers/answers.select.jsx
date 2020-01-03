@@ -20,6 +20,8 @@ function AnswerSelect(props) {
           name="question_id" label={Answer.question_id.label} />
         <Field component={EntityField} entityName="users" formName="answers/search"
           name="user_id" label={Answer.user_id.label} />
+      </Form.Group>
+      <Form.Group widths='equal'>
         <Field component={InputField} name="text" label={Answer.text.label} />
         <Field component={SelectField} name="correct" label={Answer.correct.label}
           options={booleanOptions} />

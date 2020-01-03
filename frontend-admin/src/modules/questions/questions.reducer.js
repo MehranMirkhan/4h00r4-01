@@ -21,7 +21,6 @@ export default (state = initialState, action) => {
         entityList: action.payload,
       };
     case QUESTIONS_ACTIONS.SET_ENTITY:
-      if (!action.payload) return state;
       return {
         ...state,
         entity: action.payload,

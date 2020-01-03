@@ -22,7 +22,8 @@ function UserSelect(props) {
         <Field component={InputField} name="email" label={User.email.label} />
       </Form.Group>
       <Form.Group widths='equal'>
-        <Field component={InputField} name="role" label={User.role.label} />
+        <Field component={SelectField} name="role" label={User.role.label}
+          options={User.role.options} />
         <Field component={SelectField} name="is_active" label={User.is_active.label}
           options={booleanOptions} />
       </Form.Group>
