@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Icon, Image, Segment, Modal } from 'semantic-ui-react';
+import { Button, Icon, Image, Modal } from 'semantic-ui-react';
+import { useSelector } from 'react-redux';
+import { formValueSelector } from 'redux-form';
 
-import { FilePicker } from 'src/components/FormFields';
+import { FilePicker, MultiInputField } from 'src/components/FormFields';
 
 import { API } from 'src/redux/store_config';
 import config from 'src/app.config.json';
-import { useSelector } from 'react-redux';
-import { formValueSelector } from 'redux-form';
 
 
 export const HintField = ({ input, meta, children, path, formProps, ...props }) => {
@@ -14,6 +14,10 @@ export const HintField = ({ input, meta, children, path, formProps, ...props }) 
   switch (type) {
     case "image":
       return <ImageHint value={input.value} onChange={input.onChange} />;
+    case "choice":
+      return <MultiInputField name="choices" label="اندیس گزینه‌های حذفی (از صفر)" input={input} />;
+    case "letter":
+      return <MultiInputField name="letters" label="اندیس حروف حذفی (از صفر)" input={input} />;
   }
   return null;
 }

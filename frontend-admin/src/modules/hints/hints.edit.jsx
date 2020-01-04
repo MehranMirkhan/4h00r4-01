@@ -18,9 +18,9 @@ function HintEdit(props) {
       <Field component={EntityField} entityName="questions" formName="hints/new"
         required validate={CHECKS.REQUIRED}
         name="question_id" label={Hint.question_id.label} />
+      <Field component={InputField} name="price" label={Hint.price.label} />
       <Field component={SelectField} options={Hint.type.options}
         id="type" name="type" label={Hint.type.label} />
-      <Field component={InputField} name="price" label={Hint.price.label} />
       <Field component={HintField} name="value" label={Hint.value.label} formProps={formProps} />
     </>}
     EditFields={formProps => <>
@@ -28,9 +28,10 @@ function HintEdit(props) {
       <Field component={EntityField} entityName="questions" formName="hints/edit"
         required validate={CHECKS.REQUIRED}
         name="question_id" label={Hint.question_id.label} />
-        <Field component={SelectField} options={Hint.type.options}
-          name="type" label={Hint.type.label} />
-        <Field component={InputField} name="price" label={Hint.price.label} />
+      <Field component={InputField} name="price" label={Hint.price.label} />
+      <Field component={SelectField} options={Hint.type.options}
+        name="type" label={Hint.type.label} />
+      <Field component={HintField} name="value" label={Hint.value.label} formProps={formProps} />
     </>}
   />;
 }

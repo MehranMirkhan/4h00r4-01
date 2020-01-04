@@ -8,9 +8,9 @@ const Hint = {
     label: "نوع", options: [
       { key: "null", text: "", value: null },
       { key: "image", text: "تصویر", value: "image" },
-      // { key: "choice", text: "گزینه", value: "choice" },
-      // { key: "letter", text: "حروف", value: "letter" },
-      // { key: "try", text: "تلاش", value: "try" },
+      { key: "choice", text: "گزینه", value: "choice" },
+      { key: "letter", text: "حروف", value: "letter" },
+      { key: "try", text: "تلاش", value: "try" },
       // { key: "time", text: "زمان", value: "time" },
     ]
   },

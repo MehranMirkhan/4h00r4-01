@@ -12,7 +12,7 @@ import { EntityField } from 'src/components/FormFields';
 
 function HintSelect(props) {
   return <SelectLayout {...props}
-    title="زاهنمایی‌ها"
+    title="راهنمایی‌ها"
     entityName="hints"
     SearchFields={formProps => <>
       <Form.Group widths='equal'>
