@@ -15,6 +15,7 @@ import Answers from 'src/modules/answers';
 import Hints from 'src/modules/hints';
 import UserHints from 'src/modules/user_hints';
 import Achievements from 'src/modules/achievements';
+import UserAchievements from 'src/modules/user_achievements';
 import NotFound from 'src/modules/NotFound';
 
 
@@ -58,6 +59,7 @@ function Routes({ fetchMe, logout, isAuthenticated, me }) {
         <AuthRoute path="/hints" component={Hints} />
         <AuthRoute path="/user_hints" component={UserHints} />
         <AuthRoute path="/achievements" component={Achievements} />
+        <AuthRoute path="/user_achievements" component={UserAchievements} />
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>

@@ -10,6 +10,7 @@ import answers from 'src/modules/answers/answers.reducer';
 import hints from 'src/modules/hints/hints.reducer';
 import user_hints from 'src/modules/user_hints/user_hints.reducer';
 import achievements from 'src/modules/achievements/achievements.reducer';
+import user_achievements from 'src/modules/user_achievements/user_achievements.reducer';
 
 export default combineReducers({
   form: formReducer,
@@ -22,4 +23,5 @@ export default combineReducers({
   hints,
   user_hints,
   achievements,
+  user_achievements,
 });
