@@ -16,6 +16,9 @@ Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'],
         Route::apiResource('questions', 'QuestionController');
         Route::apiResource('answers', 'AnswerController');
         Route::apiResource('hints', 'HintController');
+        Route::apiResource('user_hints', 'UserHintController');
+        Route::apiResource('achievements', 'AchievementController');
+        Route::apiResource('user_achievements', 'UserAchievementController');
     });
 });
 
