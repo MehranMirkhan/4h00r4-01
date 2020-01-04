@@ -58,10 +58,10 @@ export const fetchUsers = (searchParams) => (dispatch, _, API) => {
   if (searchParams && searchParams.sortCol)
     params.sort = (searchParams.sortDir === "asc" ? "" : "-") + searchParams.sortCol;
   return API.get('/admin/v1/users', { params })
-    .then(resp => {console.log(resp);dispatch({
+    .then(resp => dispatch({
       type: USERS_ACTIONS.SET_ENTITY_LIST,
       payload: !!resp ? resp.data : undefined,
-    })});
+    }));
 };
 
 export const fetchUser = id => (dispatch, _, API) => {

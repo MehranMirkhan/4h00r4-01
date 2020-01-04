@@ -18,8 +18,9 @@ export const HintField = ({ input, meta, children, path, formProps, ...props }) 
       return <MultiInputField name="choices" label="اندیس گزینه‌های حذفی (از صفر)" input={input} />;
     case "letter":
       return <MultiInputField name="letters" label="اندیس حروف حذفی (از صفر)" input={input} />;
+    default:
+      return null;
   }
-  return null;
 }
 
 function ImageHint({ value, onChange }) {
@@ -61,8 +62,4 @@ function saveFile(file, path) {
   formData.append("file", file);
   formData.append("path", path);
   return API.post("files", formData);
-}
-
-function deleteFile(url) {
-  return API.delete("files", { data: { path: url } });
 }

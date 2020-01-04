@@ -7,6 +7,8 @@ import User from './users.model';
 
 import { CHECKS, InputField, SelectField, booleanOptions } from 'src/components/FormFields';
 import EditLayout from 'src/components/EditLayout';
+import { Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 
 function UserEdit(props) {
@@ -25,13 +27,17 @@ function UserEdit(props) {
     </>}
     EditFields={formProps => <>
       <Field component={InputField} name="name" label={User.name.label}
-        required validate={CHECKS.REQUIRED}/>
+        required validate={CHECKS.REQUIRED} />
       <Field component={InputField} name="phone" label={User.phone.label} />
       <Field component={InputField} name="email" label={User.email.label} />
       <Field component={InputField} name="role" label={User.email.label}
         required validate={CHECKS.REQUIRED} />
       <Field component={SelectField} name="is_active" label={User.is_active.label}
         options={booleanOptions} />
+      <div style={{ marginBottom: 16 }}>
+        <Button as={Link} to={`/user_hints?user_id=${!!formProps.initialValues ? formProps.initialValues.id : 'null'}`}>راهنمایی‌ها</Button>
+        <Button as={Link} to={`/user_achievements?user_id=${!!formProps.initialValues ? formProps.initialValues.id : 'null'}`}>مدال‌ها</Button>
+      </div>
     </>}
   />;
 }

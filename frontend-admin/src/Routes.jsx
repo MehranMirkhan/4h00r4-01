@@ -13,6 +13,7 @@ import Users from 'src/modules/users';
 import Questions from 'src/modules/questions';
 import Answers from 'src/modules/answers';
 import Hints from 'src/modules/hints';
+import UserHints from 'src/modules/user_hints';
 import Achievements from 'src/modules/achievements';
 import NotFound from 'src/modules/NotFound';
 
@@ -55,6 +56,7 @@ function Routes({ fetchMe, logout, isAuthenticated, me }) {
         <AuthRoute path="/questions" component={Questions} />
         <AuthRoute path="/answers" component={Answers} />
         <AuthRoute path="/hints" component={Hints} />
+        <AuthRoute path="/user_hints" component={UserHints} />
         <AuthRoute path="/achievements" component={Achievements} />
         <Route path="*" component={NotFound} />
       </Switch>

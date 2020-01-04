@@ -8,6 +8,7 @@ import users from 'src/modules/users/users.reducer';
 import questions from 'src/modules/questions/questions.reducer';
 import answers from 'src/modules/answers/answers.reducer';
 import hints from 'src/modules/hints/hints.reducer';
+import user_hints from 'src/modules/user_hints/user_hints.reducer';
 import achievements from 'src/modules/achievements/achievements.reducer';
 
 export default combineReducers({
@@ -19,5 +20,6 @@ export default combineReducers({
   questions,
   answers,
   hints,
+  user_hints,
   achievements,
 });
