@@ -10,14 +10,17 @@ interface IAlertControllerProps {
 interface IAlertControllerState {
 }
 
+export const AlertContext = React.createContext((msg: string, type?: string) => { });
+
 class AlertController extends React.Component<IAlertControllerProps, IAlertControllerState> {
-  state = { open: false, message: "" };
+  state = { open: false, message: "", type: "error" };
   requestInterceptor: any = undefined;
   responseInterceptor: any = undefined;
 
   open = () => this.setState({ open: true });
   close = () => this.setState({ open: false });
   setMessage = (message: string) => this.setState({ message });
+  setType = (type: string) => this.setState({ type });
 
   componentDidMount() {
     // Set axios interceptors
@@ -31,17 +34,25 @@ class AlertController extends React.Component<IAlertControllerProps, IAlertContr
       error => {
         if (error.code === "ECONNABORTED") {
           this.setMessage(this.props.translate("alert.networkError"));
+          this.setType("alert.title.error");
           this.open();
         } else if (error.message === "Network Error") {
           this.setMessage(this.props.translate("alert.networkError"));
+          this.setType("alert.title.error");
           this.open();
         } else if (error.response.status === 401) {
           this.setMessage(this.props.translate("server.auth.wrongCredentials"));
+          this.setType("alert.title.error");
+          this.open();
+        } else if (error.response.status === 400 || error.response.status === 422) {
+          this.setMessage(this.props.translate("server.badRequest"));
+          this.setType("alert.title.error");
           this.open();
         } if (!!error.response && !!error.response.data && !!error.response.data.message) {
-          this.setMessage(this.props.translate("server." + error.response.data.message));
+          this.setMessage(this.props.translate(error.response.data.message));
+          this.setType("alert.title.error");
           this.open();
-        } 
+        }
       }
     );
   }
@@ -49,21 +60,29 @@ class AlertController extends React.Component<IAlertControllerProps, IAlertContr
   componentDidCatch(error: any, errorInfo: any) {
     if (!!error && !!error.message) {
       this.setMessage(error.message);
+      this.setType("alert.title.error");
       this.open();
     }
   }
 
   render() {
     const { translate } = this.props;
+    const alertContext = (msg: string, type?: string) => {
+      this.setMessage(translate(msg));
+      this.setType(!!type ? type : "empty");
+      this.open();
+    };
     return <>
       <IonAlert
         isOpen={this.state.open}
         onDidDismiss={this.close}
-        header={translate("alert.title")}
+        header={translate(this.state.type)}
         message={this.state.message}
         buttons={[translate("ok")]}
       />
-      {this.props.children}
+      <AlertContext.Provider value={alertContext}>
+        {this.props.children}
+      </AlertContext.Provider>
     </>;
   }
 }

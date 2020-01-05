@@ -1,5 +1,5 @@
 
-import { Question, TimeType, AnswerType, Solution, User } from './declarations';
+import { Question, TimeType, AnswerType, User } from './declarations';
 
 
 export const me: User = {
@@ -13,7 +13,7 @@ export const me: User = {
 export const questions: Question[] = [
   {
     id: 1,
-    text: "is 3301 prime?",
+    title: "is 3301 prime?",
     time_type: TimeType.DAILY,
     answer_type: AnswerType.CHOICE,
     start_time: new Date("2019-12-26T00:00:00Z"),
@@ -23,11 +23,15 @@ export const questions: Question[] = [
       "/assets/shapes.svg",
       "/assets/shapes.svg",
     ],
-    choices: ["Yes", "No"],
+    choices: [
+      { type: "text", value: "Yes" },
+      { type: "text", value: "No" },
+    ],
+    solutions: ["Yes"],
   },
   {
     id: 2,
-    text: "The president of USA",
+    title: "The president of USA",
     time_type: TimeType.DAILY,
     answer_type: AnswerType.TEXT,
     start_time: new Date("2019-12-27T00:00:00Z"),
@@ -37,10 +41,16 @@ export const questions: Question[] = [
       "/assets/shapes.svg",
       "/assets/shapes.svg",
     ],
+    solutions: [
+      "trump",
+      "donald trump",
+      "donald j trump",
+      "donald j. trump",
+    ]
   },
   {
     id: 3,
-    text: "Capital of France",
+    title: "Capital of France",
     time_type: TimeType.WEEKLY,
     answer_type: AnswerType.LETTER,
     start_time: new Date("2019-12-25T00:00:00Z"),
@@ -52,22 +62,18 @@ export const questions: Question[] = [
     ],
     letters: ["r", "i", "i", "s", "p", "e", "z", "a"],
     letters_num: 5,
+    solutions: ["paris"]
   },
-];
-
-export const solutions: Solution[] = [
-  { question_id: 1, text: "yes" },
-  { question_id: 2, text: "trump" },
-  { question_id: 2, text: "donald trump" },
-  { question_id: 2, text: "donald j trump" },
-  { question_id: 2, text: "donald j. trump" },
-  { question_id: 3, text: "paris" },
 ];
 
 export const API = {
   getMe: () => me,
   getQuestions: (type: TimeType) => questions.filter(q => q.time_type === type),
   getQuestion: (id: number) => questions.find(q => q.id === id),
-  postAnswer: (id: number, answer: string) =>
-    !!solutions.filter(s => s.question_id === id).find(s => s.text === answer.toLowerCase()),
+  postAnswer: (id: number, answer: string) => {
+    const q = questions.find(q => q.id === id);
+    if (!q || !q.solutions) return false;
+    const s = q.solutions.filter(s => s === answer.toLowerCase());
+    return !!s;
+  }
 };

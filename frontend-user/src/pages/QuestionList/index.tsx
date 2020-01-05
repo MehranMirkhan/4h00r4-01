@@ -55,6 +55,6 @@ const QuestionItem: React.FC<IQuestionItem> = ({ question }) =>
   <IonButton className="main-button"
     expand="block" size="large"
     routerLink={`/question/${question.id}`} routerDirection="forward"
-  >{question.text}</IonButton>;
+  >{question.title}</IonButton>;
 
 export default QuestionListPage;

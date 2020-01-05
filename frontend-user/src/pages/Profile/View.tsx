@@ -33,6 +33,12 @@ const View: React.FC = () => {
         <div className="vs24" />
         <div className="sep" />
         <div className="vs24" />
+        <div><Translate id="user.coin_1" />: {me.coin_1}</div>
+        <div className="vs24" />
+        <div><Translate id="user.coin_2" />: {me.coin_2}</div>
+        <div className="vs24" />
+        <div className="sep" />
+        <div className="vs24" />
         <IonButton routerLink="/profile/edit" routerDirection="forward">
           <IonIcon slot="start" icon={create} color="light" />
           <Translate id="pages.profile.edit" />

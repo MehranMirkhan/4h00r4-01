@@ -1,6 +1,5 @@
 
 import Storage from '../../Storage';
-import { me } from '../../data';
 
 export enum AuthActions {
   SET_TOKEN = "auth/SET_TOKEN",
@@ -61,33 +60,25 @@ export const reset = (state?: any) => ({
 
 export const login = (username: string, password: string) =>
   (dispatch: any, _: any, API: any) => {
-    // return API.post('/login', { username, password })
-    //   .then((resp: any) => {
-    //     if (!!resp && resp.statusCode === 200) {
-    //       dispatch({
-    //         type: AuthActions.SET_TOKEN,
-    //         payload: !!resp ? resp.data : undefined,
-    //       });
-    //       dispatch(fetchMe());
-    //     }
-    //   });
-    console.log("loging in");
-    dispatch({
-      type: AuthActions.SET_TOKEN,
-      payload: { access_token: "123" },
-    });
-    dispatch(fetchMe());
+    return API.post('/login', { username, password })
+      .then((resp: any) => {
+        if (!!resp && resp.status === 200) {
+          dispatch({
+            type: AuthActions.SET_TOKEN,
+            payload: !!resp ? resp.data : undefined,
+          });
+          dispatch(fetchMe());
+        }
+      });
   };
 
 export const register = (name: string, phone: string, email: string, password: string) =>
   (dispatch: any, _: any, API: any) => {
-    // return API.post('/register', { name, phone, email, password })
-    //   .then((resp: any) => {
-    //     if (!!resp && resp.statusCode === 200)
-    //       dispatch(login(phone, password));
-    //   });
-    console.log("registering");
-    dispatch(login(phone, password));
+    return API.post('/register', { name, phone, email, password })
+      .then((resp: any) => {
+        if (!!resp && resp.status === 200)
+          dispatch(login(phone, password));
+      });
   };
 
 export const logout = () => ({
@@ -95,19 +86,14 @@ export const logout = () => ({
 });
 
 export const fetchMe = () => (dispatch: any, _: any, API: any) => {
-  // return API.get('/v1/me')
-  //   .then((resp: any) => {
-  //     if (!!resp && resp.statusCode === 200)
-  //       dispatch({
-  //         type: AuthActions.SET_ME,
-  //         payload: !!resp ? resp.data : undefined,
-  //       });
-  //   });
-  console.log("fetching me");
-  dispatch({
-    type: AuthActions.SET_ME,
-    payload: me,
-  });
+  return API.get('/v1/me')
+    .then((resp: any) => {
+      if (!!resp && resp.status === 200)
+        dispatch({
+          type: AuthActions.SET_ME,
+          payload: !!resp ? resp.data : undefined,
+        });
+    });
 };
 
 // --------- STATES ---------

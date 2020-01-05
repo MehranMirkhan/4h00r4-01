@@ -8,16 +8,19 @@ import { Translate } from 'react-localize-redux';
 
 interface IToolbar {
   title?: string,
+  showBack?: boolean,
 }
 
-const Toolbar: React.FC<IToolbar> = ({ title }) => <>
+const Toolbar: React.FC<IToolbar> = ({ title, showBack = true }) => <>
   <IonToolbar color="dark">
     <IonButtons slot="start">
       <IonMenuButton />
     </IonButtons>
-    <IonButtons slot="end">
-      <IonBackButton defaultHref="/home" />
-    </IonButtons>
+    {showBack &&
+      <IonButtons slot="end">
+        <IonBackButton defaultHref="/home" />
+      </IonButtons>
+    }
     {!!title &&
       <IonTitle>
         <Translate id={title} />

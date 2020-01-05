@@ -148,8 +148,8 @@ const QuestionChoiceBody = ({ entity }: QuestionComponent) => {
   return <div className="choice-container">
     {choices.map((c, i) =>
       <IonButton key={i} type="submit" color="primary" className="choice-item"
-        onClick={() => dispatch(postAnswer(entity.id, c))}>
-        {c}
+        onClick={() => dispatch(postAnswer(entity.id, c.value))}>
+        {c.value}
       </IonButton>
     )}
   </div>;

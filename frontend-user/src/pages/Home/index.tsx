@@ -15,7 +15,7 @@ const HomePage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <Toolbar title="pages.home.title"/>
+        <Toolbar title="pages.home.title" showBack={false} />
       </IonHeader>
       <IonContent>
         <HeroSlide />

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   IonContent, IonIcon, IonItem,
   IonLabel, IonList, IonMenu,
-  IonMenuToggle, IonHeader, IonButton,
+  IonMenuToggle, IonButton,
 } from '@ionic/react';
 import { contact, exit } from 'ionicons/icons';
 import { RouteComponentProps, withRouter } from 'react-router-dom';

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Translate } from 'react-localize-redux';
 import {
   IonList, IonItem, IonLabel, IonInput,
@@ -7,14 +7,18 @@ import {
 } from '@ionic/react';
 
 import Toolbar from '../../components/Toolbar';
-import { getMe } from '../Auth/Auth.reducer';
+import { getMe, fetchMe } from '../Auth/Auth.reducer';
+import { User } from '../../declarations';
+import { AlertContext } from '../../components/AlertController';
 
 
 const Edit: React.FC = () => {
   const me = useSelector(getMe);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  
+  const [name, setName] = useState(me.name);
+  const [email, setEmail] = useState(me.email);
+  const dispatch = useDispatch();
+  const alertContext = useContext(AlertContext);
+
   return (
     <IonPage>
       <IonHeader>
@@ -38,13 +42,23 @@ const Edit: React.FC = () => {
         </IonList>
         <div className="vs24" />
         <div className="center">
-          <IonButton type="submit" color="success">
+          <IonButton type="submit" color="success"
+            onClick={() => dispatch(updateMe(alertContext)({ name, email }))}>
             <Translate id="submit" />
           </IonButton>
         </div>
       </IonContent>
     </IonPage>
   );
+}
+
+const updateMe = (alertContext: any) => (me: User) => (dispatch: any, _: any, API: any) => {
+  API.patch('/v1/me', me).then((res: any) => {
+    if (!!res && res.status === 200) {
+      dispatch(fetchMe());
+      alertContext(res.data.message);
+    }
+  });
 }
 
 export default Edit;

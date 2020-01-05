@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   IonPage, IonHeader, IonContent, IonList,
   IonItem, IonLabel, IonInput, IonButton
@@ -6,12 +6,18 @@ import {
 
 import Toolbar from '../../components/Toolbar';
 import { Translate } from 'react-localize-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { AlertContext } from '../../components/AlertController';
+import { login, getMe } from '../Auth/Auth.reducer';
 
 
 const PC: React.FC = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const dispatch = useDispatch();
+  const alertContext = useContext(AlertContext);
+  const me = useSelector(getMe);
 
   return (
     <IonPage>
@@ -39,7 +45,8 @@ const PC: React.FC = () => {
         </IonList>
         <div className="vs24" />
         <div className="center">
-          <IonButton type="submit" color="success">
+          <IonButton type="submit" color="success"
+            onClick={() => dispatch(changePassword(me, alertContext)({ oldPassword, password, passwordConfirm }))}>
             <Translate id="submit" />
           </IonButton>
         </div>
@@ -47,5 +54,20 @@ const PC: React.FC = () => {
     </IonPage>
   );
 }
+
+const changePassword = (me: any, alertContext: any) =>
+  ({ oldPassword, password, passwordConfirm }: any) =>
+    (dispatch: any, _: any, API: any) => {
+      if (password !== passwordConfirm) {
+        alertContext("pages.profile.wrongPasswordConfirm");
+        return;
+      }
+      API.post('/password', { old_password: oldPassword, new_password: password }).then((res: any) => {
+        if (!!res && res.status === 200) {
+          dispatch(login(me.phone, password));
+          alertContext(res.data.message);
+        }
+      });
+    }
 
 export default PC;

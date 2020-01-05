@@ -25,7 +25,8 @@
       "pcTitle": ["Change Password", "تغییر رمز عبور"],
       "edit": ["Edit", "ویرایش"],
       "passwordChange": ["Change Password", "تغییر رمز عبور"],
-      "oldPassword": ["Old Password", "رمز عبور قدیمی"]
+      "oldPassword": ["Old Password", "رمز عبور قدیمی"],
+      "wrongPasswordConfirm": ["Password confirmation is wrong", "تکرار رمز عبور نادرست است"]
     },
     "level": {
       "title": ["Levels", "مرحله‌ای"]
@@ -45,7 +46,9 @@
     "settings": ["Settings", "تنظیمات"]
   },
   "alert": {
-    "title": ["Error", "خطا"],
+    "title": {
+      "error": ["Error", "خطا"]
+    },
     "networkError": ["Network Error<br/>Please try again", "خطا در برقراری ارتباط با سرور<br/>لطفا دوباره تلاش کنید"]
   },
   "server": {
@@ -56,15 +59,22 @@
       "wrongOldPassword": ["Old password is wrong", "رمز عبور قدیمی اشتباه است"],
       "passwordChanged": ["Password successfully changed", "رمز عبور با موفقیت تغییر کرد"]
     },
+    "user": {
+      "updated": ["Profile updated", "پروفایل اصلاح شد"]
+    },
     "unknown": ["Uknown Error", "خطای نامشخص"],
-    "deleted": ["Record deleted", "رکورد حذف شد"]
+    "deleted": ["Record deleted", "رکورد حذف شد"],
+    "badRequest": ["Some values are wrong", "در داده‌های وارد شده خطا وجود دارد"]
   },
   "user": {
     "name": ["Name", "نام"],
     "phone": ["Phone", "شماره همراه"],
     "email": ["Email", "ایمیل"],
-    "level": ["Level", "مرحله"]
+    "level": ["Level", "مرحله"],
+    "coin_1": ["Gold", "طلا"],
+    "coin_2": ["Silver", "نقره"]
   },
+  "empty": ["", ""],
   "yes": ["Yes", "بله"],
   "no": ["No", "خیر"],
   "choose": ["Choose", "انتخاب"],
