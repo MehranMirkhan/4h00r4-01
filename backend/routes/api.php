@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'Auth'], function () {
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
-    Route::post('/password', 'AuthController@changePassword');
 });
 
 Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'], function () {
@@ -23,9 +22,13 @@ Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'],
 });
 
 Route::group(['middleware' => 'auth:api'], function () {
+    Route::group(['namespace' => 'Auth'], function () {
+        Route::post('/password', 'AuthController@changePassword');
+    });
     Route::post('/files', 'FileController@store');
     Route::delete('/files', 'FileController@destroy');
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
         Route::get('/me', 'UserController@me');
+        Route::patch('/me', 'UserController@updateMe');
     });
 });

@@ -8,10 +8,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller {
-    public function me(Request $request) {
-        return $request->user();
-    }
-
     public function index(Request $request) {
         return Utility::richRetrieve($request, User::query());
     }
@@ -32,5 +28,20 @@ class UserController extends Controller {
         } catch (\Exception $e) {
             return response()->json(['message' => 'unknown'], $e->getCode());
         }
+    }
+
+    // --------- User routes
+    public function me(Request $request) {
+        return $request->user();
+    }
+
+    public function updateMe(Request $request) {
+        $request->validate([
+            'name'  => 'nullable|string',
+            'email' => 'nullable|string|email',
+        ]);
+        $user = $request->user();
+        $user->update(['name' => $request->name, 'email' => $request->email]);
+        return response()->json(['message' => 'server.user.updated'], 200);
     }
 }

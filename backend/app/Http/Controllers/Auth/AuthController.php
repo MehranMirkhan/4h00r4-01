@@ -15,7 +15,7 @@ class AuthController extends Controller {
         try {
             $user = (new User)->findForPassport($request->username);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'auth.wrongCredentials'], 401);
+            return response()->json(['message' => 'server.auth.wrongCredentials'], 401);
         }
         try {
             $tokenRequest = Request::create('/oauth/token', 'post', [
@@ -30,9 +30,9 @@ class AuthController extends Controller {
             return $response;
         } catch (Exception $e) {
             if ($e->getCode() === 400)
-                return response()->json(['message' => 'auth.badRequest'], $e->getCode());
+                return response()->json(['message' => 'server.auth.badRequest'], $e->getCode());
             else if ($e->getCode() === 401)
-                return response()->json(['message' => 'auth.wrongCredentials'], $e->getCode());
+                return response()->json(['message' => 'server.auth.wrongCredentials'], $e->getCode());
             return response()->json(['message' => 'unknown'], $e->getCode());
         }
     }
@@ -46,7 +46,7 @@ class AuthController extends Controller {
         ]);
 
         if (!isset($request->email) && !isset($request->phone))
-            return response()->json(['message' => 'auth.emptyUsername'], 400);
+            return response()->json(['message' => 'server.auth.emptyUsername'], 400);
 
         return User::create([
             'name'     => $request->name,
@@ -68,12 +68,12 @@ class AuthController extends Controller {
         ]);
         $response = app()->handle($attempt);
         if ($response->getStatusCode() != 200)
-            return response()->json(['message' => 'auth.wrongOldPassword'], 403);
+            return response()->json(['message' => 'server.auth.wrongOldPassword'], 403);
         $user->update(['password' => Hash::make($request->new_password)]);
         $userTokens = $user->tokens;
         foreach ($userTokens as $token) {
             $token->revoke();
         }
-        return response()->json(['message' => 'auth.passwordChanged'], 200);
+        return response()->json(['message' => 'server.auth.passwordChanged'], 200);
     }
 }
