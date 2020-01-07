@@ -36,6 +36,9 @@ const Navbar = connect(null, dispatch => ({
         active={route === 'setting'}
         color="blue"
         icon="setting"
+        link
+        as={Link}
+        to="/settings"
       />
 
       <Menu.Menu position='right'>

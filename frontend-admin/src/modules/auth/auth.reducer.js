@@ -34,10 +34,13 @@ export default (state = initialState, action) => {
 
 export const login = (username, password) => (dispatch, _, API) => {
   return API.post('/login', { username, password })
-    .then(resp => dispatch({
-      type: AUTH_ACTIONS.LOGIN,
-      payload: !!resp ? resp.data : undefined,
-    }));
+    .then(resp => {
+      dispatch({
+        type: AUTH_ACTIONS.LOGIN,
+        payload: !!resp ? resp.data : undefined,
+      });
+      dispatch(fetchMe());
+    });
 };
 
 export const logout = () => (dispatch) => {
@@ -53,6 +56,20 @@ export const fetchMe = () => (dispatch, _, API) => {
       payload: !!resp ? resp.data : undefined,
     }));
 };
+
+export const changePassword = ({ old_password, new_password, new_password_confirm }) =>
+  (dispatch, getState, API) => {
+    if (new_password !== new_password_confirm) {
+      alert("تکرار رمز عبور اشتباه است");
+      return;
+    }
+    return API.post('/password', { old_password, new_password }).then((res) => {
+      if (!!res && res.status === 200) {
+        dispatch(login(getMe(getState()).phone, new_password));
+        alert("رمز عبور با موفقیت تغییر کرد");
+      }
+    });
+  }
 
 // --------- STATES ---------
 
