@@ -36,6 +36,7 @@ function QuestionEdit(props) {
       <Field component={MultiFilePicker} name="images" label={Question.images.label} path="q_img" />
       <Field component={ChoicesField} name="choices" label={Question.choices.label} />
       <Field component={MultiInputField} name="letters" label={Question.letters.label} />
+      <Field component={InputField} name="letters_num" label={Question.letters_num.label} />
       <Field component={MultiInputField} name="solutions" label={Question.solutions.label} />
     </>}
     EditFields={formProps => <>
@@ -55,6 +56,7 @@ function QuestionEdit(props) {
       <Field component={MultiFilePicker} name="images" label={Question.images.label} path="q_img" />
       <Field component={ChoicesField} name="choices" label={Question.choices.label} />
       <Field component={MultiInputField} name="letters" label={Question.letters.label} />
+      <Field component={InputField} name="letters_num" label={Question.letters_num.label} />
       <Field component={MultiInputField} name="solutions" label={Question.solutions.label} />
     </>}
   />;

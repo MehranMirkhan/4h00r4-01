@@ -32,6 +32,7 @@ const Question = {
   images: { label: "تصاویر" },
   choices: { label: "گزینه‌ها" },
   letters: { label: "حروف" },
+  letters_num: { label: "تعداد حروف" },
   solutions: { label: "جواب‌ها" },
 };
 
