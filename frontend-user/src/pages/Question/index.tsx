@@ -15,6 +15,8 @@ import { entitySelector, answerResultSelector, fetch, postAnswer, reset } from '
 import { Question, AnswerType } from '../../declarations';
 import Toolbar from '../../components/Toolbar';
 
+import config from '../../app.config.json';
+
 
 const QuestionPage: React.FC = ({ match }: any) => {
   const entity = useSelector(entitySelector);
@@ -57,7 +59,7 @@ const QuestionImages: React.FC<QuestionComponent> = ({ entity }) => {
   return (
     <IonSlides pager options={options} className="slider">
       {!!entity.images && entity.images.map((img: string, i: number) =>
-        <IonSlide key={i}><img src={img} alt="" /></IonSlide>)}
+        <IonSlide key={i}><img src={`${config.base_url}/storage/${img}`} alt="" /></IonSlide>)}
     </IonSlides>
   );
 }

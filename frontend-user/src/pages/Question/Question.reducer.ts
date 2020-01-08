@@ -38,10 +38,15 @@ export const reset = () => ({
   type: QuestionActions.RESET,
 });
 
-export const fetch = (id: number) => (dispatch: Dispatch) => {
-  dispatch({
-    type: QuestionActions.SET,
-    payload: API.getQuestion(id),
+export const fetch = (id: number) => (dispatch: Dispatch, _: any, API: any) => {
+  return API.get(`/v1/questions/${id}`).then((res: any) => {
+    if (!!res && res.status === 200) {
+      let question = convert(res.data);
+      dispatch({
+        type: QuestionActions.SET,
+        payload: question,
+      });
+    }
   });
 };
 
@@ -51,3 +56,12 @@ export const postAnswer = (id: number, answer: string) => (dispatch: Dispatch) =
     payload: API.postAnswer(id, answer),
   });
 };
+
+
+function convert(data: any) {
+  let q = {...data};
+  if (!!q.images) q.images = JSON.parse(data.images);
+  if (!!q.choices) q.choices = JSON.parse(data.choices);
+  if (!!q.letters) q.letters = JSON.parse(data.letters);
+  return q;
+}

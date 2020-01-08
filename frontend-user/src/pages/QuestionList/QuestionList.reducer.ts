@@ -34,9 +34,11 @@ export const reset = () => ({
 export const fetch = (time_type: TimeType) => (dispatch: Dispatch, getState: any, API: any) => {
   const locale = getState().settings.lang;
   return API.get('/v1/questions', { params: { time_type, locale } }).then((res: any) => {
-    dispatch({
-      type: QuestionListActions.SET,
-      payload: res.data.data,
-    });
+    if (!!res && res.status === 200) {
+      dispatch({
+        type: QuestionListActions.SET,
+        payload: res.data.data,
+      });
+    }
   });
 }

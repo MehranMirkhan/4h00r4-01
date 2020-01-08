@@ -1,6 +1,7 @@
 {
   "persist_key": "puzzles_ugQzcAOtUd",
   "_server_url": "http://localhost/4h00r4-01/backend/public/api",
+  "base_url": "http://192.168.1.123/4h00r4-01/backend/public",
   "server_url": "http://192.168.1.123/4h00r4-01/backend/public/api",
   "request_timeout": 5000,
   "languages": [
