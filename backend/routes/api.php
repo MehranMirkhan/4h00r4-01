@@ -32,3 +32,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::patch('/me', 'UserController@updateMe');
     });
 });
+
+Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
+    Route::get('/questions', 'QuestionController@getAllForUser');
+});

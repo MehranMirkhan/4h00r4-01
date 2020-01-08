@@ -36,4 +36,15 @@ class QuestionController extends Controller {
             return response()->json(['message' => 'unknown'], $e->getCode());
         }
     }
+
+    // ----------------------- User routes
+    public function getAllForUser(Request $request) {
+        $page_size = 10;
+        $query = Question::query();
+        if (isset($request->time_type))
+            $query->where('time_type', $request->time_type);
+        if (isset($request['locale']))
+            $query->where('locale', $request['locale']);
+        return $query->paginate($page_size);
+    }
 }
