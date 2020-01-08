@@ -35,4 +35,5 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
     Route::get('/questions', 'QuestionController@getAllForUser');
+    Route::get('/questions/{id}', 'QuestionController@getForUser');
 });

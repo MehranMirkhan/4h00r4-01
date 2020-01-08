@@ -47,4 +47,10 @@ class QuestionController extends Controller {
             $query->where('locale', $request['locale']);
         return $query->paginate($page_size);
     }
+
+    public function getForUser($id) {
+        $question = Question::query()->where('id', $id)->firstOrFail();
+        unset($question['solutions']);
+        return $question;
+    }
 }
