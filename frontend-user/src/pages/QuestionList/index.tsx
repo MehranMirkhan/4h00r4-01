@@ -4,7 +4,7 @@ import {
 } from '@ionic/react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { dataSelector, fetch } from './QuestionList.reducer';
+import { dataSelector, fetch, reset } from './QuestionList.reducer';
 
 import { Question, TimeType } from '../../declarations';
 import { getURLParams } from '../../utils';
@@ -38,6 +38,7 @@ const QuestionList: React.FC<IQuestionList> = ({ timeType }) => {
   const data = useSelector(dataSelector);
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(reset());
     dispatch(fetch(timeType));
   }, [dispatch, timeType]);
   return (

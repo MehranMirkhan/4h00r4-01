@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
 import {
   IonContent, IonHeader, IonPage,
   IonSlides, IonSlide, IonChip, IonIcon,
-  IonLabel, IonInput, IonButton,
+  IonLabel, IonInput, IonButton, IonAlert,
 } from '@ionic/react';
 import moment from 'moment';
-import { Translate } from 'react-localize-redux';
+import { Translate, withLocalize } from 'react-localize-redux';
 import { alarm } from 'ionicons/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -21,24 +22,26 @@ import config from '../../app.config.json';
 const QuestionPage: React.FC = ({ match }: any) => {
   const entity = useSelector(entitySelector);
   const answerResult = useSelector(answerResultSelector);
+  const [redirect, setRedirect] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(reset());
     dispatch(fetch(Number(match.params.id)));
   }, [dispatch, match]);
   return (
-    <IonPage>
-      <IonHeader>
-        <Toolbar title="pages.question.title"/>
-      </IonHeader>
-      <IonContent>
-        <QuestionImages entity={entity} />
-        <div style={{ textAlign: "center" }}><h1>{!entity ? "" : entity.text}</h1></div>
-        <QuestionTimer entity={entity} />
-        <AnswerResult answerResult={answerResult} />
-        <QuestionBody entity={entity} />
-      </IonContent>
-    </IonPage>
+    redirect ? <Redirect to={`/question_list?type=${entity.time_type}`} /> :
+      <IonPage>
+        <IonHeader>
+          <Toolbar title="pages.question.title" />
+        </IonHeader>
+        <IonContent>
+          <QuestionImages entity={entity} />
+          <div style={{ textAlign: "center" }}><h1>{!entity ? "" : entity.text}</h1></div>
+          <QuestionTimer entity={entity} />
+          <AnswerResult answerResult={answerResult} setRedirect={setRedirect} />
+          <QuestionBody entity={entity} />
+        </IonContent>
+      </IonPage>
   );
 };
 
@@ -66,8 +69,7 @@ const QuestionImages: React.FC<QuestionComponent> = ({ entity }) => {
 
 function calculateTimeLeft(deadline: string | Date | undefined) {
   const start = moment();
-  const end = moment(deadline);
-  // return moment.duration(end.diff(start));
+  const end = moment.utc(deadline);
   return end.diff(start);
 }
 
@@ -76,15 +78,17 @@ const QuestionTimer: React.FC<QuestionComponent> = ({ entity }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(dl));
 
   useEffect(() => {
-    let v = setTimeout(() => {
-      setTimeLeft(calculateTimeLeft(dl));
-    }, 1000);
-    return () => clearTimeout(v);
+    if (timeLeft > 0) {
+      let v = setTimeout(() => {
+        setTimeLeft(calculateTimeLeft(dl));
+      }, 1000);
+      return () => clearTimeout(v);
+    }
   });
 
   useEffect(() => {
-    setTimeLeft(calculateTimeLeft(dl));
-  }, [entity, setTimeLeft, dl]);
+    if (timeLeft > 0) setTimeLeft(calculateTimeLeft(dl));
+  }, [entity, setTimeLeft, dl, timeLeft]);
 
   const daysLeft = moment.duration(timeLeft).days();
   const hmsLeft = moment.utc(timeLeft).format("HH:mm:ss");
@@ -92,12 +96,16 @@ const QuestionTimer: React.FC<QuestionComponent> = ({ entity }) => {
   return (
     <div className="timer-container">
       {!entity ? null :
-        <IonChip className="timer-chip">
+        <IonChip className="timer-chip" color={timeLeft > 0 ? "primary" : "danger"}>
           <IonIcon icon={alarm} size="large" />
           <IonLabel className="timer-label">
-            <span>{daysLeft}</span>
-            <span className="timer-days"><Translate id="days" /></span>
-            <span>{hmsLeft}</span>
+            {timeLeft > 0 ?
+              <>
+                <span>{daysLeft}</span>
+                <span className="timer-days"><Translate id="days" /></span>
+                <span>{hmsLeft}</span>
+              </>
+              : <span><Translate id="pages.question.time_up" /></span>}
           </IonLabel>
         </IonChip>
       }
@@ -105,16 +113,23 @@ const QuestionTimer: React.FC<QuestionComponent> = ({ entity }) => {
   );
 }
 
-const AnswerResult = ({ answerResult }: { answerResult: boolean | undefined }) => {
-  if (answerResult === undefined) return null;
-  return <div className="timer-container">
-    <IonChip color={answerResult ? "success" : "danger"} className="answer-chip">
-      <IonLabel>
-        <Translate id={`pages.question.${answerResult ? 'correct' : 'wrong'}`} />
-      </IonLabel>
-    </IonChip>
-  </div>;
-};
+const AnswerResult = withLocalize(({ answerResult, setRedirect, translate }: any) => {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (answerResult !== undefined) {
+      setOpen(true);
+      setTimeout(() => {
+        setOpen(false);
+        if (answerResult === true) setRedirect(true);
+      }, 1000);
+    }
+  }, [answerResult, setRedirect]);
+  return <IonAlert
+    isOpen={open}
+    onDidDismiss={() => setOpen(false)}
+    message={translate(`pages.question.${answerResult ? 'correct' : 'wrong'}`)}
+  />
+});
 
 const QuestionBody: React.FC<QuestionComponent> = ({ entity }) => {
   if (!entity) return null;

@@ -1,5 +1,4 @@
 import { Dispatch } from "redux";
-import { API } from "../../data";
 
 export enum QuestionActions {
   RESET = "Question/RESET",
@@ -50,16 +49,22 @@ export const fetch = (id: number) => (dispatch: Dispatch, _: any, API: any) => {
   });
 };
 
-export const postAnswer = (id: number, answer: string) => (dispatch: Dispatch) => {
-  dispatch({
-    type: QuestionActions.SET_ANSWER,
-    payload: API.postAnswer(id, answer),
-  });
-};
+export const postAnswer = (id: number, answer: string) =>
+  (dispatch: Dispatch, _: any, API: any) => {
+    return API.post(`/v1/answers`, { question_id: id, text: answer })
+      .then((res: any) => {
+        if (!!res && [200, 201].indexOf(res.status) >= 0) {
+          dispatch({
+            type: QuestionActions.SET_ANSWER,
+            payload: res.data.correct,
+          });
+        }
+      });
+  };
 
 
 function convert(data: any) {
-  let q = {...data};
+  let q = { ...data };
   if (!!q.images) q.images = JSON.parse(data.images);
   if (!!q.choices) q.choices = JSON.parse(data.choices);
   if (!!q.letters) q.letters = JSON.parse(data.letters);

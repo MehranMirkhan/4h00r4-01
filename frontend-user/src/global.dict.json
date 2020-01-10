@@ -34,8 +34,9 @@
     "question": {
       "title": ["Question", "معما"],
       "send": ["Send", "ارسال"],
-      "correct": ["Correct", "پاسخ درست است"],
-      "wrong": ["Wrong", "پاسخ اشتباه است"]
+      "correct": ["The answer is correct", "پاسخ درست است"],
+      "wrong": ["The answer is wrong", "پاسخ اشتباه است"],
+      "time_up": ["Answering time has ended", "مهلت پاسخدهی پایان یافته است"]
     }
   },
   "menu": {
@@ -61,6 +62,11 @@
     },
     "user": {
       "updated": ["Profile updated", "پروفایل اصلاح شد"]
+    },
+    "answer": {
+      "time_up": ["Answering time has ended", "مهلت پاسخدهی پایان یافته است"],
+      "already_answered": ["The question is already answered", "به این سوال قبلاْ جواب داده‌اید"],
+      "reached_tries": ["Maximum number of tries have reached", "اجازه تلاش مجدد ندارید"]
     },
     "unknown": ["Uknown Error", "خطای نامشخص"],
     "deleted": ["Record deleted", "رکورد حذف شد"],

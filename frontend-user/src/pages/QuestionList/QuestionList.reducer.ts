@@ -1,6 +1,5 @@
 import { TimeType } from "../../declarations";
 import { Dispatch } from "redux";
-import { API } from "../../data";
 
 export enum QuestionListActions {
   RESET = "QuestionList/RESET",
