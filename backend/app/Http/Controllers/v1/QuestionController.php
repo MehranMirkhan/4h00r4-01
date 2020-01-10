@@ -48,9 +48,11 @@ class QuestionController extends Controller {
         return $query->paginate($page_size);
     }
 
-    public function getForUser($id) {
+    public function getForUser($id, Request $request) {
         $question = Question::query()->where('id', $id)->firstOrFail();
         unset($question['solutions']);
+        unset($question['created_at']);
+        unset($question['updated_at']);
         return $question;
     }
 }

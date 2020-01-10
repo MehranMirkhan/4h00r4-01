@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
         Route::get('/me', 'UserController@me');
         Route::patch('/me', 'UserController@updateMe');
+        Route::post('/answers', 'AnswerController@handleAnswer');
     });
 });
 

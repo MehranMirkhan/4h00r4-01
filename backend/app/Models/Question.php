@@ -17,6 +17,7 @@ class Question extends Model {
         'answer_type',
         'choices',
         'letters',
+        'letters_num',
         'solutions',
         'locale',
     ];
