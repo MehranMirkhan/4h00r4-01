@@ -2,7 +2,7 @@
 import { Question, TimeType, AnswerType, User } from './declarations';
 
 
-export const me: User = {
+export const me: Partial<User> = {
   id: 1,
   name: "Mehran",
   email: "someone@somewhere.com",
@@ -10,7 +10,7 @@ export const me: User = {
   level: 3,
 };
 
-export const questions: Question[] = [
+export const questions: Partial<Question>[] = [
   {
     id: 1,
     title: "is 3301 prime?",

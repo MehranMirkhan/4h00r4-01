@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import {
   IonContent, IonHeader, IonPage,
   IonSlides, IonSlide, IonChip, IonIcon,
-  IonLabel, IonInput, IonButton, IonAlert,
+  IonLabel, IonInput, IonButton, IonAlert, IonActionSheet,
 } from '@ionic/react';
 import moment from 'moment';
 import { Translate, withLocalize } from 'react-localize-redux';
@@ -11,9 +11,12 @@ import { alarm } from 'ionicons/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import './Question.css';
-import { entitySelector, answerResultSelector, fetch, postAnswer, reset } from './Question.reducer';
+import {
+  entitySelector, answerResultSelector, fetch,
+  postAnswer, reset, buyHint, hintResultSelector
+} from './Question.reducer';
 
-import { Question, AnswerType } from '../../declarations';
+import { Question, AnswerType, Hint } from '../../declarations';
 import Toolbar from '../../components/Toolbar';
 
 import config from '../../app.config.json';
@@ -27,7 +30,7 @@ const QuestionPage: React.FC = ({ match }: any) => {
   useEffect(() => {
     dispatch(reset());
     dispatch(fetch(Number(match.params.id)));
-  }, [dispatch, match]);
+  }, [dispatch, match.params.id]);
   return (
     redirect ? <Redirect to={`/question_list?type=${entity.time_type}`} /> :
       <IonPage>
@@ -40,13 +43,14 @@ const QuestionPage: React.FC = ({ match }: any) => {
           <QuestionTimer entity={entity} />
           <AnswerResult answerResult={answerResult} setRedirect={setRedirect} />
           <QuestionBody entity={entity} />
+          <QuestionHint entity={entity} />
         </IonContent>
       </IonPage>
   );
 };
 
 interface QuestionComponent {
-  entity: Question,
+  entity: Partial<Question>,
 }
 
 const QuestionImages: React.FC<QuestionComponent> = ({ entity }) => {
@@ -87,8 +91,8 @@ const QuestionTimer: React.FC<QuestionComponent> = ({ entity }) => {
   });
 
   useEffect(() => {
-    if (timeLeft > 0) setTimeLeft(calculateTimeLeft(dl));
-  }, [entity, setTimeLeft, dl, timeLeft]);
+    setTimeLeft(calculateTimeLeft(dl));
+  }, [entity, setTimeLeft, dl]);
 
   const daysLeft = moment.duration(timeLeft).days();
   const hmsLeft = moment.utc(timeLeft).format("HH:mm:ss");
@@ -148,11 +152,14 @@ const QuestionBody: React.FC<QuestionComponent> = ({ entity }) => {
 const QuestionTextBody = ({ entity }: QuestionComponent) => {
   const [answer, setAnswer] = useState("");
   const dispatch = useDispatch();
+  const submit = () => {
+    if (!!entity.id) dispatch(postAnswer(entity.id, answer));
+  };
   return <>
     <IonInput autofocus value={answer} className="answer-input"
       onIonChange={e => setAnswer(e.detail.value as string)} />
     <IonButton type="submit" color="primary" expand="block" style={{ marginTop: 16 }}
-      onClick={() => dispatch(postAnswer(entity.id, answer))}>
+      onClick={submit}>
       <Translate id="pages.question.send" />
     </IonButton>
   </>;
@@ -162,10 +169,13 @@ const QuestionChoiceBody = ({ entity }: QuestionComponent) => {
   const dispatch = useDispatch();
   const choices = entity.choices;
   if (!choices) return null;
+  const submit = (c: any) => () => {
+    if (!!entity.id) dispatch(postAnswer(entity.id, c.value));
+  };
   return <div className="choice-container">
     {choices.map((c, i) =>
       <IonButton key={i} type="submit" color="primary" className="choice-item"
-        onClick={() => dispatch(postAnswer(entity.id, c.value))}>
+        onClick={submit(c)}>
         {c.value}
       </IonButton>
     )}
@@ -220,6 +230,11 @@ const QuestionLetterBody = ({ entity }: QuestionComponent) => {
       {letterIndex !== undefined ? letters[letterIndex] : ''}
     </IonButton>;
 
+  const submit = () => {
+    if (!!entity.id) dispatch(postAnswer(entity.id,
+      answer.map((a: AnswerLetter) => letters[a ? a : 0]).join('')));
+  };
+
   return <>
     <div className="letters-container">
       {letters.map(hintItem)}
@@ -229,11 +244,47 @@ const QuestionLetterBody = ({ entity }: QuestionComponent) => {
     </div>
     <IonButton type="submit" color="primary" expand="block" style={{ marginTop: 16 }}
       disabled={answer.indexOf(undefined) !== -1}
-      onClick={() => dispatch(postAnswer(entity.id,
-        answer.map((a: AnswerLetter) => letters[a ? a : 0]).join('')))}>
+      onClick={submit}>
       <Translate id="pages.question.send" />
     </IonButton>
   </>;
 };
+
+const QuestionHint = withLocalize(({ entity, translate }: any) => {
+  const [open, setOpen] = useState(false);
+  
+  const hintResult = useSelector(hintResultSelector);
+  const dispatch = useDispatch();
+  
+  const onOpen = () => setOpen(true);
+  const onClose = () => setOpen(false);
+  
+  if (!entity) return null;
+  const hints: Hint[] | undefined = entity.hints;
+  if (!hints || hints.length === 0) return null;
+
+  const btnHintItem = (hint: Hint) => ({
+    text: `${hint.type} - ${hint.price} Gold`,
+    icon: 'flash',
+    handler: () => {
+      dispatch(buyHint(hint.id));
+    },
+  });
+
+  return <>
+    <IonActionSheet
+      isOpen={open}
+      onDidDismiss={onClose}
+      buttons={hints.map(btnHintItem)} />
+    <IonButton color="success" expand="block" style={{ marginTop: 16 }}
+      onClick={onOpen}>
+      <Translate id="pages.question.hints" />
+    </IonButton>
+    <IonAlert
+      isOpen={!!hintResult}
+      message={!!hintResult ? translate(hintResult) : ""}
+    />
+  </>;
+});
 
 export default QuestionPage;

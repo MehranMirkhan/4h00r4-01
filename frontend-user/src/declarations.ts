@@ -5,33 +5,34 @@ export type AppPage = {
 }
 
 export type User = {
-  id?: number,
-  name?: string,
-  phone?: string,
-  email?: string,
-  coin_1?: number,
-  coin_2?: number,
-  score_daily?: number,
-  score_weekly?: number,
-  level?: number,
-  profile_pic?: string,
+  id: number,
+  name: string,
+  phone: string,
+  email: string,
+  coin_1: number,
+  coin_2: number,
+  score_daily: number,
+  score_weekly: number,
+  level: number,
+  profile_pic: string,
 }
 
 export type Question = {
   id: number,
-  title?: string,
-  images?: string[],
-  start_time?: Date,
-  end_time?: Date,
-  score?: number,
-  tries?: number,
-  time_type?: TimeType,
-  answer_type?: AnswerType,
-  choices?: Choice[],
-  letters?: string[],
-  letters_num?: number,
-  solutions?: string[],
-  locale?: Locale,
+  title: string,
+  images: string[],
+  start_time: Date,
+  end_time: Date,
+  score: number,
+  tries: number,
+  time_type: TimeType,
+  answer_type: AnswerType,
+  choices: Choice[],
+  letters: string[],
+  letters_num: number,
+  solutions: string[],
+  locale: Locale,
+  hints: Hint[],
 }
 
 export type Choice = {
@@ -43,14 +44,15 @@ export type Answer = {
   user_id: number,
   question_id: number,
   text: string,
-  correct?: boolean,
+  correct: boolean,
 }
 
 export type Hint = {
+  id: number,
   question_id: number,
   type: HintType,
   value: string,
-  price?: number,
+  price: number,
 }
 
 export type Achievement = {

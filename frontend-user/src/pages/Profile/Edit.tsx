@@ -52,7 +52,7 @@ const Edit: React.FC = () => {
   );
 }
 
-const updateMe = (alertContext: any) => (me: User) => (dispatch: any, _: any, API: any) => {
+const updateMe = (alertContext: any) => (me: Partial<User>) => (dispatch: any, _: any, API: any) => {
   API.patch('/v1/me', me).then((res: any) => {
     if (!!res && res.status === 200) {
       dispatch(fetchMe());

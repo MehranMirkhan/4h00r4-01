@@ -39,7 +39,7 @@ const QuestionList: React.FC<IQuestionList> = ({ timeType }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(reset());
-    dispatch(fetch(timeType));
+    if (!!timeType) dispatch(fetch(timeType));
   }, [dispatch, timeType]);
   return (
     <div>

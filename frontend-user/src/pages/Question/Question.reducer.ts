@@ -4,11 +4,14 @@ export enum QuestionActions {
   RESET = "Question/RESET",
   SET = "Question/SET",
   SET_ANSWER = "Question/SET_ANSWER",
+  SET_HINT = "Question/SET_HINT",
+  RESET_HINT = "Question/RESET_HINT",
 }
 
 const initialState = {
   entity: undefined,
   answerResult: undefined,
+  hintResult: undefined,
 };
 
 export default (state = initialState, action: any) => {
@@ -23,6 +26,16 @@ export default (state = initialState, action: any) => {
         ...state,
         answerResult: action.payload,
       };
+    case QuestionActions.SET_HINT:
+      return {
+        ...state,
+        hintResult: action.payload,
+      };
+    case QuestionActions.RESET_HINT:
+      return {
+        ...state,
+        hintResult: undefined,
+      };
     case QuestionActions.RESET:
       return initialState;
     default:
@@ -32,6 +45,7 @@ export default (state = initialState, action: any) => {
 
 export const entitySelector = (state: any) => state.question.entity;
 export const answerResultSelector = (state: any) => state.question.answerResult;
+export const hintResultSelector = (state: any) => state.question.hintResult;
 
 export const reset = () => ({
   type: QuestionActions.RESET,
@@ -61,6 +75,20 @@ export const postAnswer = (id: number, answer: string) =>
         }
       });
   };
+
+export const buyHint = (id: number) => (dispatch: Dispatch, _: any, API: any) => {
+  return API.post(`/v1/hints/${id}/buy`)
+    .then((res: any) => {
+      if (!!res && res.status === 200)
+        dispatch({
+          type: QuestionActions.SET_HINT,
+          payload: res.data,
+        });
+        setTimeout(() => dispatch({
+          type: QuestionActions.RESET_HINT,
+        }), 1000);
+    });
+};
 
 
 function convert(data: any) {
