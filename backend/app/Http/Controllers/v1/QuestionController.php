@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Utility;
 use App\Models\Question;
+use App\Models\UserHint;
 use Illuminate\Http\Request;
 
 
@@ -49,10 +50,25 @@ class QuestionController extends Controller {
     }
 
     public function getForUser($id, Request $request) {
-        $question = Question::query()->where('id', $id)->firstOrFail();
+        $question = Question::query()->where('id', $id)
+                            ->with('hints')
+                            ->firstOrFail();
         unset($question['solutions']);
         unset($question['created_at']);
         unset($question['updated_at']);
+        foreach ($question->hints as $hint) {
+            try {
+                $user = $request->user();
+                UserHint::query()->where([
+                    'hint_id' => $hint->id,
+                    'user_id' => $user->id,
+                ])->firstOrFail();
+            } catch (\Exception $e) {
+                unset($hint['value']);
+            }
+            unset($hint['created_at']);
+            unset($hint['updated_at']);
+        }
         return $question;
     }
 }

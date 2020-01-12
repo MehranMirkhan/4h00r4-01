@@ -11,6 +11,7 @@ class Hint extends Model {
         'type',
         'value',
         'price',
+        'order_no',
     ];
 
     public function question() {

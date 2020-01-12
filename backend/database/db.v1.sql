@@ -1,4 +1,3 @@
--- DROP TABLE users
 CREATE TABLE users
 (
     id                BIGINT                NOT NULL AUTO_INCREMENT,
@@ -24,7 +23,6 @@ CREATE TABLE users
     UNIQUE (phone)
 );
 
--- DROP TABLE questions
 CREATE TABLE questions
 (
     id          BIGINT                            NOT NULL AUTO_INCREMENT,
@@ -46,7 +44,6 @@ CREATE TABLE questions
     PRIMARY KEY (id)
 );
 
--- DROP TABLE answers
 CREATE TABLE answers
 (
     id          BIGINT    NOT NULL AUTO_INCREMENT,
@@ -61,7 +58,6 @@ CREATE TABLE answers
     FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
 );
 
--- DROP TABLE hints
 CREATE TABLE hints
 (
     id          BIGINT                                            NOT NULL AUTO_INCREMENT,
@@ -69,13 +65,13 @@ CREATE TABLE hints
     type        ENUM ('image', 'choice', 'letter', 'try', 'time') NULL DEFAULT NULL,
     value       TEXT                                              NULL DEFAULT NULL,
     price       INT                                               NULL DEFAULT NULL,
+    order_no    INT                                               NULL DEFAULT NULL,
     created_at  TIMESTAMP                                         NULL DEFAULT NULL,
     updated_at  TIMESTAMP                                         NULL DEFAULT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
 );
 
--- DROP TABLE user_hints
 CREATE TABLE user_hints
 (
     id         BIGINT    NOT NULL AUTO_INCREMENT,
@@ -88,7 +84,6 @@ CREATE TABLE user_hints
     FOREIGN KEY (hint_id) REFERENCES hints (id) ON DELETE CASCADE
 );
 
--- DROP TABLE achievements
 CREATE TABLE achievements
 (
     id         BIGINT      NOT NULL AUTO_INCREMENT,
@@ -98,7 +93,6 @@ CREATE TABLE achievements
     PRIMARY KEY (id)
 );
 
--- DROP TABLE user_achievements
 CREATE TABLE user_achievements
 (
     id             BIGINT    NOT NULL AUTO_INCREMENT,

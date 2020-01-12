@@ -30,11 +30,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
         Route::get('/me', 'UserController@me');
         Route::patch('/me', 'UserController@updateMe');
+        Route::get('/questions', 'QuestionController@getAllForUser');
+        Route::get('/questions/{id}', 'QuestionController@getForUser');
         Route::post('/answers', 'AnswerController@handleAnswer');
+        Route::post('/hints/{id}/buy', 'UserHintController@buy');
     });
 });
 
 Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
-    Route::get('/questions', 'QuestionController@getAllForUser');
-    Route::get('/questions/{id}', 'QuestionController@getForUser');
 });
