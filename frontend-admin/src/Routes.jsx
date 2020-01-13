@@ -19,6 +19,8 @@ import UserAchievements from 'src/modules/user_achievements';
 import Settings from 'src/modules/settings';
 import NotFound from 'src/modules/NotFound';
 
+import pjson from '../package.json';
+
 
 const mapStateToProps = state => ({
   isAuthenticated: isAuthenticated(state),
@@ -49,8 +51,11 @@ function Routes({ fetchMe, logout, isAuthenticated, me }) {
       alert("فقط مدیر سامانه اجازه دسترسی دارد");
     }
   }
+  const routerParams = {};
+  if (!!pjson.homepage)
+    routerParams.basename = pjson.homepage;
   return (
-    <BrowserRouter>
+    <BrowserRouter {...routerParams}>
       <Switch>
         <UnAuthRoute exact path="/" component={Auth} />
         <AuthRoute exact path="/report" component={Report} />

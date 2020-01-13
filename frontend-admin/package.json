@@ -2,6 +2,7 @@
   "name": "puzzles",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/puzzles",
   "author": {
     "name": "Mehran Mirkhan",
     "email": "mehranmirkhan@gmail.com",
