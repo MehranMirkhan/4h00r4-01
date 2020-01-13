@@ -37,8 +37,8 @@ function QuestionSelect(props) {
       { key: "answer_type", header: Question.answer_type.label },
       { key: "start_time", header: Question.start_time.label },
       { key: "end_time", header: Question.end_time.label },
-      { key: "score", header: Question.score.label },
-      { key: "tries", header: Question.tries.label },
+      // { key: "score", header: Question.score.label },
+      // { key: "tries", header: Question.tries.label },
     ]}
   />;
 }

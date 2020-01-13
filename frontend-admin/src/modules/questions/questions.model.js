@@ -43,7 +43,9 @@ export const print = q => {
   if (!!q.time_type) q.time_type = q.time_type.text;
   q.answer_type = Question.answer_type.options.find(x => x.value === q.answer_type);
   if (!!q.answer_type) q.answer_type = q.answer_type.text;
-  if (q.start_time) q.start_time = moment(q.start_time, 'YYYY-MM-DD HH:mm:ss').format('jYYYY/jMM/jDD');
-  if (q.end_time) q.end_time = moment(q.end_time, 'YYYY-MM-DD HH:mm:ss').format('jYYYY/jMM/jDD');
+  // if (q.start_time) q.start_time = moment(q.start_time, 'YYYY-MM-DD HH:mm:ss').format('jYYYY/jMM/jDD');
+  // if (q.end_time) q.end_time = moment(q.end_time, 'YYYY-MM-DD HH:mm:ss').format('jYYYY/jMM/jDD');
+  if (q.start_time) q.start_time = (new Date(q.start_time)).toGMTString();
+  if (q.end_time) q.end_time = (new Date(q.end_time)).toGMTString();
   return q;
 }
