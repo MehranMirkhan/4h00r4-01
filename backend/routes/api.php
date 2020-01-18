@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
     Route::post('/files', 'FileController@store');
     Route::delete('/files', 'FileController@destroy');
+
     Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
         Route::get('/me', 'UserController@me');
         Route::patch('/me', 'UserController@updateMe');
@@ -35,7 +36,4 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/answers', 'AnswerController@handleAnswer');
         Route::post('/hints/{id}/buy', 'UserHintController@buy');
     });
-});
-
-Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
 });

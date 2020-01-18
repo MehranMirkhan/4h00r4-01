@@ -28,7 +28,7 @@ class AuthController extends Controller {
             ]);
             $response = app()->handle($tokenRequest);
             return $response;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             if ($e->getCode() === 400)
                 return response()->json(['message' => 'server.auth.badRequest'], $e->getCode());
             else if ($e->getCode() === 401)
@@ -39,19 +39,12 @@ class AuthController extends Controller {
 
     public function register(Request $request) {
         $request->validate([
-            'name'     => 'string|max:255',
-            'email'    => 'string|email|max:255|unique:users',
-            'phone'    => 'string|max:255|unique:users',
+            'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
-        if (!isset($request->email) && !isset($request->phone))
-            return response()->json(['message' => 'server.auth.emptyUsername'], 400);
-
         return User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'phone'    => $request->phone,
+            'username' => $request->username,
             'password' => Hash::make($request->password),
         ]);
     }
@@ -63,7 +56,7 @@ class AuthController extends Controller {
         ]);
         $user = $request->user();
         $attempt = Request::create('/api/login', 'post', [
-            'username' => isset($user->phone) ? $user->phone : $user->email,
+            'username' => $user->username,
             'password' => $request->old_password,
         ]);
         $response = app()->handle($attempt);

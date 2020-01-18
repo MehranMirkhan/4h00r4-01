@@ -1,12 +1,13 @@
 CREATE TABLE users
 (
     id                BIGINT                NOT NULL AUTO_INCREMENT,
+    username          VARCHAR(256)          NOT NULL,
+    password          VARCHAR(256)          NOT NULL,
     name              VARCHAR(256)          NULL     DEFAULT NULL,
     phone             VARCHAR(32)           NULL,
     email             VARCHAR(256)          NULL,
     phone_verified_at TIMESTAMP             NULL     DEFAULT NULL,
     email_verified_at TIMESTAMP             NULL     DEFAULT NULL,
-    password          TEXT                  NOT NULL,
     role              ENUM ('admin','user') NULL     DEFAULT 'user',
     is_active         BOOLEAN               NOT NULL DEFAULT TRUE,
     coin_1            INT                   NOT NULL DEFAULT 0,
@@ -19,6 +20,7 @@ CREATE TABLE users
     created_at        TIMESTAMP             NULL     DEFAULT NULL,
     updated_at        TIMESTAMP             NULL     DEFAULT NULL,
     PRIMARY KEY (id),
+    UNIQUE (username),
     UNIQUE (email),
     UNIQUE (phone)
 );

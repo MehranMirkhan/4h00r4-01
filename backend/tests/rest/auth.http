@@ -1,0 +1,19 @@
+POST http://localhost/puzzles/api/login
+content-type: application/json
+accept-type: application/json
+
+{
+    "username": "admin",
+    "password": "123456"
+}
+
+###
+
+POST http://localhost/puzzles/api/register
+content-type: application/json
+accept-type: application/json
+
+{
+    "username": "newuser",
+    "password": "123456"
+}

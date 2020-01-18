@@ -12,7 +12,7 @@ class User extends Authenticatable {
     protected $table = 'users';
 
     protected $fillable = [
-        'name', 'email', 'phone', 'password', 'role',
+        'username', 'name', 'email', 'phone', 'password', 'role',
         'is_active', 'coin_1', 'coin_2', 'score_daily',
         'score_weekly', 'level', 'profile_pic',
     ];
@@ -27,8 +27,9 @@ class User extends Authenticatable {
     ];
 
     public function findForPassport($username) {
-        return $this->where('email', $username)
+        return $this->where('username', $username)
                     ->orWhere('phone', $username)
+                    ->orWhere('email', $username)
                     ->firstOrFail();
     }
 
