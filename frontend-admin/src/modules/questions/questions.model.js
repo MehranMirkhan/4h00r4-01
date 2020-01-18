@@ -1,4 +1,4 @@
-import moment from 'moment-jalaali';
+// import moment from 'moment-jalaali';
 
 const Question = {
   id: { label: "شناسه" },
