@@ -14,6 +14,5 @@ content-type: application/json
 accept-type: application/json
 
 {
-    "username": "newuser",
     "password": "123456"
 }

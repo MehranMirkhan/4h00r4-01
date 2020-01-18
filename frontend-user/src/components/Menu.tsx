@@ -4,12 +4,12 @@ import {
   IonLabel, IonList, IonMenu,
   IonMenuToggle, IonButton,
 } from '@ionic/react';
-import { contact, exit } from 'ionicons/icons';
+import { contact } from 'ionicons/icons';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { AppPage } from '../declarations';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Translate } from 'react-localize-redux';
-import { getMe, logout } from '../pages/Auth/Auth.reducer';
+import { getMe, isRegistered } from '../pages/Auth/Auth.reducer';
 
 import "./Menu.css";
 
@@ -20,9 +20,8 @@ interface MenuProps extends RouteComponentProps {
 
 const Menu: React.FunctionComponent<MenuProps> = ({ appPages }) => {
   const me = useSelector(getMe);
-  const hasMe = !!me && Object.keys(me).length > 0;
+  const hasMe = useSelector(isRegistered);
   const settings = useSelector((state: any) => state.settings);
-  const dispatch = useDispatch();
   return (
     <IonMenu contentId="main" type="overlay" side={settings.lang === 'fa' ? "end" : "start"}>
       <IonContent>
@@ -40,13 +39,13 @@ const Menu: React.FunctionComponent<MenuProps> = ({ appPages }) => {
                 </IonButton>
               </IonMenuToggle>
             </div>
-            <div className="center">
+            {/* <div className="center">
               <IonButton type="submit" color="danger"
                 onClick={() => dispatch(logout())}>
                 <IonIcon slot="start" icon={exit} color="light" />
                 <Translate id="menu.logout" />
               </IonButton>
-            </div>
+            </div> */}
           </>
           : null
         }

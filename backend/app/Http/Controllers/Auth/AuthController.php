@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 
-use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class AuthController extends Controller {
@@ -38,20 +39,37 @@ class AuthController extends Controller {
     }
 
     public function register(Request $request) {
+        // $request->validate([
+        //     'username' => 'required|string|max:255|unique:users',
+        //     'password' => 'required|string|min:6',
+        // ]);
+
         $request->validate([
-            'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
-        return User::create([
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
+        // return User::create([
+        //     'username' => $request->username,
+        //     'password' => Hash::make($request->password),
+        // ]);
+
+        $username = hash('md5', 'NewUser-' . Carbon::now()->toIso8601String());
+        $password = $request->password;
+
+        User::create([
+            'username' => $username,
+            'password' => Hash::make($password),
         ]);
+
+        return response()->json([
+            'username' => $username,
+            'password' => $password,
+        ], 201);
     }
 
     public function changePassword(Request $request) {
         $request->validate([
-            'old_password' => 'required|string|min:6',
+            'old_password' => 'required|string',
             'new_password' => 'required|string|min:6',
         ]);
         $user = $request->user();

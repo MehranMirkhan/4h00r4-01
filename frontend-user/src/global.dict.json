@@ -15,9 +15,14 @@
       "login": ["Login", "ورود"],
       "logout": ["Logout", "خروج"],
       "signup": ["Register", "ثبت نام"],
-      "username": ["Phone", "نام کاربری"],
+      "username": ["Username", "نام کاربری"],
+      "phone": ["Phone", "شماره همراه"],
       "password": ["Password", "رمز عبور"],
-      "passwordConfirm": ["Confirm Password", "تکرار رمز عبور"]
+      "passwordConfirm": ["Confirm Password", "تکرار رمز عبور"],
+      "emptyPhone": ["Please enter phone number", "لطفاْ شماره همراه را وارد نمایید"],
+      "emptyPassword": ["Please enter password", "لطفاْ رمز عبور را وارد نمایید"],
+      "emptyPasswordConfirm": ["Please enter password confirm", "لطفاْ تکرار رمز عبور را وارد نمایید"],
+      "passwordConfirmMismatch": ["Password confirm does not match password", "تکرار رمز عبور نادرست است"]
     },
     "profile": {
       "title": ["Profile", "اطلاعات کاربری"],

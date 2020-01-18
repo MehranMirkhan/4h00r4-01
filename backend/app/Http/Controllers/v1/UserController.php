@@ -38,10 +38,15 @@ class UserController extends Controller {
     public function updateMe(Request $request) {
         $request->validate([
             'name'  => 'nullable|string',
+            'phone' => 'nullable|string',
             'email' => 'nullable|string|email',
         ]);
         $user = $request->user();
-        $user->update(['name' => $request->name, 'email' => $request->email]);
+        $user->update([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email
+        ]);
         return response()->json(['message' => 'server.user.updated'], 200);
     }
 }

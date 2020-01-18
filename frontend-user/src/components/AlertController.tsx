@@ -1,10 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { IonAlert } from '@ionic/react';
 import { withLocalize } from 'react-localize-redux';
 import { API } from '../redux/store_config';
+import { isAuthenticated, register } from '../pages/Auth/Auth.reducer';
 
 interface IAlertControllerProps {
   translate?: any,
+  isAuth: boolean,
+  createNewUser: () => any,
 }
 
 interface IAlertControllerState {
@@ -41,14 +45,20 @@ class AlertController extends React.Component<IAlertControllerProps, IAlertContr
           this.setType("alert.title.error");
           this.open();
         } else if (error.response.status === 401) {
-          this.setMessage(this.props.translate("server.auth.wrongCredentials"));
-          this.setType("alert.title.error");
-          this.open();
+          if (this.props.isAuth) {
+            this.setMessage(this.props.translate("server.auth.wrongCredentials"));
+            this.setType("alert.title.error");
+            this.open();
+          } else {
+            this.props.createNewUser().then((_: any) => {
+              window.location.reload();
+            });
+          }
         } else if (error.response.status === 400 || error.response.status === 422) {
           this.setMessage(this.props.translate("server.badRequest"));
           this.setType("alert.title.error");
           this.open();
-        } if (!!error.response && !!error.response.data && !!error.response.data.message) {
+        } else if (!!error.response && !!error.response.data && !!error.response.data.message) {
           this.setMessage(this.props.translate(error.response.data.message));
           this.setType("alert.title.error");
           this.open();
@@ -87,4 +97,7 @@ class AlertController extends React.Component<IAlertControllerProps, IAlertContr
   }
 }
 
-export default withLocalize((props) => <AlertController {...props} />);
+export default connect(
+  state => ({ isAuth: isAuthenticated(state) }),
+  dispatch => ({ createNewUser: () => dispatch(register() as any) })
+)(withLocalize((props: any) => <AlertController {...props} />));

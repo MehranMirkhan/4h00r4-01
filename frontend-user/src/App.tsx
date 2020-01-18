@@ -82,26 +82,32 @@ const App: React.FC = () => {
         <LocalizeProvider initialize={localizationConfig}>
           <LangHandler>
             <AlertController>
-              <IonReactRouter>
-                <IonSplitPane contentId="main">
-                  <Menu appPages={appPages} />
-                  <IonRouterOutlet id="main">
-                    <Route exact path="/home" component={Home} />
-                    <Route path="/auth" component={Auth} />
-                    <Route path="/profile" component={Profile} />
-                    <Route exact path="/settings" component={Settings} />
-                    <Route exact path="/level" component={Level} />
-                    <Route path="/question_list" component={QuestionList} />
-                    <Route path="/question/:id" component={Question} />
-                    <Route path="/" render={() => <Redirect to="/home" exact />} />
-                  </IonRouterOutlet>
-                </IonSplitPane>
-              </IonReactRouter>
+              <AppContent />
             </AlertController>
           </LangHandler>
         </LocalizeProvider>
       </Provider>
     </IonApp>
+  );
+};
+
+const AppContent: React.FC = () => {
+  return (
+    <IonReactRouter>
+      <IonSplitPane contentId="main">
+        <Menu appPages={appPages} />
+        <IonRouterOutlet id="main">
+          <Route exact path="/home" component={Home} />
+          <Route path="/auth" component={Auth} />
+          <Route path="/profile" component={Profile} />
+          <Route exact path="/settings" component={Settings} />
+          <Route exact path="/level" component={Level} />
+          <Route path="/question_list" component={QuestionList} />
+          <Route path="/question/:id" component={Question} />
+          <Route path="/" render={() => <Redirect to="/home" exact />} />
+        </IonRouterOutlet>
+      </IonSplitPane>
+    </IonReactRouter>
   );
 };
 
