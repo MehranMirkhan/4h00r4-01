@@ -3,8 +3,8 @@ content-type: application/json
 accept-type: application/json
 
 {
-    "username": "admin",
-    "password": "123456"
+    "username": "123456",
+    "password": "123123"
 }
 
 ###

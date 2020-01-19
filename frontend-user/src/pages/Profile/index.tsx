@@ -4,7 +4,7 @@ import { Redirect, Route } from 'react-router';
 
 import { IonRouterOutlet } from '@ionic/react';
 
-import { getMe } from '../Auth/Auth.reducer';
+import { isRegistered } from '../Auth/Auth.reducer';
 
 import View from './View';
 import Edit from './Edit';
@@ -12,9 +12,7 @@ import PasswordChange from './PasswordChange';
 
 
 const ProfilePage: React.FC = () => {
-  const me = useSelector(getMe);
-
-  const hasMe = !!me && Object.keys(me).length > 0;
+  const hasMe = useSelector(isRegistered);
   if (!hasMe) return <Redirect to="/home" exact />;
 
   return (

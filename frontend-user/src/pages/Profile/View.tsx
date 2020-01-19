@@ -1,18 +1,22 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Translate } from 'react-localize-redux';
 
 import { IonIcon, IonButton, IonPage, IonHeader, IonContent } from '@ionic/react';
 import { contact, create, sync } from 'ionicons/icons';
 
 import Toolbar from '../../components/Toolbar';
-import { getMe } from '../Auth/Auth.reducer';
+import { getMe, fetchMe } from '../Auth/Auth.reducer';
 
 import './View.css';
 
 
 const View: React.FC = () => {
   const me = useSelector(getMe);
+  const dispatch = useDispatch();
+  useEffect(()=> {
+    dispatch(fetchMe());
+  }, []);
   return (
   <IonPage>
     <IonHeader>

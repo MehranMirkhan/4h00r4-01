@@ -64,7 +64,7 @@ export const fetch = (id: number) => (dispatch: Dispatch, _: any, API: any) => {
 };
 
 export const postAnswer = (id: number, answer: string) =>
-  (dispatch: Dispatch, _: any, API: any) => {
+  (dispatch: Dispatch, getState: any, API: any) => {
     return API.post(`/v1/answers`, { question_id: id, text: answer })
       .then((res: any) => {
         if (!!res && [200, 201].indexOf(res.status) >= 0) {
@@ -72,11 +72,12 @@ export const postAnswer = (id: number, answer: string) =>
             type: QuestionActions.SET_ANSWER,
             payload: res.data.correct,
           });
+          return dispatch(fetch(entitySelector(getState()).id) as any);
         }
       });
   };
 
-export const buyHint = (id: number) => (dispatch: Dispatch, _: any, API: any) => {
+export const buyHint = (id: number) => (dispatch: Dispatch, getState: any, API: any) => {
   return API.post(`/v1/hints/${id}/buy`)
     .then((res: any) => {
       if (!!res && res.status === 200)
@@ -87,6 +88,7 @@ export const buyHint = (id: number) => (dispatch: Dispatch, _: any, API: any) =>
         setTimeout(() => dispatch({
           type: QuestionActions.RESET_HINT,
         }), 1000);
+        return dispatch(fetch(entitySelector(getState()).id) as any);
     });
 };
 

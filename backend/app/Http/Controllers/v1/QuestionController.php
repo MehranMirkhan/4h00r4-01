@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Utility;
 use App\Models\Question;
+use App\Models\Answer;
 use App\Models\UserHint;
 use Illuminate\Http\Request;
 
@@ -50,19 +51,33 @@ class QuestionController extends Controller {
     }
 
     public function getForUser($id, Request $request) {
+        $user = $request->user();
         $question = Question::query()->where('id', $id)
                             ->with('hints')
                             ->firstOrFail();
+        $answers = Answer::query()->where([
+            'question_id' => $id,
+            'user_id' => $user->id,
+        ])->get();
+        $question['tries'] -= count($answers);
         unset($question['solutions']);
         unset($question['created_at']);
         unset($question['updated_at']);
         foreach ($question->hints as $hint) {
             try {
-                $user = $request->user();
-                UserHint::query()->where([
+                $user_hints = UserHint::query()->where([
                     'hint_id' => $hint->id,
                     'user_id' => $user->id,
-                ])->firstOrFail();
+                ])->get();
+                if (count($user_hints) === 0)
+                    unset($hint['value']);
+                if ($hint->type === "try") {
+                    $try_hint_count = UserHint::query()->where([
+                        'hint_id' => $hint->id,
+                        'user_id' => $user->id,
+                    ])->count();
+                    $question['tries'] += $try_hint_count;
+                }
             } catch (\Exception $e) {
                 unset($hint['value']);
             }

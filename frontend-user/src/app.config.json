@@ -1,6 +1,6 @@
 {
   "persist_key": "puzzles_ugQzcAOtUd",
-  "base_url": "http://localhost/puzzles/public",
+  "base_url": "http://localhost/puzzles",
   "server_url": "http://localhost/puzzles/api",
   "request_timeout": 5000,
   "default_password": "1qaz!QAZ",

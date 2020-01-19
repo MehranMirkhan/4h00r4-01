@@ -63,9 +63,14 @@ const QuestionImages: React.FC<QuestionComponent> = ({ entity }) => {
     loop: true,
     spaceBetween: 20,
   };
+  const images = [];
+  if (!!entity.images)
+    images.push(...entity.images);
+  if (!!entity.hints)
+    images.push(...entity.hints.filter(h => h.type === "image" && !!h.value).map(h => h.value));
   return (
     <IonSlides pager options={options} className="slider">
-      {!!entity.images && entity.images.map((img: string, i: number) =>
+      {!!images && images.map((img: string, i: number) =>
         <IonSlide key={i}><img src={`${config.base_url}/storage/${img}`} alt="" /></IonSlide>)}
     </IonSlides>
   );
@@ -172,9 +177,22 @@ const QuestionChoiceBody = ({ entity }: QuestionComponent) => {
   const submit = (c: any) => () => {
     if (!!entity.id) dispatch(postAnswer(entity.id, c.value));
   };
+  const isChoiceRemovedByHint = (index: number) => {
+    if (!!entity.hints) {
+      const choiceHints: Hint[] = entity.hints.filter(h => h.type === "choice" && !!h.value);
+      for (let lh of choiceHints) {
+        const lhValue: String[] = JSON.parse(lh.value);
+        if (lhValue.map(x => Number(x)).indexOf(index) > -1)
+          return true;
+      };
+    }
+    return false;
+  };
   return <div className="choice-container">
     {choices.map((c, i) =>
-      <IonButton key={i} type="submit" color="primary" className="choice-item"
+      <IonButton key={i} type="submit" color="primary"
+        className={isChoiceRemovedByHint(i) ? "choice-item letter-disabled" : "choice-item"}
+        disabled={isChoiceRemovedByHint(i)}
         onClick={submit(c)}>
         {c.value}
       </IonButton>
@@ -199,6 +217,17 @@ const QuestionLetterBody = ({ entity }: QuestionComponent) => {
   if (!letters || !letters_num) return null;
 
   const isLetterUsed = (index: number) => answer.find(a => a === index) !== undefined;
+  const isLetterRemovedByHint = (index: number) => {
+    if (!!entity.hints) {
+      const letterHints: Hint[] = entity.hints.filter(h => h.type === "letter" && !!h.value);
+      for (let lh of letterHints) {
+        const lhValue: String[] = JSON.parse(lh.value);
+        if (lhValue.map(x => Number(x)).indexOf(index) > -1)
+          return true;
+      };
+    }
+    return false;
+  };
   const onLetterClick = (index: number) => () => {
     let x: AnswerLetter[] = [...answer];
     for (let i = 0; i < letters_num; i++) {
@@ -217,8 +246,8 @@ const QuestionLetterBody = ({ entity }: QuestionComponent) => {
 
   const hintItem = (letter: string, index: number) =>
     <IonButton key={index} color="primary"
-      className={isLetterUsed(index) ? "letter-item letter-disabled" : "letter-item"}
-      disabled={isLetterUsed(index)}
+      className={isLetterUsed(index) || isLetterRemovedByHint(index) ? "letter-item letter-disabled" : "letter-item"}
+      disabled={isLetterUsed(index) || isLetterRemovedByHint(index)}
       onClick={onLetterClick(index)}>
       {letter}
     </IonButton>;
@@ -252,15 +281,22 @@ const QuestionLetterBody = ({ entity }: QuestionComponent) => {
 
 const QuestionHint = withLocalize(({ entity, translate }: any) => {
   const [open, setOpen] = useState(false);
-  
+
   const hintResult = useSelector(hintResultSelector);
   const dispatch = useDispatch();
-  
+
   const onOpen = () => setOpen(true);
   const onClose = () => setOpen(false);
-  
+
   if (!entity) return null;
-  const hints: Hint[] | undefined = entity.hints;
+  let hints: Hint[] | undefined = entity.hints;
+  function hintFilter(h: Hint): boolean {
+    if (!!h.value)
+      return false;
+    return true;
+  }
+  if (!!hints)
+    hints = hints.filter(hintFilter);
   if (!hints || hints.length === 0) return null;
 
   const btnHintItem = (hint: Hint) => ({
@@ -269,6 +305,7 @@ const QuestionHint = withLocalize(({ entity, translate }: any) => {
     handler: () => {
       dispatch(buyHint(hint.id));
     },
+    disabled: !!hint.value,
   });
 
   return <>
@@ -282,7 +319,7 @@ const QuestionHint = withLocalize(({ entity, translate }: any) => {
     </IonButton>
     <IonAlert
       isOpen={!!hintResult}
-      message={!!hintResult ? translate(hintResult) : ""}
+      message={!!hintResult ? translate("pages.question.hintBought") : ""}
     />
   </>;
 });

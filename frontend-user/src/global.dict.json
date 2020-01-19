@@ -40,6 +40,7 @@
       "title": ["Question", "معما"],
       "send": ["Send", "ارسال"],
       "hints": ["Hints", "راهنمایی‌ها"],
+      "hintBought": ["Hint bought", "راهنمایی خریداری شد"],
       "correct": ["The answer is correct", "پاسخ درست است"],
       "wrong": ["The answer is wrong", "پاسخ اشتباه است"],
       "time_up": ["Answering time has ended", "مهلت پاسخدهی پایان یافته است"]

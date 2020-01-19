@@ -5,7 +5,9 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Utility;
 use App\Models\Answer;
+use App\Models\Hint;
 use App\Models\Question;
+use App\Models\UserHint;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -72,11 +74,18 @@ class AnswerController extends Controller {
             return response()->json(['message' => 'server.answer.already_answered'], 403);
 
         // Check if the user has reached the number of tries
-        // TODO: Consider try hint
         $c = Answer::query()->where([
             'question_id' => $q_id,
             'user_id'     => $u_id,
         ])->count();
+        try {
+            $h = Hint::query()->where(['question_id' => $q_id, 'type' => 'try'])->firstOrFail();
+            $try_hint_count = UserHint::query()->where([
+                'hint_id' => $h->id,
+                'user_id' => $u_id,
+                ])->count();
+            $c -= $try_hint_count;
+        } catch(\Exception $e) {}
         if ($c >= $question->tries)
             return response()->json(['message' => 'server.answer.reached_tries'], 403);
 
