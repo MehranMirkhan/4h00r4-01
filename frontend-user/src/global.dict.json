@@ -48,6 +48,9 @@
   },
   "menu": {
     "home": ["Home", "صفحه اصلی"],
+    "level": ["Level", "مرحله‌ای"],
+    "daily": ["Daily", "روزانه"],
+    "weekly": ["Weekly", "هفتگی"],
     "auth": ["Login / Register", "ورود / ثبت نام"],
     "profile": ["Profile", "صفحه کاربری"],
     "logout": ["Logout", "خروج"],

@@ -33,6 +33,7 @@ export type Question = {
   solutions: string[],
   locale: Locale,
   hints: Hint[],
+  solved?: boolean,
 }
 
 export type Choice = {

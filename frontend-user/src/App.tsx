@@ -18,7 +18,7 @@ import Settings from './pages/Settings';
 import Level from './pages/Level';
 import QuestionList from './pages/QuestionList';
 import Question from './pages/Question';
-import { home, settings, logIn } from 'ionicons/icons';
+import { home, settings, logIn, help } from 'ionicons/icons';
 
 import { store } from './redux/store_config';
 import config from './app.config.json';
@@ -53,6 +53,21 @@ const appPages: AppPage[] = [
     title: 'menu.home',
     url: '/home',
     icon: home
+  },
+  {
+    title: 'menu.level',
+    url: '/level',
+    icon: help
+  },
+  {
+    title: 'menu.daily',
+    url: '/question_list?type=daily',
+    icon: help
+  },
+  {
+    title: 'menu.weekly',
+    url: '/question_list?type=weekly',
+    icon: help
   },
   {
     title: 'menu.auth',

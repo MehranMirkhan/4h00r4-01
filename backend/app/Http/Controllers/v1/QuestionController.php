@@ -47,6 +47,7 @@ class QuestionController extends Controller {
             $query->where('time_type', $request->time_type);
         if (isset($request['locale']))
             $query->where('locale', $request['locale']);
+        $query->orderBy('start_time', 'desc');
         return $query->paginate($page_size);
     }
 
@@ -57,12 +58,21 @@ class QuestionController extends Controller {
                             ->firstOrFail();
         $answers = Answer::query()->where([
             'question_id' => $id,
-            'user_id' => $user->id,
+            'user_id'     => $user->id,
         ])->get();
         $question['tries'] -= count($answers);
+        $c = Answer::query()->where([
+            'question_id' => $id,
+            'user_id'     => $user->id,
+            'correct'     => true,
+        ])->count();
+        if ($c > 0)
+            $question['solved'] = true;
+
         unset($question['solutions']);
         unset($question['created_at']);
         unset($question['updated_at']);
+
         foreach ($question->hints as $hint) {
             try {
                 $user_hints = UserHint::query()->where([

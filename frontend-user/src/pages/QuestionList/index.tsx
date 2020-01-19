@@ -3,6 +3,7 @@ import {
   IonButton, IonContent, IonHeader, IonPage,
 } from '@ionic/react';
 import { useSelector, useDispatch } from 'react-redux';
+import moment from 'moment';
 
 import { dataSelector, fetch, reset } from './QuestionList.reducer';
 
@@ -56,6 +57,13 @@ const QuestionItem: React.FC<IQuestionItem> = ({ question }) =>
   <IonButton className="main-button"
     expand="block" size="large"
     routerLink={`/question/${question.id}`} routerDirection="forward"
+    disabled={calculateTimeLeft(question.end_time) <= 0}
   >{question.title}</IonButton>;
+
+function calculateTimeLeft(deadline: string | Date | undefined) {
+  const start = moment();
+  const end = moment.utc(deadline);
+  return end.diff(start);
+}
 
 export default QuestionListPage;
