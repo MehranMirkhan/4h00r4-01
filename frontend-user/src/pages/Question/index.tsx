@@ -53,9 +53,9 @@ const QuestionPage: React.FC = ({ match }: any) => {
       </IonHeader>
       <IonContent>
         <QuestionImages entity={entity} />
-        <div style={{ textAlign: "center" }}>
+        {/* <div style={{ textAlign: "center" }}>
           <h1>{!entity ? "" : entity.text}</h1>
-        </div>
+        </div> */}
         <QuestionTimer entity={entity} />
         <div style={{ textAlign: "center" }}>
           Tries left: {!!entity ? entity.tries : 0}

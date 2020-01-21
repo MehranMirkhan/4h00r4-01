@@ -37,7 +37,8 @@
       "title": ["Levels", "مرحله‌ای"]
     },
     "level": {
-      "title": ["Level", "مرحله"]
+      "title": ["Level", "مرحله"],
+      "submit": ["Submit", "ثبت"]
     },
     "question": {
       "title": ["Question", "معما"],
