@@ -1,14 +1,10 @@
 [
   {
     "id": 1,
-    "title": "آیا عدد ۳۳۰۱ اول است؟",
-    "answer_type": "choice",
+    "title": "۱ + ۲ + ... + ۱۰۰",
+    "answer_type": "text",
     "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
-    "choices": [
-      { "type": "text", "value": "Yes" },
-      { "type": "text", "value": "No" }
-    ],
-    "solutions": ["Yes"]
+    "solutions": ["۵۰۵۰", "5050"]
   },
   {
     "id": 2,

@@ -1,14 +1,10 @@
 [
   {
     "id": 1,
-    "title": "is 3301 prime?",
-    "answer_type": "choice",
+    "title": "1 + 2 + ... + 100 = ?",
+    "answer_type": "text",
     "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
-    "choices": [
-      { "type": "text", "value": "Yes" },
-      { "type": "text", "value": "No" }
-    ],
-    "solutions": ["Yes"]
+    "solutions": ["5050"]
   },
   {
     "id": 2,

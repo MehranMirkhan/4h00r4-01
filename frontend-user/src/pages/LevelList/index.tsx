@@ -25,7 +25,7 @@ const LevelListPage = withLocalize(({ activeLanguage }) => {
       if (!!v) setCurrLevel(Number(v));
       else Storage.set("level", "1");
     });
-  }, []);
+  });
 
   return (
     <IonPage>
@@ -42,6 +42,7 @@ const LevelListPage = withLocalize(({ activeLanguage }) => {
             />
           ))}
         </div>
+        <IonButton onClick={() => Storage.set("level", "1")}>Reset</IonButton>
       </IonContent>
     </IonPage>
   );
