@@ -1,26 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router';
+import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router";
 import {
-  IonContent, IonHeader, IonPage,
-  IonSlides, IonSlide, IonChip, IonIcon,
-  IonLabel, IonInput, IonButton, IonAlert, IonActionSheet,
-} from '@ionic/react';
-import moment from 'moment';
-import { Translate, withLocalize } from 'react-localize-redux';
-import { alarm } from 'ionicons/icons';
-import { useSelector, useDispatch } from 'react-redux';
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonSlides,
+  IonSlide,
+  IonChip,
+  IonIcon,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonAlert,
+  IonActionSheet
+} from "@ionic/react";
+import moment from "moment";
+import { Translate, withLocalize } from "react-localize-redux";
+import { alarm } from "ionicons/icons";
+import { useSelector, useDispatch } from "react-redux";
 
-import './Question.css';
+import "./Question.css";
 import {
-  entitySelector, answerResultSelector, fetch,
-  postAnswer, reset, buyHint, hintResultSelector
-} from './Question.reducer';
+  entitySelector,
+  answerResultSelector,
+  fetch,
+  postAnswer,
+  reset,
+  buyHint,
+  hintResultSelector
+} from "./Question.reducer";
 
-import { Question, AnswerType, Hint } from '../../declarations';
-import Toolbar from '../../components/Toolbar';
+import { Question, AnswerType, Hint } from "../../declarations";
+import Toolbar from "../../components/Toolbar";
 
-import config from '../../app.config.json';
-
+import config from "../../app.config.json";
 
 const QuestionPage: React.FC = ({ match }: any) => {
   const entity = useSelector(entitySelector);
@@ -31,26 +44,32 @@ const QuestionPage: React.FC = ({ match }: any) => {
     dispatch(reset());
     dispatch(fetch(Number(match.params.id)));
   }, [dispatch, match.params.id]);
-  return (
-    redirect ? <Redirect to={`/question_list?type=${entity.time_type}`} /> :
-      <IonPage>
-        <IonHeader>
-          <Toolbar title="pages.question.title" />
-        </IonHeader>
-        <IonContent>
-          <QuestionImages entity={entity} />
-          <div style={{ textAlign: "center" }}><h1>{!entity ? "" : entity.text}</h1></div>
-          <QuestionTimer entity={entity} />
-          <AnswerResult answerResult={answerResult} setRedirect={setRedirect} />
-          <QuestionBody entity={entity} />
-          <QuestionHint entity={entity} />
-        </IonContent>
-      </IonPage>
+  return redirect ? (
+    <Redirect to={`/question_list?type=${entity.time_type}`} />
+  ) : (
+    <IonPage>
+      <IonHeader>
+        <Toolbar title="pages.question.title" />
+      </IonHeader>
+      <IonContent>
+        <QuestionImages entity={entity} />
+        <div style={{ textAlign: "center" }}>
+          <h1>{!entity ? "" : entity.text}</h1>
+        </div>
+        <QuestionTimer entity={entity} />
+        <div style={{ textAlign: "center" }}>
+          Tries left: {!!entity ? entity.tries : 0}
+        </div>
+        <AnswerResult answerResult={answerResult} setRedirect={setRedirect} />
+        <QuestionBody entity={entity} />
+        <QuestionHint entity={entity} />
+      </IonContent>
+    </IonPage>
   );
 };
 
 interface QuestionComponent {
-  entity: Partial<Question>,
+  entity: Partial<Question>;
 }
 
 const QuestionImages: React.FC<QuestionComponent> = ({ entity }) => {
@@ -61,20 +80,27 @@ const QuestionImages: React.FC<QuestionComponent> = ({ entity }) => {
     pager: true,
     paginationClickable: true,
     loop: true,
-    spaceBetween: 20,
+    spaceBetween: 20
   };
   const images = [];
-  if (!!entity.images)
-    images.push(...entity.images);
+  if (!!entity.images) images.push(...entity.images);
   if (!!entity.hints)
-    images.push(...entity.hints.filter(h => h.type === "image" && !!h.value).map(h => h.value));
+    images.push(
+      ...entity.hints
+        .filter(h => h.type === "image" && !!h.value)
+        .map(h => h.value)
+    );
   return (
     <IonSlides pager options={options} className="slider">
-      {!!images && images.map((img: string, i: number) =>
-        <IonSlide key={i}><img src={`${config.base_url}/storage/${img}`} alt="" /></IonSlide>)}
+      {!!images &&
+        images.map((img: string, i: number) => (
+          <IonSlide key={i}>
+            <img src={`${config.base_url}/storage/${img}`} alt="" />
+          </IonSlide>
+        ))}
     </IonSlides>
   );
-}
+};
 
 function calculateTimeLeft(deadline: string | Date | undefined) {
   const start = moment();
@@ -83,7 +109,9 @@ function calculateTimeLeft(deadline: string | Date | undefined) {
 }
 
 const QuestionTimer: React.FC<QuestionComponent> = ({ entity }) => {
-  const dl: string | Date | undefined = !entity ? "2030-01-01" : entity.end_time;
+  const dl: string | Date | undefined = !entity
+    ? "2030-01-01"
+    : entity.end_time;
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(dl));
 
   useEffect(() => {
@@ -104,41 +132,56 @@ const QuestionTimer: React.FC<QuestionComponent> = ({ entity }) => {
 
   return (
     <div className="timer-container">
-      {!entity ? null :
-        <IonChip className="timer-chip" color={timeLeft > 0 ? "primary" : "danger"}>
+      {!entity ? null : (
+        <IonChip
+          className="timer-chip"
+          color={timeLeft > 0 ? "primary" : "danger"}
+        >
           <IonIcon icon={alarm} size="large" />
           <IonLabel className="timer-label">
-            {timeLeft > 0 ?
+            {timeLeft > 0 ? (
               <>
                 <span>{daysLeft}</span>
-                <span className="timer-days"><Translate id="days" /></span>
+                <span className="timer-days">
+                  <Translate id="days" />
+                </span>
                 <span>{hmsLeft}</span>
               </>
-              : <span><Translate id="pages.question.time_up" /></span>}
+            ) : (
+              <span>
+                <Translate id="pages.question.time_up" />
+              </span>
+            )}
           </IonLabel>
         </IonChip>
-      }
+      )}
     </div>
   );
-}
+};
 
-const AnswerResult = withLocalize(({ answerResult, setRedirect, translate }: any) => {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    if (answerResult !== undefined) {
-      setOpen(true);
-      setTimeout(() => {
-        setOpen(false);
-        if (answerResult === true) setRedirect(true);
-      }, 1000);
-    }
-  }, [answerResult, setRedirect]);
-  return <IonAlert
-    isOpen={open}
-    onDidDismiss={() => setOpen(false)}
-    message={translate(`pages.question.${answerResult ? 'correct' : 'wrong'}`)}
-  />
-});
+const AnswerResult = withLocalize(
+  ({ answerResult, setRedirect, translate }: any) => {
+    const [open, setOpen] = useState(false);
+    useEffect(() => {
+      if (answerResult !== undefined) {
+        setOpen(true);
+        setTimeout(() => {
+          setOpen(false);
+          if (answerResult === true) setRedirect(true);
+        }, 1000);
+      }
+    }, [answerResult, setRedirect]);
+    return (
+      <IonAlert
+        isOpen={open}
+        onDidDismiss={() => setOpen(false)}
+        message={translate(
+          `pages.question.${answerResult ? "correct" : "wrong"}`
+        )}
+      />
+    );
+  }
+);
 
 const QuestionBody: React.FC<QuestionComponent> = ({ entity }) => {
   if (!entity) return null;
@@ -160,15 +203,26 @@ const QuestionTextBody = ({ entity }: QuestionComponent) => {
   const submit = () => {
     if (!!entity.id) dispatch(postAnswer(entity.id, answer));
   };
-  return <>
-    <IonInput autofocus value={answer} className="answer-input"
-      onIonChange={e => setAnswer(e.detail.value as string)} />
-    <IonButton type="submit" color="primary" expand="block" style={{ marginTop: 16 }}
-      disabled={!!entity.solved}
-      onClick={submit}>
-      <Translate id="pages.question.send" />
-    </IonButton>
-  </>;
+  return (
+    <>
+      <IonInput
+        autofocus
+        value={answer}
+        className="answer-input"
+        onIonChange={e => setAnswer(e.detail.value as string)}
+      />
+      <IonButton
+        type="submit"
+        color="primary"
+        expand="block"
+        style={{ marginTop: 16 }}
+        disabled={!!entity.solved}
+        onClick={submit}
+      >
+        <Translate id="pages.question.send" />
+      </IonButton>
+    </>
+  );
 };
 
 const QuestionChoiceBody = ({ entity }: QuestionComponent) => {
@@ -180,25 +234,36 @@ const QuestionChoiceBody = ({ entity }: QuestionComponent) => {
   };
   const isChoiceRemovedByHint = (index: number) => {
     if (!!entity.hints) {
-      const choiceHints: Hint[] = entity.hints.filter(h => h.type === "choice" && !!h.value);
+      const choiceHints: Hint[] = entity.hints.filter(
+        h => h.type === "choice" && !!h.value
+      );
       for (let lh of choiceHints) {
         const lhValue: String[] = JSON.parse(lh.value);
-        if (lhValue.map(x => Number(x)).indexOf(index) > -1)
-          return true;
-      };
+        if (lhValue.map(x => Number(x)).indexOf(index) > -1) return true;
+      }
     }
     return false;
   };
-  return <div className="choice-container">
-    {choices.map((c, i) =>
-      <IonButton key={i} type="submit" color="primary"
-        className={isChoiceRemovedByHint(i) || !!entity.solved ? "choice-item letter-disabled" : "choice-item"}
-        disabled={isChoiceRemovedByHint(i) || !!entity.solved}
-        onClick={submit(c)}>
-        {c.value}
-      </IonButton>
-    )}
-  </div>;
+  return (
+    <div className="choice-container">
+      {choices.map((c, i) => (
+        <IonButton
+          key={i}
+          type="submit"
+          color="primary"
+          className={
+            isChoiceRemovedByHint(i) || !!entity.solved
+              ? "choice-item letter-disabled"
+              : "choice-item"
+          }
+          disabled={isChoiceRemovedByHint(i) || !!entity.solved}
+          onClick={submit(c)}
+        >
+          {c.value}
+        </IonButton>
+      ))}
+    </div>
+  );
 };
 
 type AnswerLetter = number | undefined;
@@ -211,21 +276,22 @@ const QuestionLetterBody = ({ entity }: QuestionComponent) => {
   useEffect(() => {
     let x: AnswerLetter[] = [];
     let n = letters_num ? letters_num : 1;
-    for (let i = 0; i < n; i++)
-      x.push(undefined);
+    for (let i = 0; i < n; i++) x.push(undefined);
     setAnswer(x);
   }, [entity, letters_num]);
   if (!letters || !letters_num) return null;
 
-  const isLetterUsed = (index: number) => answer.find(a => a === index) !== undefined;
+  const isLetterUsed = (index: number) =>
+    answer.find(a => a === index) !== undefined;
   const isLetterRemovedByHint = (index: number) => {
     if (!!entity.hints) {
-      const letterHints: Hint[] = entity.hints.filter(h => h.type === "letter" && !!h.value);
+      const letterHints: Hint[] = entity.hints.filter(
+        h => h.type === "letter" && !!h.value
+      );
       for (let lh of letterHints) {
         const lhValue: String[] = JSON.parse(lh.value);
-        if (lhValue.map(x => Number(x)).indexOf(index) > -1)
-          return true;
-      };
+        if (lhValue.map(x => Number(x)).indexOf(index) > -1) return true;
+      }
     }
     return false;
   };
@@ -245,39 +311,62 @@ const QuestionLetterBody = ({ entity }: QuestionComponent) => {
     setAnswer(x);
   };
 
-  const hintItem = (letter: string, index: number) =>
-    <IonButton key={index} color="primary"
-      className={isLetterUsed(index) || isLetterRemovedByHint(index) || !!entity.solved ? "letter-item letter-disabled" : "letter-item"}
-      disabled={isLetterUsed(index) || isLetterRemovedByHint(index) || !!entity.solved}
-      onClick={onLetterClick(index)}>
+  const hintItem = (letter: string, index: number) => (
+    <IonButton
+      key={index}
+      color="primary"
+      className={
+        isLetterUsed(index) || isLetterRemovedByHint(index) || !!entity.solved
+          ? "letter-item letter-disabled"
+          : "letter-item"
+      }
+      disabled={
+        isLetterUsed(index) || isLetterRemovedByHint(index) || !!entity.solved
+      }
+      onClick={onLetterClick(index)}
+    >
       {letter}
-    </IonButton>;
+    </IonButton>
+  );
 
-  const answerItem = (letterIndex: number | undefined, index: number) =>
-    <IonButton key={index} color="success" className="letter-item"
+  const answerItem = (letterIndex: number | undefined, index: number) => (
+    <IonButton
+      key={index}
+      color="success"
+      className="letter-item"
       disabled={letterIndex === undefined}
-      onClick={onAnswerLetterClick(index)}>
-      {letterIndex !== undefined ? letters[letterIndex] : ''}
-    </IonButton>;
+      onClick={onAnswerLetterClick(index)}
+    >
+      {letterIndex !== undefined ? letters[letterIndex] : ""}
+    </IonButton>
+  );
 
   const submit = () => {
-    if (!!entity.id) dispatch(postAnswer(entity.id,
-      answer.map((a: AnswerLetter) => letters[a ? a : 0]).join('')));
+    if (!!entity.id)
+      dispatch(
+        postAnswer(
+          entity.id,
+          answer.map((a: AnswerLetter) => letters[a ? a : 0]).join("")
+        )
+      );
   };
 
-  return <>
-    <div className="letters-container">
-      {letters.map(hintItem)}
-    </div>
-    <div className="letters-container">
-      {answer.map(answerItem)}
-    </div>
-    <IonButton type="submit" color="primary" expand="block" style={{ marginTop: 16 }}
-      disabled={answer.indexOf(undefined) !== -1}
-      onClick={submit}>
-      <Translate id="pages.question.send" />
-    </IonButton>
-  </>;
+  return (
+    <>
+      <div className="letters-container">{letters.map(hintItem)}</div>
+      <div className="letters-container">{answer.map(answerItem)}</div>
+      <IonButton
+        type="submit"
+        color="primary"
+        expand="block"
+        style={{ marginTop: 16 }}
+        disabled={answer.indexOf(undefined) !== -1}
+        onClick={submit}
+      >
+        <Translate id="pages.question.send" />
+      </IonButton>
+    </>
+  );
 };
 
 const QuestionHint = withLocalize(({ entity, translate }: any) => {
@@ -292,37 +381,42 @@ const QuestionHint = withLocalize(({ entity, translate }: any) => {
   if (!entity || !!entity.solved) return null;
   let hints: Hint[] | undefined = entity.hints;
   function hintFilter(h: Hint): boolean {
-    if (!!h.value)
-      return false;
+    if (!!h.value) return false;
     return true;
   }
-  if (!!hints)
-    hints = hints.filter(hintFilter);
+  if (!!hints) hints = hints.filter(hintFilter);
   if (!hints || hints.length === 0) return null;
 
   const btnHintItem = (hint: Hint) => ({
     text: `${hint.type} - ${hint.price} Gold`,
-    icon: 'flash',
+    icon: "flash",
     handler: () => {
       dispatch(buyHint(hint.id));
     },
-    disabled: !!hint.value,
+    disabled: !!hint.value
   });
 
-  return <>
-    <IonActionSheet
-      isOpen={open}
-      onDidDismiss={onClose}
-      buttons={hints.map(btnHintItem)} />
-    <IonButton color="success" expand="block" style={{ marginTop: 16 }}
-      onClick={onOpen}>
-      <Translate id="pages.question.hints" />
-    </IonButton>
-    <IonAlert
-      isOpen={!!hintResult}
-      message={!!hintResult ? translate("pages.question.hintBought") : ""}
-    />
-  </>;
+  return (
+    <>
+      <IonActionSheet
+        isOpen={open}
+        onDidDismiss={onClose}
+        buttons={hints.map(btnHintItem)}
+      />
+      <IonButton
+        color="success"
+        expand="block"
+        style={{ marginTop: 16 }}
+        onClick={onOpen}
+      >
+        <Translate id="pages.question.hints" />
+      </IonButton>
+      <IonAlert
+        isOpen={!!hintResult}
+        message={!!hintResult ? translate("pages.question.hintBought") : ""}
+      />
+    </>
+  );
 });
 
 export default QuestionPage;

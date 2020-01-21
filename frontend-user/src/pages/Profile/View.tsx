@@ -16,7 +16,7 @@ const View: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(()=> {
     dispatch(fetchMe());
-  }, []);
+  }, [dispatch]);
   return (
   <IonPage>
     <IonHeader>

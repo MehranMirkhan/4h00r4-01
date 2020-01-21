@@ -43,9 +43,9 @@ class UserController extends Controller {
         ]);
         $user = $request->user();
         $user->update([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email
+            'name' => isset($request->name) ? $request->name : $user->name,
+            'phone' => isset($request->phone) ? $request->phone : $user->phone,
+            'email' => isset($request->email) ? $request->email : $user->email
         ]);
         return response()->json(['message' => 'server.user.updated'], 200);
     }
