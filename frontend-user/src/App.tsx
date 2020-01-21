@@ -15,6 +15,7 @@ import Home from './pages/Home';
 import Auth from './pages/Auth';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import LevelList from './pages/LevelList';
 import Level from './pages/Level';
 import QuestionList from './pages/QuestionList';
 import Question from './pages/Question';
@@ -56,7 +57,7 @@ const appPages: AppPage[] = [
   },
   {
     title: 'menu.level',
-    url: '/level',
+    url: '/level_list',
     icon: help
   },
   {
@@ -116,7 +117,8 @@ const AppContent: React.FC = () => {
           <Route path="/auth" component={Auth} />
           <Route path="/profile" component={Profile} />
           <Route exact path="/settings" component={Settings} />
-          <Route exact path="/level" component={Level} />
+          <Route exact path="/level_list" component={LevelList} />
+          <Route path="/level/:id" component={Level} />
           <Route path="/question_list" component={QuestionList} />
           <Route path="/question/:id" component={Question} />
           <Route path="/" render={() => <Redirect to="/home" exact />} />

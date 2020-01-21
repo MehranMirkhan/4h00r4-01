@@ -52,7 +52,7 @@ const HeroSlide: React.FC = () => {
 
 const MainButtons: React.FC = () => {
   const btns = [
-    { url: "/level", text: "pages.home.level" },
+    { url: "/level_list", text: "pages.home.level" },
     { url: "/question_list?type=daily", text: "pages.home.daily" },
     { url: "/question_list?type=weekly", text: "pages.home.weekly" },
   ];

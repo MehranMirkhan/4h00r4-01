@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "آیا عدد ۳۳۰۱ اول است؟",
+    "answer_type": "choice",
+    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
+    "choices": [
+      { "type": "text", "value": "Yes" },
+      { "type": "text", "value": "No" }
+    ],
+    "solutions": ["Yes"]
+  },
+  {
+    "id": 2,
+    "title": "۲ + ۵ = ؟",
+    "answer_type": "text",
+    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
+    "solutions": ["۷", "7"]
+  },
+  {
+    "id": 3,
+    "title": "پایتخت کشور فرانسه",
+    "answer_type": "letter",
+    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
+    "letters": ["ر", "ی", "ی", "س", "پ", "ف", "ز", "ا"],
+    "letters_num": 5,
+    "solutions": ["پاریس"]
+  }
+]

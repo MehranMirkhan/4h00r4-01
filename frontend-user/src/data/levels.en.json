@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "is 3301 prime?",
+    "answer_type": "choice",
+    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
+    "choices": [
+      { "type": "text", "value": "Yes" },
+      { "type": "text", "value": "No" }
+    ],
+    "solutions": ["Yes"]
+  },
+  {
+    "id": 2,
+    "title": "The president of USA",
+    "answer_type": "text",
+    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
+    "solutions": ["trump", "donald trump", "donald j trump", "donald j. trump"]
+  },
+  {
+    "id": 3,
+    "title": "Capital of France",
+    "answer_type": "letter",
+    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
+    "letters": ["r", "i", "i", "s", "p", "e", "z", "a"],
+    "letters_num": 5,
+    "solutions": ["paris"]
+  }
+]

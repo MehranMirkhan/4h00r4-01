@@ -1,55 +1,40 @@
-import React from 'react';
-import {
-  IonButton, IonContent, IonHeader, IonPage,
-} from '@ionic/react';
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router";
+import { IonContent, IonHeader, IonPage } from "@ionic/react";
+import { withLocalize } from "react-localize-redux";
 
-import Toolbar from '../../components/Toolbar';
+import Toolbar from "../../components/Toolbar";
+import { Question } from "../../declarations";
+import Storage from "../../Storage";
 
-import './Level.css';
+const LevelPage = withLocalize(({ match, activeLanguage }: any) => {
+  const levels = require(`../../data/levels.${activeLanguage.code}.json`);
+  const id = match.params.id;
 
+  const [level, setLevel] = useState<Question | undefined>(undefined);
+  const [redirect, setRedirect] = useState(false);
 
-const LevelPage: React.FC = () => {
-  return (
+  useEffect(() => {
+    Storage.get("level").then((v: any) => {
+      if (Number(v) > id) setRedirect(true);
+      else setLevel(levels[id - 1]);
+    });
+  }, [id, setRedirect, levels, setLevel]);
+
+  return redirect ? (
+    <Redirect to="/level_list" />
+  ) : (
     <IonPage>
       <IonHeader>
-        <Toolbar title="pages.level.title"/>
+        <Toolbar title="pages.level.title" />
       </IonHeader>
-      <IonContent>
-        <div className="level-container">
-          {levels.map((level, i) =>
-            <IonButton key={i} size="large" className="level-item"
-              routerLink={`/question?type=level&id=${level.id}`} routerDirection="forward"
-              color={level.solved ? "success" : "primary"}
-              disabled={i > 0 && !levels[i - 1].solved}>
-              {level.id}
-            </IonButton>
-          )}
-        </div>
-      </IonContent>
+      <IonContent>{!!level && <Level level={level} />}</IonContent>
     </IonPage>
   );
-};
+});
 
-const levels = [
-  { id: 1, solved: true },
-  { id: 2, solved: true },
-  { id: 3, solved: false },
-  { id: 4, solved: false },
-  { id: 5, solved: false },
-  { id: 6, solved: false },
-  { id: 7, solved: false },
-  { id: 8, solved: false },
-  { id: 9, solved: false },
-  { id: 10, solved: false },
-  { id: 11, solved: false },
-  { id: 12, solved: false },
-  { id: 13, solved: false },
-  { id: 14, solved: false },
-  { id: 15, solved: false },
-  { id: 16, solved: false },
-  { id: 17, solved: false },
-  { id: 18, solved: false },
-  { id: 19, solved: false },
-];
+const Level = ({ level }: any) => {
+  return level.title;
+};
 
 export default LevelPage;

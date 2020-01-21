@@ -33,8 +33,11 @@
       "oldPassword": ["Old Password", "رمز عبور قدیمی"],
       "wrongPasswordConfirm": ["Password confirmation is wrong", "تکرار رمز عبور نادرست است"]
     },
-    "level": {
+    "levels": {
       "title": ["Levels", "مرحله‌ای"]
+    },
+    "level": {
+      "title": ["Level", "مرحله"]
     },
     "question": {
       "title": ["Question", "معما"],
