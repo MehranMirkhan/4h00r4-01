@@ -21,6 +21,7 @@ const LevelPage = withLocalize(({ match, activeLanguage, translate }: any) => {
   const id = Number(match.params.id);
 
   const [level, setLevel] = useState<Question | undefined>(undefined);
+  const [levelHints, setLevelHints] = useState<Hint[]>([]);
   const [redirect, setRedirect] = useState(false);
   const [open, setOpen] = useState(false);
   const [answerResult, setAnswerResult] = useState(false);
@@ -36,6 +37,13 @@ const LevelPage = withLocalize(({ match, activeLanguage, translate }: any) => {
       }
     });
   }, [id, setRedirect, levels, setLevel]);
+
+  Storage.getObject("level-hints").then((v: any[]) => {
+    if (!v) {
+      Storage.setObject("level-hints", []);
+      setLevelHints([]);
+    } else setLevelHints(v.filter(x => x.question_id === id));
+  });
 
   const onSubmit = (answer: string) => {
     if (!level) return;
@@ -62,7 +70,9 @@ const LevelPage = withLocalize(({ match, activeLanguage, translate }: any) => {
         <Toolbar title="pages.level.title" />
       </IonHeader>
       <IonContent>
-        {!!level && <Level level={level} onSubmit={onSubmit} />}
+        {!!level && (
+          <Level level={level} boughtHints={levelHints} onSubmit={onSubmit} />
+        )}
         <IonAlert
           isOpen={open}
           onDidDismiss={() => setOpen(false)}
@@ -75,14 +85,18 @@ const LevelPage = withLocalize(({ match, activeLanguage, translate }: any) => {
   );
 });
 
-const Level = ({ level, onSubmit }: any) => {
+const Level = ({ level, onSubmit, boughtHints }: any) => {
   return (
     <>
       <QuestionImages entity={level} />
       <div style={{ textAlign: "center" }}>
         <h1>{!!level && !!level.images ? level.title : ""}</h1>
       </div>
-      <QuestionBody entity={level} onSubmit={onSubmit} />
+      <QuestionBody
+        entity={level}
+        boughtHints={boughtHints}
+        onSubmit={onSubmit}
+      />
       {/* <QuestionHint entity={level} /> */}
     </>
   );
@@ -122,14 +136,21 @@ const QuestionImages: React.FC<{ entity: Partial<Question> }> = ({
 
 const QuestionBody: React.FC<{
   entity: Partial<Question>;
+  boughtHints: Hint[];
   onSubmit: (v: string) => void;
-}> = ({ entity, onSubmit }) => {
+}> = ({ entity, onSubmit, boughtHints }) => {
   if (!entity) return null;
   switch (entity.answer_type) {
     case AnswerType.TEXT:
       return <QuestionTextBody entity={entity} onSubmit={onSubmit} />;
     case AnswerType.LETTER:
-      return <QuestionLetterBody entity={entity} onSubmit={onSubmit} />;
+      return (
+        <QuestionLetterBody
+          entity={entity}
+          boughtHints={boughtHints}
+          onSubmit={onSubmit}
+        />
+      );
     default:
       return null;
   }
@@ -166,8 +187,9 @@ type AnswerLetter = number | undefined;
 
 const QuestionLetterBody: React.FC<{
   entity: Partial<Question>;
+  boughtHints: Hint[];
   onSubmit: (v: string) => void;
-}> = ({ entity, onSubmit }) => {
+}> = ({ entity, onSubmit, boughtHints }) => {
   const letters: string[] | undefined = entity.letters;
   const letters_num: number | undefined = entity.letters_num;
   const [answer, setAnswer] = useState<AnswerLetter[]>([]);
@@ -182,7 +204,7 @@ const QuestionLetterBody: React.FC<{
   const isLetterUsed = (index: number) =>
     answer.find(a => a === index) !== undefined;
   const isLetterRemovedByHint = (index: number) => {
-    if (!!entity.hints) {
+    if (!!entity.hints && !!boughtHints) {
       const letterHints: Hint[] = entity.hints.filter(
         h => h.type === "letter" && !!h.value
       );

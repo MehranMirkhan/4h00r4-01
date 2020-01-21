@@ -1,25 +1,62 @@
 [
   {
     "id": 1,
-    "title": "1 + 2 + ... + 100 = ?",
+    "title": "2 + 5 = ?",
     "answer_type": "text",
-    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
-    "solutions": ["5050"]
+    "images": [
+      "/assets/shapes.svg",
+      "/assets/shapes.svg",
+      "/assets/shapes.svg"
+    ],
+    "solutions": ["7"]
   },
   {
     "id": 2,
-    "title": "The president of USA",
+    "title": "1 + 2 + ... + 100 = ?",
     "answer_type": "text",
-    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
-    "solutions": ["trump", "donald trump", "donald j trump", "donald j. trump"]
+    "images": [
+      "/assets/shapes.svg",
+      "/assets/shapes.svg",
+      "/assets/shapes.svg"
+    ],
+    "solutions": ["5050"],
+    "hints": [
+      {
+        "id": 1,
+        "type": "image",
+        "value": "assets/shapes.svg",
+        "price": 10,
+        "order_no": null
+      }
+    ]
   },
   {
     "id": 3,
     "title": "Capital of France",
     "answer_type": "letter",
-    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
+    "images": [
+      "/assets/shapes.svg",
+      "/assets/shapes.svg",
+      "/assets/shapes.svg"
+    ],
     "letters": ["r", "i", "i", "s", "p", "e", "z", "a"],
     "letters_num": 5,
-    "solutions": ["paris"]
+    "solutions": ["paris"],
+    "hints": [
+      {
+        "id": 1,
+        "type": "image",
+        "value": "assets/shapes.svg",
+        "price": 10,
+        "order_no": null
+      },
+      {
+        "id": 2,
+        "type": "letter",
+        "value": "[\"2\",\"6\"]",
+        "price": 50,
+        "order_no": null
+      }
+    ]
   }
 ]

@@ -1,25 +1,62 @@
 [
   {
     "id": 1,
-    "title": "۱ + ۲ + ... + ۱۰۰",
+    "title": "۲ + ۵ = ؟",
     "answer_type": "text",
-    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
-    "solutions": ["۵۰۵۰", "5050"]
+    "images": [
+      "/assets/shapes.svg",
+      "/assets/shapes.svg",
+      "/assets/shapes.svg"
+    ],
+    "solutions": ["۷", "7"]
   },
   {
     "id": 2,
-    "title": "۲ + ۵ = ؟",
+    "title": "۱ + ۲ + ... + ۱۰۰",
     "answer_type": "text",
-    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
-    "solutions": ["۷", "7"]
+    "images": [
+      "/assets/shapes.svg",
+      "/assets/shapes.svg",
+      "/assets/shapes.svg"
+    ],
+    "solutions": ["۵۰۵۰", "5050"],
+    "hints": [
+      {
+        "id": 1,
+        "type": "image",
+        "value": "assets/shapes.svg",
+        "price": 10,
+        "order_no": null
+      }
+    ]
   },
   {
     "id": 3,
     "title": "پایتخت کشور فرانسه",
     "answer_type": "letter",
-    "images": ["/assets/shapes.svg", "/assets/shapes.svg", "/assets/shapes.svg"],
+    "images": [
+      "/assets/shapes.svg",
+      "/assets/shapes.svg",
+      "/assets/shapes.svg"
+    ],
     "letters": ["ر", "ی", "ی", "س", "پ", "ف", "ز", "ا"],
     "letters_num": 5,
-    "solutions": ["پاریس"]
+    "solutions": ["پاریس"],
+    "hints": [
+      {
+        "id": 1,
+        "type": "image",
+        "value": "assets/shapes.svg",
+        "price": 10,
+        "order_no": null
+      },
+      {
+        "id": 2,
+        "type": "letter",
+        "value": "[\"2\",\"5\"]",
+        "price": 50,
+        "order_no": null
+      }
+    ]
   }
 ]
