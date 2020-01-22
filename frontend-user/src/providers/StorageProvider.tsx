@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import { Locale, LevelHint } from "../declarations";
 import Storage from "../Storage";
 
@@ -42,6 +42,7 @@ enum StorageActionType {
   SET_LANG,
   SET_CURRENT_LEVEL,
   SET_LEVEL_HINTS,
+  SET,
   RESET
 }
 
@@ -51,6 +52,7 @@ type StorageAction =
   | { type: StorageActionType.SET_LANG; payload: Locale }
   | { type: StorageActionType.SET_CURRENT_LEVEL; payload: number }
   | { type: StorageActionType.SET_LEVEL_HINTS; payload: LevelHint[] }
+  | { type: StorageActionType.SET; payload: StorageState }
   | { type: StorageActionType.RESET };
 
 const initialState: StorageState = {
@@ -122,6 +124,8 @@ function storageReducer(
           levelHints: action.payload
         }
       };
+    case StorageActionType.SET:
+      return { ...action.payload };
     case StorageActionType.RESET:
       Storage.clear();
       return { ...initialState };
@@ -160,6 +164,33 @@ const StorageProvider: React.FC = ({ children }) => {
         payload: [...state.levels.levelHints, { levelId, hintId }]
       })
   };
+  useEffect(() => {
+    Promise.all([
+      Storage.getObject("auth.token"),
+      Storage.getObject("auth.me"),
+      Storage.getObject("settings.lang"),
+      Storage.getObject("levels.currentLevel"),
+      Storage.getObject("levels.levelHints")
+    ]).then((results: any) => {
+      dispatch({
+        type: StorageActionType.SET,
+        payload: {
+          auth: {
+            token: results[0],
+            isAuthenticated: !!results[0],
+            me: results[1]
+          },
+          settings: {
+            lang: results[2]
+          },
+          levels: {
+            currentLevel: results[3],
+            levelHints: results[4]
+          }
+        }
+      });
+    });
+  }, []);
   return (
     <storageContext.Provider value={{ state, actions }}>
       {children}
