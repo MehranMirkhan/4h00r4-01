@@ -8,12 +8,13 @@ import {
   IonSlide,
   IonAlert,
   IonInput,
-  IonButton
+  IonButton,
+  IonActionSheet
 } from "@ionic/react";
 import { withLocalize, Translate } from "react-localize-redux";
 
 import Toolbar from "../../components/Toolbar";
-import { Question, AnswerType, Hint } from "../../declarations";
+import { Question, AnswerType, Hint, LevelHint } from "../../declarations";
 import { storageContext } from "../../providers/StorageProvider";
 
 const LevelPage = withLocalize(({ match, activeLanguage, translate }: any) => {
@@ -90,7 +91,7 @@ const Level = ({ level, onSubmit, boughtHints }: any) => {
         boughtHints={boughtHints}
         onSubmit={onSubmit}
       />
-      {/* <QuestionHint entity={level} /> */}
+      <QuestionHint entity={level} />
     </>
   );
 };
@@ -98,6 +99,24 @@ const Level = ({ level, onSubmit, boughtHints }: any) => {
 const QuestionImages: React.FC<{ entity: Partial<Question> }> = ({
   entity
 }) => {
+  const storage = useContext(storageContext);
+  const [images, setImages] = useState<string[]>([]);
+  useEffect(() => {
+    setImages([]);
+    const img = [];
+    if (!!entity.images) img.push(...entity.images);
+    if (!!entity.hints)
+      img.push(
+        ...entity.hints
+          .filter(
+            h =>
+              h.type === "image" &&
+              isHintBought(h, storage.state.levels.levelHints)
+          )
+          .map(h => h.value)
+      );
+    setImages(img);
+  }, [entity, storage.state.levels.levelHints]);
   if (!entity) return null;
   const options = {
     initialSlide: 0,
@@ -107,25 +126,21 @@ const QuestionImages: React.FC<{ entity: Partial<Question> }> = ({
     loop: true,
     spaceBetween: 20
   };
-  const images = [];
-  if (!!entity.images) images.push(...entity.images);
-  if (!!entity.hints)
-    images.push(
-      ...entity.hints
-        .filter(h => h.type === "image" && !!h.value)
-        .map(h => h.value)
-    );
   return (
     <IonSlides pager options={options} className="slider">
-      {!!images &&
-        images.map((img: string, i: number) => (
-          <IonSlide key={i}>
-            <img src={img} alt="" />
-          </IonSlide>
-        ))}
+      {images.map((img: string, i: number) => (
+        <IonSlide key={i}>
+          <img src={img} alt="" />
+        </IonSlide>
+      ))}
     </IonSlides>
   );
 };
+
+function isHintBought(hint: Hint, boughtHints: LevelHint[]) {
+  for (let h of boughtHints) if (h.hintId === hint.id) return true;
+  return false;
+}
 
 const QuestionBody: React.FC<{
   entity: Partial<Question>;
@@ -273,5 +288,55 @@ const QuestionLetterBody: React.FC<{
     </>
   );
 };
+
+const QuestionHint = withLocalize(({ entity, translate }: any) => {
+  const storage = useContext(storageContext);
+  const [open, setOpen] = useState(false);
+
+  // const hintResult = useSelector(hintResultSelector);
+  // const dispatch = useDispatch();
+
+  const onOpen = () => setOpen(true);
+  const onClose = () => setOpen(false);
+
+  if (!entity || !!entity.solved) return null;
+  let hints: Hint[] | undefined = entity.hints;
+  if (!!hints)
+    hints = hints.filter(
+      h => !isHintBought(h, storage.state.levels.levelHints)
+    );
+  if (!hints || hints.length === 0) return null;
+
+  const btnHintItem = (hint: Hint) => ({
+    text: `${hint.type} - ${hint.price} Gold`,
+    icon: "flash",
+    handler: () => {
+      // dispatch(buyHint(hint.id));
+    },
+    disabled: !!hint.value
+  });
+
+  return (
+    <>
+      <IonActionSheet
+        isOpen={open}
+        onDidDismiss={onClose}
+        buttons={hints.map(btnHintItem)}
+      />
+      <IonButton
+        color="success"
+        expand="block"
+        style={{ marginTop: 16 }}
+        onClick={onOpen}
+      >
+        <Translate id="pages.question.hints" />
+      </IonButton>
+      {/* <IonAlert
+        isOpen={!!hintResult}
+        message={!!hintResult ? translate("pages.question.hintBought") : ""}
+      /> */}
+    </>
+  );
+});
 
 export default LevelPage;
