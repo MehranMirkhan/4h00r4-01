@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { IonButton, IonContent, IonHeader, IonPage } from "@ionic/react";
 
 import Toolbar from "../../components/Toolbar";
-import Storage from "../../Storage";
 
 import "./Level.css";
 import { withLocalize } from "react-localize-redux";
 import { Question } from "../../declarations";
+import { storageContext } from "../../providers/StorageProvider";
 
 enum LevelState {
   SOLVED,
@@ -18,14 +18,7 @@ const LevelListPage = withLocalize(({ activeLanguage }) => {
   const levels: Partial<
     Question
   >[] = require(`../../data/levels.${activeLanguage.code}.json`);
-  const [currLevel, setCurrLevel] = useState<number>(1);
-
-  useEffect(() => {
-    Storage.get("level").then((v: any) => {
-      if (!!v) setCurrLevel(Number(v));
-      else Storage.set("level", "1");
-    });
-  });
+  const storage = useContext(storageContext);
 
   return (
     <IonPage>
@@ -38,11 +31,13 @@ const LevelListPage = withLocalize(({ activeLanguage }) => {
             <LevelItem
               key={i}
               level={level}
-              state={getLevelState(currLevel, i)}
+              state={getLevelState(storage.state.levels.currentLevel, i)}
             />
           ))}
         </div>
-        <IonButton onClick={() => Storage.set("level", "1")}>Reset</IonButton>
+        <IonButton onClick={() => storage.actions.setCurrentLevel(1)}>
+          Reset
+        </IonButton>
       </IonContent>
     </IonPage>
   );

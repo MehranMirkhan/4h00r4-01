@@ -36,17 +36,6 @@ export default (state = initialState, action: any) => {
 
 // Actions
 
-export const initialLoad = () => (dispatch: any) => {
-  return Storage.getObject("settings").then((v: any) => {
-    if (!!v) {
-      console.log("Settings loaded:", v);
-      dispatch(reset(v));
-    } else {
-      Storage.setObject("settings", initialState);
-    }
-  });
-};
-
 export const reset = (state?: any) => ({
   type: SettingsActions.RESET,
   payload: state ? state : undefined,

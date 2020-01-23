@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router";
 import {
   IonContent,
@@ -14,52 +14,45 @@ import { withLocalize, Translate } from "react-localize-redux";
 
 import Toolbar from "../../components/Toolbar";
 import { Question, AnswerType, Hint } from "../../declarations";
-import Storage from "../../Storage";
+import { storageContext } from "../../providers/StorageProvider";
 
 const LevelPage = withLocalize(({ match, activeLanguage, translate }: any) => {
   const levels = require(`../../data/levels.${activeLanguage.code}.json`);
   const id = Number(match.params.id);
+  const storage = useContext(storageContext);
 
-  const [level, setLevel] = useState<Question | undefined>(undefined);
-  const [levelHints, setLevelHints] = useState<Hint[]>([]);
   const [redirect, setRedirect] = useState(false);
   const [open, setOpen] = useState(false);
   const [answerResult, setAnswerResult] = useState(false);
 
-  useEffect(() => {
-    Storage.get("level").then((v: any) => {
-      v = Number(v);
-      if (v < id) setRedirect(true);
-      else {
-        let l = levels[id - 1];
-        if (v > id) l.solved = true;
-        setLevel(l);
-      }
-    });
-  }, [id, setRedirect, levels, setLevel]);
+  const currLevel = storage.state.levels.currentLevel;
+  const level = levels[id - 1];
+  const levelHints = storage.state.levels.levelHints.filter(
+    x => x.levelId === id
+  );
 
-  Storage.getObject("level-hints").then((v: any[]) => {
-    if (!v) {
-      Storage.setObject("level-hints", []);
-      setLevelHints([]);
-    } else setLevelHints(v.filter(x => x.question_id === id));
-  });
+  useEffect(() => {
+    if (currLevel < id) setRedirect(true);
+    if (currLevel > id) level.solved = true;
+    else level.solved = false;
+  }, [currLevel, id]);
 
   const onSubmit = (answer: string) => {
     if (!level) return;
     for (let solution of level.solutions) {
       if (solution === answer) {
         setAnswerResult(true);
-        Storage.set("level", String(id + 1));
-      } else {
-        setAnswerResult(false);
+        storage.actions.incrementCurrentLevel();
+        setTimeout(() => {
+          setRedirect(true);
+        }, 1000);
+        break;
       }
-      setOpen(true);
-      setTimeout(() => {
-        setOpen(false);
-        if (answerResult) setRedirect(true);
-      }, 1000);
     }
+    setOpen(true);
+    setTimeout(() => {
+      setOpen(false);
+    }, 1000);
   };
 
   return redirect ? (

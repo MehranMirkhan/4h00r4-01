@@ -48,17 +48,6 @@ export default (state = initialState, action: any) => {
 
 // --------- ACTIONS ---------
 
-export const initialLoad = () => (dispatch: any) => {
-  return Storage.getObject("auth").then((v: any) => {
-    if (!!v) {
-      console.log("Auth loaded:", v);
-      return dispatch(reset(v));
-    } else {
-      Storage.setObject("auth", initialState);
-    }
-  });
-};
-
 export const reset = (state?: any) => ({
   type: AuthActions.RESET,
   payload: state ? state : undefined,

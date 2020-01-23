@@ -1,11 +1,15 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import { Locale, LevelHint } from "../declarations";
 import Storage from "../Storage";
+import config from "../app.config.json";
+import { useDispatch } from "react-redux";
+import { AuthActions } from "../pages/Auth/Auth.reducer";
 
 export type AuthState = {
-  token?: object;
+  token?: any;
   isAuthenticated: boolean;
-  me?: object;
+  me?: any;
+  hasMe: boolean;
 };
 
 export type SettingsState = {
@@ -25,10 +29,10 @@ export type StorageState = {
 
 interface IStorageContext {
   state: StorageState;
-  actions?: {
-    setToken: (token: object) => void;
-    setMe: (me: object) => void;
-    setLang: (lang: Locale) => void;
+  actions: {
+    setToken: (token: any) => void;
+    setMe: (me: any) => void;
+    setSettings: (settings: SettingsState) => void;
     setCurrentLevel: (currentLevel: number) => void;
     incrementCurrentLevel: () => void;
     setLevelHints: (levelHints: LevelHint[]) => void;
@@ -39,7 +43,7 @@ interface IStorageContext {
 enum StorageActionType {
   SET_TOKEN,
   SET_ME,
-  SET_LANG,
+  SET_SETTINGS,
   SET_CURRENT_LEVEL,
   SET_LEVEL_HINTS,
   SET,
@@ -49,7 +53,7 @@ enum StorageActionType {
 type StorageAction =
   | { type: StorageActionType.SET_TOKEN; payload: object }
   | { type: StorageActionType.SET_ME; payload: object }
-  | { type: StorageActionType.SET_LANG; payload: Locale }
+  | { type: StorageActionType.SET_SETTINGS; payload: SettingsState }
   | { type: StorageActionType.SET_CURRENT_LEVEL; payload: number }
   | { type: StorageActionType.SET_LEVEL_HINTS; payload: LevelHint[] }
   | { type: StorageActionType.SET; payload: StorageState }
@@ -57,7 +61,8 @@ type StorageAction =
 
 const initialState: StorageState = {
   auth: {
-    isAuthenticated: false
+    isAuthenticated: false,
+    hasMe: false
   },
   settings: {
     lang: Locale.FA
@@ -70,17 +75,25 @@ const initialState: StorageState = {
 
 export const storageContext = createContext<IStorageContext>({
   state: initialState,
-  actions: undefined
+  actions: {
+    setToken: (token: any) => {},
+    setMe: (me: any) => {},
+    setSettings: (settings: SettingsState) => {},
+    setCurrentLevel: (currentLevel: number) => {},
+    incrementCurrentLevel: () => {},
+    setLevelHints: (levelHints: LevelHint[]) => {},
+    addLevelHint: (levelId: number, hintId: number) => {},
+  }
 });
 
 function storageReducer(
   state: StorageState,
   action: StorageAction
 ): StorageState {
+  let newState = null;
   switch (action.type) {
     case StorageActionType.SET_TOKEN:
-      Storage.setObject("auth.token", action.payload);
-      return {
+      newState = {
         ...state,
         auth: {
           ...state.auth,
@@ -88,42 +101,46 @@ function storageReducer(
           isAuthenticated: !!action.payload
         }
       };
+      Storage.setObject("auth", newState.auth);
+      return newState;
     case StorageActionType.SET_ME:
-      Storage.setObject("auth.me", action.payload);
-      return {
+      newState = {
         ...state,
         auth: {
           ...state.auth,
-          me: action.payload
+          me: action.payload,
+          hasMe: true
         }
       };
-    case StorageActionType.SET_LANG:
-      Storage.set("settings.lang", action.payload);
-      return {
+      Storage.setObject("auth", newState.auth);
+      return newState;
+    case StorageActionType.SET_SETTINGS:
+      newState = {
         ...state,
-        settings: {
-          ...state.settings,
-          lang: action.payload
-        }
+        settings: action.payload
       };
+      Storage.setObject("settings", newState.settings);
+      return newState;
     case StorageActionType.SET_CURRENT_LEVEL:
-      Storage.set("levels.currentLevel", String(action.payload));
-      return {
+      newState = {
         ...state,
         levels: {
           ...state.levels,
           currentLevel: action.payload
         }
       };
+      Storage.setObject("levels", newState.levels);
+      return newState;
     case StorageActionType.SET_LEVEL_HINTS:
-      Storage.setObject("levels.levelHints", action.payload);
-      return {
+      newState = {
         ...state,
         levels: {
           ...state.levels,
           levelHints: action.payload
         }
       };
+      Storage.setObject("levels", newState.levels);
+      return newState;
     case StorageActionType.SET:
       return { ...action.payload };
     case StorageActionType.RESET:
@@ -136,13 +153,14 @@ function storageReducer(
 
 const StorageProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(storageReducer, initialState);
+  const reduxDispatch = useDispatch();
   const actions = {
-    setToken: (token: object) =>
+    setToken: (token: any) =>
       dispatch({ type: StorageActionType.SET_TOKEN, payload: token }),
-    setMe: (me: object) =>
+    setMe: (me: any) =>
       dispatch({ type: StorageActionType.SET_ME, payload: me }),
-    setLang: (lang: Locale) =>
-      dispatch({ type: StorageActionType.SET_LANG, payload: lang }),
+    setSettings: (settings: SettingsState) =>
+      dispatch({ type: StorageActionType.SET_SETTINGS, payload: settings }),
     setCurrentLevel: (currentLevel: number) =>
       dispatch({
         type: StorageActionType.SET_CURRENT_LEVEL,
@@ -166,31 +184,36 @@ const StorageProvider: React.FC = ({ children }) => {
   };
   useEffect(() => {
     Promise.all([
-      Storage.getObject("auth.token"),
-      Storage.getObject("auth.me"),
-      Storage.getObject("settings.lang"),
-      Storage.getObject("levels.currentLevel"),
-      Storage.getObject("levels.levelHints")
+      Storage.getObject("auth"),
+      Storage.getObject("settings"),
+      Storage.getObject("levels")
     ]).then((results: any) => {
+      if (config.log) console.log("Storage loaded:", results);
+      if (!results[0]) results[0] = initialState.auth;
+      else {
+        reduxDispatch({
+          type: AuthActions.SET_TOKEN,
+          payload: results[0].token
+        });
+        reduxDispatch({ type: AuthActions.SET_ME, payload: results[0].me });
+      }
+      if (!results[1]) results[1] = initialState.settings;
+      if (!results[2]) results[2] = initialState.levels;
       dispatch({
         type: StorageActionType.SET,
         payload: {
           auth: {
-            token: results[0],
-            isAuthenticated: !!results[0],
-            me: results[1]
+            token: results[0].token,
+            isAuthenticated: !!results[0].token,
+            me: results[0].me,
+            hasMe: !!results[0].me
           },
-          settings: {
-            lang: results[2]
-          },
-          levels: {
-            currentLevel: results[3],
-            levelHints: results[4]
-          }
+          settings: results[1],
+          levels: results[2]
         }
       });
     });
-  }, []);
+  }, [reduxDispatch]);
   return (
     <storageContext.Provider value={{ state, actions }}>
       {children}

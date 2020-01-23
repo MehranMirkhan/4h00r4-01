@@ -29,7 +29,7 @@ const Menu: React.FunctionComponent<MenuProps> = ({ appPages }) => {
           <>
             <div className="center">
               <IonIcon icon={contact} className="avatar" />
-              <div>{me.name}</div>
+              <div>{!!me ? me.name : ""}</div>
             </div>
             <div className="center">
               <IonMenuToggle autoHide={false}>

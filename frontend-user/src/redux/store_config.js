@@ -6,8 +6,6 @@ import reducer from './reducer';
 import { isAuthenticated, getAccessToken } from '../pages/Auth/Auth.reducer';
 
 import config from '../app.config.json';
-import { initialLoad as initializeAuth } from '../pages/Auth/Auth.reducer';
-import { initialLoad as initializeSettings } from '../pages/Settings/Settings.reducer';
 
 
 export const API = Axios.create({
@@ -58,7 +56,3 @@ if (config.log) {
     return response;
   });
 }
-
-// Initializing states
-store.dispatch(initializeAuth());
-store.dispatch(initializeSettings());

@@ -1,22 +1,28 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { IonAlert } from '@ionic/react';
-import { withLocalize } from 'react-localize-redux';
-import { API } from '../redux/store_config';
-import { isAuthenticated, register } from '../pages/Auth/Auth.reducer';
+import React from "react";
+import { connect } from "react-redux";
+import { IonAlert } from "@ionic/react";
+import { withLocalize } from "react-localize-redux";
+import { API } from "../redux/store_config";
+import { isAuthenticated, register, logout } from "../pages/Auth/Auth.reducer";
 
 interface IAlertControllerProps {
-  translate?: any,
-  isAuth: boolean,
-  createNewUser: () => any,
+  translate?: any;
+  isAuth: boolean;
+  hasMe: boolean;
+  createNewUser: () => any;
+  logout: () => any;
 }
 
-interface IAlertControllerState {
-}
+interface IAlertControllerState {}
 
-export const AlertContext = React.createContext((msg: string, type?: string) => { });
+export const AlertContext = React.createContext(
+  (msg: string, type?: string) => {}
+);
 
-class AlertController extends React.Component<IAlertControllerProps, IAlertControllerState> {
+class AlertController extends React.Component<
+  IAlertControllerProps,
+  IAlertControllerState
+> {
   state = { open: false, message: "", type: "error" };
   requestInterceptor: any = undefined;
   responseInterceptor: any = undefined;
@@ -46,19 +52,33 @@ class AlertController extends React.Component<IAlertControllerProps, IAlertContr
           this.open();
         } else if (error.response.status === 401) {
           if (this.props.isAuth) {
-            this.setMessage(this.props.translate("server.auth.wrongCredentials"));
-            this.setType("alert.title.error");
-            this.open();
+            if (!this.props.hasMe) {
+              this.setMessage(
+                this.props.translate("server.auth.wrongCredentials")
+              );
+              this.setType("alert.title.error");
+              this.open();
+            } else {
+              console.log("Logging out");
+              this.props.logout();
+            }
           } else {
             this.props.createNewUser().then((_: any) => {
               window.location.reload();
             });
           }
-        } else if (error.response.status === 400 || error.response.status === 422) {
+        } else if (
+          error.response.status === 400 ||
+          error.response.status === 422
+        ) {
           this.setMessage(this.props.translate("server.badRequest"));
           this.setType("alert.title.error");
           this.open();
-        } else if (!!error.response && !!error.response.data && !!error.response.data.message) {
+        } else if (
+          !!error.response &&
+          !!error.response.data &&
+          !!error.response.data.message
+        ) {
           this.setMessage(this.props.translate(error.response.data.message));
           this.setType("alert.title.error");
           this.open();
@@ -82,22 +102,27 @@ class AlertController extends React.Component<IAlertControllerProps, IAlertContr
       this.setType(!!type ? type : "empty");
       this.open();
     };
-    return <>
-      <IonAlert
-        isOpen={this.state.open}
-        onDidDismiss={this.close}
-        header={translate(this.state.type)}
-        message={this.state.message}
-        buttons={[translate("ok")]}
-      />
-      <AlertContext.Provider value={alertContext}>
-        {this.props.children}
-      </AlertContext.Provider>
-    </>;
+    return (
+      <>
+        <IonAlert
+          isOpen={this.state.open}
+          onDidDismiss={this.close}
+          header={translate(this.state.type)}
+          message={this.state.message}
+          buttons={[translate("ok")]}
+        />
+        <AlertContext.Provider value={alertContext}>
+          {this.props.children}
+        </AlertContext.Provider>
+      </>
+    );
   }
 }
 
 export default connect(
-  state => ({ isAuth: isAuthenticated(state) }),
-  dispatch => ({ createNewUser: () => dispatch(register() as any) })
+  (state: any) => ({ isAuth: isAuthenticated(state), hasMe: !!state.auth.me }),
+  dispatch => ({
+    createNewUser: () => dispatch(register() as any),
+    logout: () => dispatch(logout())
+  })
 )(withLocalize((props: any) => <AlertController {...props} />));

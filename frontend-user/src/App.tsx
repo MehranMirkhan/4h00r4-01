@@ -1,85 +1,85 @@
-import React, { useEffect } from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { Provider, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { Redirect, Route } from "react-router-dom";
+import { Provider, useSelector } from "react-redux";
 // import { PersistGate } from 'redux-persist/integration/react';
 
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
+import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
 import { LocalizeProvider, withLocalize } from "react-localize-redux";
-import { AppPage } from './declarations';
-import AlertController from './components/AlertController';
+import { AppPage } from "./declarations";
+import AlertController from "./components/AlertController";
 
-import Menu from './components/Menu';
-import Home from './pages/Home';
+import Menu from "./components/Menu";
+import Home from "./pages/Home";
 // import List from './pages/List';
-import Auth from './pages/Auth';
-import Profile from './pages/Profile';
-import Settings from './pages/Settings';
-import LevelList from './pages/LevelList';
-import Level from './pages/Level';
-import QuestionList from './pages/QuestionList';
-import Question from './pages/Question';
-import { home, settings, logIn, help } from 'ionicons/icons';
+import Auth from "./pages/Auth";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import LevelList from "./pages/LevelList";
+import Level from "./pages/Level";
+import QuestionList from "./pages/QuestionList";
+import Question from "./pages/Question";
+import { home, settings, logIn, help } from "ionicons/icons";
 
-import { store } from './redux/store_config';
-import config from './app.config.json';
-import globalDictionary from './global.dict.json';
+import { store } from "./redux/store_config";
+import config from "./app.config.json";
+import globalDictionary from "./global.dict.json";
 
 /* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
+import "@ionic/react/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
+import "@ionic/react/css/normalize.css";
+import "@ionic/react/css/structure.css";
+import "@ionic/react/css/typography.css";
 
 /* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
+import "@ionic/react/css/padding.css";
+import "@ionic/react/css/float-elements.css";
+import "@ionic/react/css/text-alignment.css";
+import "@ionic/react/css/text-transformation.css";
+import "@ionic/react/css/flex-utils.css";
+import "@ionic/react/css/display.css";
 
 /* Theme variables */
-import './theme/variables.css';
+import "./theme/variables.css";
 
 /* Fonts */
-import './theme/font/fonts.css';
-import './App.css';
-
+import "./theme/font/fonts.css";
+import "./App.css";
+import StorageProvider from "./providers/StorageProvider";
 
 const appPages: AppPage[] = [
   {
-    title: 'menu.home',
-    url: '/home',
+    title: "menu.home",
+    url: "/home",
     icon: home
   },
   {
-    title: 'menu.level',
-    url: '/level_list',
+    title: "menu.level",
+    url: "/level_list",
     icon: help
   },
   {
-    title: 'menu.daily',
-    url: '/question_list?type=daily',
+    title: "menu.daily",
+    url: "/question_list?type=daily",
     icon: help
   },
   {
-    title: 'menu.weekly',
-    url: '/question_list?type=weekly',
+    title: "menu.weekly",
+    url: "/question_list?type=weekly",
     icon: help
   },
   {
-    title: 'menu.auth',
-    url: '/auth',
+    title: "menu.auth",
+    url: "/auth",
     icon: logIn
   },
   {
-    title: 'menu.settings',
-    url: '/settings',
-    icon: settings,
-  },
+    title: "menu.settings",
+    url: "/settings",
+    icon: settings
+  }
 ];
 
 const localizationConfig: any = {
@@ -87,8 +87,8 @@ const localizationConfig: any = {
   translation: globalDictionary,
   options: {
     defaultLanguage: config.defaultLanguage,
-    renderToStaticMarkup: false,
-  },
+    renderToStaticMarkup: false
+  }
 };
 
 const App: React.FC = () => {
@@ -96,11 +96,13 @@ const App: React.FC = () => {
     <IonApp>
       <Provider store={store}>
         <LocalizeProvider initialize={localizationConfig}>
-          <LangHandler>
-            <AlertController>
-              <AppContent />
-            </AlertController>
-          </LangHandler>
+          <StorageProvider>
+            <LangHandler>
+              <AlertController>
+                <AppContent />
+              </AlertController>
+            </LangHandler>
+          </StorageProvider>
         </LocalizeProvider>
       </Provider>
     </IonApp>
@@ -128,17 +130,22 @@ const AppContent: React.FC = () => {
   );
 };
 
-const LangHandler = withLocalize(({ children, activeLanguage, setActiveLanguage }: any) => {
-  const settings = useSelector((state: any) => state.settings);
-  useEffect(() => {
-    if (activeLanguage.code !== settings.lang)
-      setActiveLanguage(settings.lang);
-  }, [settings.lang, activeLanguage.code, setActiveLanguage]);
-  return <>
-    {settings.lang === 'fa' &&
-      <link rel="stylesheet" type="text/css" href="rtl.css" />}
-    {children}
-  </>;
-});
+const LangHandler = withLocalize(
+  ({ children, activeLanguage, setActiveLanguage }: any) => {
+    const settings = useSelector((state: any) => state.settings);
+    useEffect(() => {
+      if (activeLanguage.code !== settings.lang)
+        setActiveLanguage(settings.lang);
+    }, [settings.lang, activeLanguage.code, setActiveLanguage]);
+    return (
+      <>
+        {settings.lang === "fa" && (
+          <link rel="stylesheet" type="text/css" href="rtl.css" />
+        )}
+        {children}
+      </>
+    );
+  }
+);
 
 export default App;
