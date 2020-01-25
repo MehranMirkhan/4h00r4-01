@@ -1,0 +1,105 @@
+{
+  "pages": {
+    "home": {
+      "title": ["Home", "صفحه اصلی"],
+      "level": ["LEVEL", "مرحله‌ای"],
+      "daily": ["DAILY", "روزانه"],
+      "weekly": ["WEEKLY", "هفتگی"]
+    },
+    "settings": {
+      "title": ["Settings", "تنظیمات"],
+      "lang": ["Language", "زبان"]
+    },
+    "auth": {
+      "title": ["Login / Register", "ورود / ثبت نام"],
+      "login": ["Login", "ورود"],
+      "logout": ["Logout", "خروج"],
+      "signup": ["Register", "ثبت نام"],
+      "username": ["Username", "نام کاربری"],
+      "phone": ["Phone", "شماره همراه"],
+      "password": ["Password", "رمز عبور"],
+      "passwordConfirm": ["Confirm Password", "تکرار رمز عبور"],
+      "emptyPhone": ["Please enter phone number", "لطفاْ شماره همراه را وارد نمایید"],
+      "emptyPassword": ["Please enter password", "لطفاْ رمز عبور را وارد نمایید"],
+      "emptyPasswordConfirm": ["Please enter password confirm", "لطفاْ تکرار رمز عبور را وارد نمایید"],
+      "passwordConfirmMismatch": ["Password confirm does not match password", "تکرار رمز عبور نادرست است"]
+    },
+    "profile": {
+      "title": ["Profile", "اطلاعات کاربری"],
+      "editTitle": ["Edit Profile", "ویرایش اطلاعات کاربری"],
+      "pcTitle": ["Change Password", "تغییر رمز عبور"],
+      "edit": ["Edit", "ویرایش"],
+      "passwordChange": ["Change Password", "تغییر رمز عبور"],
+      "oldPassword": ["Old Password", "رمز عبور قدیمی"],
+      "wrongPasswordConfirm": ["Password confirmation is wrong", "تکرار رمز عبور نادرست است"]
+    },
+    "levels": {
+      "title": ["Levels", "مرحله‌ای"]
+    },
+    "level": {
+      "title": ["Level", "مرحله"],
+      "submit": ["Submit", "ثبت"]
+    },
+    "question": {
+      "title": ["Question", "معما"],
+      "send": ["Send", "ارسال"],
+      "hints": ["Hints", "راهنمایی‌ها"],
+      "hintBought": ["Hint bought", "راهنمایی خریداری شد"],
+      "correct": ["The answer is correct", "پاسخ درست است"],
+      "wrong": ["The answer is wrong", "پاسخ اشتباه است"],
+      "time_up": ["Answering time has ended", "مهلت پاسخدهی پایان یافته است"]
+    }
+  },
+  "menu": {
+    "home": ["Home", "صفحه اصلی"],
+    "level": ["Level", "مرحله‌ای"],
+    "daily": ["Daily", "روزانه"],
+    "weekly": ["Weekly", "هفتگی"],
+    "auth": ["Login / Register", "ورود / ثبت نام"],
+    "profile": ["Profile", "صفحه کاربری"],
+    "logout": ["Logout", "خروج"],
+    "settings": ["Settings", "تنظیمات"]
+  },
+  "alert": {
+    "title": {
+      "error": ["Error", "خطا"]
+    },
+    "networkError": ["Network Error<br/>Please try again", "خطا در برقراری ارتباط با سرور<br/>لطفا دوباره تلاش کنید"]
+  },
+  "server": {
+    "auth": {
+      "wrongCredentials": ["Wrong username or password", "نام کاربری یا رمز عبور اشتباه است"],
+      "badRequest": ["Wrong username or password", "نام کاربری یا رمز عبور اشتباه است"],
+      "emptyUsername": ["Please enter your phone number", "لطفاً شماره همراه خود را وارد نمایید"],
+      "wrongOldPassword": ["Old password is wrong", "رمز عبور قدیمی اشتباه است"],
+      "passwordChanged": ["Password successfully changed", "رمز عبور با موفقیت تغییر کرد"]
+    },
+    "user": {
+      "updated": ["Profile updated", "پروفایل اصلاح شد"]
+    },
+    "answer": {
+      "time_up": ["Answering time has ended", "مهلت پاسخدهی پایان یافته است"],
+      "already_answered": ["The question is already answered", "به این سوال قبلاْ جواب داده‌اید"],
+      "reached_tries": ["Maximum number of tries have reached", "اجازه تلاش مجدد ندارید"]
+    },
+    "unknown": ["Uknown Error", "خطای نامشخص"],
+    "deleted": ["Record deleted", "رکورد حذف شد"],
+    "badRequest": ["Some values are wrong", "در داده‌های وارد شده خطا وجود دارد"]
+  },
+  "user": {
+    "name": ["Name", "نام"],
+    "phone": ["Phone", "شماره همراه"],
+    "email": ["Email", "ایمیل"],
+    "level": ["Level", "مرحله"],
+    "coin_1": ["Gold", "طلا"],
+    "coin_2": ["Silver", "نقره"]
+  },
+  "empty": ["", ""],
+  "yes": ["Yes", "بله"],
+  "no": ["No", "خیر"],
+  "choose": ["Choose", "انتخاب"],
+  "ok": ["OK", "قبول"],
+  "cancel": ["Cancel", "انصراف"],
+  "days": ["Days", "روز"],
+  "submit": ["Submit", "تأیید"]
+}
