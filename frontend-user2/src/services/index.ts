@@ -1,5 +1,3 @@
-import { IAPI } from "src/api";
-
 import auth from "./auth.service";
 
 export default (storage: IStorageContext, api: IAPI) => ({

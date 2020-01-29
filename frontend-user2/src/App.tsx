@@ -28,17 +28,20 @@ import "./theme/variables.css";
 
 /* Fonts */
 import "./theme/font/fonts.css";
+import AlertProvider from "./providers/AlertProvider";
 
 const App: React.FC = () => {
   return (
     <IonApp>
-      <StorageProvider>
-        <ApiProvider>
-          <ServiceProvider>
-            <Routes />
-          </ServiceProvider>
-        </ApiProvider>
-      </StorageProvider>
+      <AlertProvider>
+        <StorageProvider>
+          <ApiProvider>
+            <ServiceProvider>
+              <Routes />
+            </ServiceProvider>
+          </ApiProvider>
+        </StorageProvider>
+      </AlertProvider>
     </IonApp>
   );
 };

@@ -1,14 +1,26 @@
 import { AxiosResponse } from "axios";
 
-import { IAPI } from "src/api";
+export const login = (storage: IStorageContext, api: IAPI) => async (
+  username: string,
+  password: string
+) =>
+  api.users.login(username, password).then((resp: AxiosResponse<any>) => {
+    if (!!resp && resp.status / 100 === 2)
+      storage.storageActions.setToken(resp.data.token);
+    return resp;
+  });
+
+export const register = (storage: IStorageContext, api: IAPI) => async () =>
+  api.users.register().then((resp: AxiosResponse<any>) => {
+    if (!!resp && resp.status / 100 === 2) {
+      const { username, password } = resp.data;
+      login(storage, api)(username, password);
+      window.location.reload();
+    }
+    return resp;
+  });
 
 export default (storage: IStorageContext, api: IAPI) => ({
-  login: async (username: string, password: string) => {
-    return api.users
-      .login(username, password)
-      .then((res: AxiosResponse<any>) => {
-        if (res.status === 200) storage.storageActions.setToken(res.data.token);
-        return res;
-      });
-  }
+  login: login(storage, api),
+  register: register(storage, api)
 });

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import Storage from "src/tools/Storage";
@@ -105,48 +105,52 @@ function storageReducer(
       };
       break;
     case "SET":
+      if (config.log) console.log("Storage:", action.payload);
       return { ...action.payload };
     case "RESET":
       Storage.clear();
+      if (config.log) console.log("Storage:", initialState);
       return { ...initialState };
     default:
       return state;
   }
   store(newState);
+  if (config.log) console.log("Storage:", newState);
   return newState;
 }
+
+const makeActions = (dispatch: any) => ({
+  setToken: (token: any) => dispatch({ type: "SET_TOKEN", payload: token }),
+  setMe: (me: any) => dispatch({ type: "SET_ME", payload: me }),
+  setSettings: (settings: SettingsState) =>
+    dispatch({ type: "SET_SETTINGS", payload: settings }),
+  setCurrentLevel: (currentLevel: number) =>
+    dispatch({
+      type: "SET_CURRENT_LEVEL",
+      payload: currentLevel
+    }),
+  incrementCurrentLevel: () =>
+    dispatch({
+      type: "INCREMENT_CURRENT_LEVEL"
+    }),
+  setLevelHints: (levelHints: LevelHint[]) =>
+    dispatch({
+      type: "SET_LEVEL_HINTS",
+      payload: levelHints
+    }),
+  addLevelHint: (levelId: number, hintId: number) =>
+    dispatch({
+      type: "ADD_LEVEL_HINT",
+      payload: { levelId, hintId }
+    })
+});
 
 const StorageProvider: React.FC = ({ children }) => {
   const { i18n } = useTranslation();
   const [storageState, dispatch] = useReducer(storageReducer, initialState);
-  const storageActions = {
-    setToken: (token: any) => dispatch({ type: "SET_TOKEN", payload: token }),
-    setMe: (me: any) => dispatch({ type: "SET_ME", payload: me }),
-    setSettings: (settings: SettingsState) =>
-      dispatch({ type: "SET_SETTINGS", payload: settings }),
-    setCurrentLevel: (currentLevel: number) =>
-      dispatch({
-        type: "SET_CURRENT_LEVEL",
-        payload: currentLevel
-      }),
-    incrementCurrentLevel: () =>
-      dispatch({
-        type: "INCREMENT_CURRENT_LEVEL"
-      }),
-    setLevelHints: (levelHints: LevelHint[]) =>
-      dispatch({
-        type: "SET_LEVEL_HINTS",
-        payload: levelHints
-      }),
-    addLevelHint: (levelId: number, hintId: number) =>
-      dispatch({
-        type: "ADD_LEVEL_HINT",
-        payload: { levelId, hintId }
-      })
-  };
+  const storageActions = useMemo(() => makeActions(dispatch), [dispatch]);
   useEffect(() => {
     read().then((result: StorageState) => {
-      if (config.log) console.log("Storage loaded:", result);
       if (!result) store(initialState);
       else
         dispatch({

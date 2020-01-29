@@ -1,14 +1,14 @@
 import React from "react";
+import { IonIcon } from "@ionic/react";
+import { settings, logIn } from "ionicons/icons";
 import { useTranslation } from "react-i18next";
 
 import Page from "src/widgets/Page";
 import Slide from "src/widgets/Slide";
+import MultiCol from "src/widgets/MultiCol";
 import LinkButton from "src/widgets/LinkButton";
 
 import "./Home.css";
-import { IonIcon } from "@ionic/react";
-import MultiCol from "src/widgets/MultiCol";
-import { settings, logIn } from "ionicons/icons";
 
 export default function() {
   const { t } = useTranslation();

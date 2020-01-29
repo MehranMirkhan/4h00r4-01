@@ -1,14 +1,8 @@
-import { AxiosInstance, AxiosResponse } from "axios";
-
-export interface IUsersAPI {
-  get: () => Promise<AxiosResponse<any>>;
-  getById: (id: number) => Promise<AxiosResponse<any>>;
-  login: (email: string, password: string) => Promise<AxiosResponse<any>>;
-}
+import { AxiosInstance } from "axios";
+import { default_password } from "src/app.config.json";
 
 export default (axios: AxiosInstance): IUsersAPI => ({
-  get: () => axios.get(`/users`),
-  getById: (id: number) => axios.get(`/users/${id}`),
+  register: () => axios.post("/register", { password: default_password }),
   login: (email: string, password: string) =>
     axios.post("/login", { email, password })
 });

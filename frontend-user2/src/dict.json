@@ -10,7 +10,9 @@
       "Settings": "Settings",
       "Language": "Language",
       "OK": "OK",
-      "Cancel": "Cancel"
+      "Cancel": "Cancel",
+      "Error": "Error",
+      "Network Error": "Network Error"
     }
   },
   "fa": {
@@ -24,7 +26,9 @@
       "Settings": "تنظیمات",
       "Language": "زبان",
       "OK": "قبول",
-      "Cancel": "انصراف"
+      "Cancel": "انصراف",
+      "Error": "خطا",
+      "Network Error": "خطای شبکه"
     }
   }
 }
