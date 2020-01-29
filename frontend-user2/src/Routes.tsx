@@ -12,32 +12,32 @@ import { storageContext } from "./providers/StorageProvider";
 
 const menuItems = [
   {
-    title: "home",
+    title: "Home",
     url: "/home",
     icon: home
   },
   {
-    title: "menu.level",
+    title: "Level",
     url: "/level_list",
     icon: help
   },
   {
-    title: "menu.daily",
+    title: "Daily",
     url: "/question_list?type=daily",
     icon: help
   },
   {
-    title: "menu.weekly",
+    title: "Weekly",
     url: "/question_list?type=weekly",
     icon: help
   },
   {
-    title: "menu.auth",
+    title: "Login / Register",
     url: "/auth",
     icon: logIn
   },
   {
-    title: "menu.settings",
+    title: "Settings",
     url: "/settings",
     icon: settings
   }
