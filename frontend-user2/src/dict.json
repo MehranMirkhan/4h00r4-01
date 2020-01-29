@@ -1,7 +1,20 @@
 {
   "en": {
     "translation": {
-      "Welcome to Puzzles": "Welcome to Puzzles"
+      "Welcome to Puzzles": "Welcome to Puzzles",
+      "Settings": "Settings",
+      "Language": "Language",
+      "OK": "OK",
+      "Cancel": "Cancel"
+    }
+  },
+  "fa": {
+    "translation": {
+      "Welcome to Puzzles": "به بازی پازل خوش آمدید",
+      "Settings": "تنظیمات",
+      "Language": "زبان",
+      "OK": "قبول",
+      "Cancel": "انصراف"
     }
   }
 }

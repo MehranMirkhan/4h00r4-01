@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Redirect, Route } from "react-router-dom";
 
 import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
@@ -7,6 +7,8 @@ import { home, settings, logIn, help } from "ionicons/icons";
 
 import Menu from "src/widgets/Menu";
 import Home from "src/pages/Home";
+import Settings from "src/pages/Settings";
+import { storageContext } from "./providers/StorageProvider";
 
 const menuItems = [
   {
@@ -42,15 +44,26 @@ const menuItems = [
 ];
 
 export default function() {
+  const {
+    storageState: {
+      settings: { lang }
+    }
+  } = useContext(storageContext);
   return (
-    <IonReactRouter>
-      <IonSplitPane contentId="main">
-        <Menu items={menuItems} />
-        <IonRouterOutlet id="main">
-          <Route exact path="/home" component={Home} />
-          <Route path="/" render={() => <Redirect to="/home" exact />} />
-        </IonRouterOutlet>
-      </IonSplitPane>
-    </IonReactRouter>
+    <>
+      {lang === "fa" && (
+        <link rel="stylesheet" type="text/css" href="rtl.css" />
+      )}
+      <IonReactRouter>
+        <IonSplitPane contentId="main">
+          <Menu items={menuItems} />
+          <IonRouterOutlet id="main">
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/settings" component={Settings} />
+            <Route path="/" render={() => <Redirect to="/home" exact />} />
+          </IonRouterOutlet>
+        </IonSplitPane>
+      </IonReactRouter>
+    </>
   );
 }

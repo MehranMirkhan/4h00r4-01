@@ -1,65 +1,8 @@
 import React, { createContext, useReducer, useEffect } from "react";
-
-import { LevelHint } from "src/declarations";
-import Storage from "src/Storage";
-import config from "src/app.config.json";
 import { useTranslation } from "react-i18next";
 
-export type AuthState = {
-  token?: any;
-  me?: any;
-};
-
-export type SettingsState = {
-  lang?: string;
-};
-
-export type LevelsState = {
-  currentLevel: number;
-  levelHints: LevelHint[];
-};
-
-export type StorageState = {
-  auth: AuthState;
-  settings: SettingsState;
-  levels: LevelsState;
-};
-
-export interface IStorageContext {
-  storageState: StorageState;
-  storageActions: {
-    setToken: (token: any) => void;
-    setMe: (me: any) => void;
-    setSettings: (settings: SettingsState) => void;
-    setCurrentLevel: (currentLevel: number) => void;
-    incrementCurrentLevel: () => void;
-    setLevelHints: (levelHints: LevelHint[]) => void;
-    addLevelHint: (levelId: number, hintId: number) => void;
-  };
-}
-
-enum StorageActionType {
-  SET_TOKEN,
-  SET_ME,
-  SET_SETTINGS,
-  SET_CURRENT_LEVEL,
-  INCREMENT_CURRENT_LEVEL,
-  SET_LEVEL_HINTS,
-  ADD_LEVEL_HINT,
-  SET,
-  RESET
-}
-
-type StorageAction =
-  | { type: StorageActionType.SET_TOKEN; payload: object }
-  | { type: StorageActionType.SET_ME; payload: object }
-  | { type: StorageActionType.SET_SETTINGS; payload: SettingsState }
-  | { type: StorageActionType.SET_CURRENT_LEVEL; payload: number }
-  | { type: StorageActionType.INCREMENT_CURRENT_LEVEL }
-  | { type: StorageActionType.SET_LEVEL_HINTS; payload: LevelHint[] }
-  | { type: StorageActionType.ADD_LEVEL_HINT; payload: LevelHint }
-  | { type: StorageActionType.SET; payload: StorageState }
-  | { type: StorageActionType.RESET };
+import Storage from "src/tools/Storage";
+import config from "src/app.config.json";
 
 export const initialState: StorageState = {
   auth: {},
@@ -101,7 +44,7 @@ function storageReducer(
 ): StorageState {
   let newState = null;
   switch (action.type) {
-    case StorageActionType.SET_TOKEN:
+    case "SET_TOKEN":
       newState = {
         ...state,
         auth: {
@@ -110,7 +53,7 @@ function storageReducer(
         }
       };
       break;
-    case StorageActionType.SET_ME:
+    case "SET_ME":
       newState = {
         ...state,
         auth: {
@@ -119,13 +62,13 @@ function storageReducer(
         }
       };
       break;
-    case StorageActionType.SET_SETTINGS:
+    case "SET_SETTINGS":
       newState = {
         ...state,
         settings: action.payload
       };
       break;
-    case StorageActionType.SET_CURRENT_LEVEL:
+    case "SET_CURRENT_LEVEL":
       newState = {
         ...state,
         levels: {
@@ -134,7 +77,7 @@ function storageReducer(
         }
       };
       break;
-    case StorageActionType.INCREMENT_CURRENT_LEVEL:
+    case "INCREMENT_CURRENT_LEVEL":
       newState = {
         ...state,
         levels: {
@@ -143,7 +86,7 @@ function storageReducer(
         }
       };
       break;
-    case StorageActionType.SET_LEVEL_HINTS:
+    case "SET_LEVEL_HINTS":
       newState = {
         ...state,
         levels: {
@@ -152,7 +95,7 @@ function storageReducer(
         }
       };
       break;
-    case StorageActionType.ADD_LEVEL_HINT:
+    case "ADD_LEVEL_HINT":
       newState = {
         ...state,
         levels: {
@@ -161,9 +104,9 @@ function storageReducer(
         }
       };
       break;
-    case StorageActionType.SET:
+    case "SET":
       return { ...action.payload };
-    case StorageActionType.RESET:
+    case "RESET":
       Storage.clear();
       return { ...initialState };
     default:
@@ -177,29 +120,27 @@ const StorageProvider: React.FC = ({ children }) => {
   const { i18n } = useTranslation();
   const [storageState, dispatch] = useReducer(storageReducer, initialState);
   const storageActions = {
-    setToken: (token: any) =>
-      dispatch({ type: StorageActionType.SET_TOKEN, payload: token }),
-    setMe: (me: any) =>
-      dispatch({ type: StorageActionType.SET_ME, payload: me }),
+    setToken: (token: any) => dispatch({ type: "SET_TOKEN", payload: token }),
+    setMe: (me: any) => dispatch({ type: "SET_ME", payload: me }),
     setSettings: (settings: SettingsState) =>
-      dispatch({ type: StorageActionType.SET_SETTINGS, payload: settings }),
+      dispatch({ type: "SET_SETTINGS", payload: settings }),
     setCurrentLevel: (currentLevel: number) =>
       dispatch({
-        type: StorageActionType.SET_CURRENT_LEVEL,
+        type: "SET_CURRENT_LEVEL",
         payload: currentLevel
       }),
     incrementCurrentLevel: () =>
       dispatch({
-        type: StorageActionType.INCREMENT_CURRENT_LEVEL
+        type: "INCREMENT_CURRENT_LEVEL"
       }),
     setLevelHints: (levelHints: LevelHint[]) =>
       dispatch({
-        type: StorageActionType.SET_LEVEL_HINTS,
+        type: "SET_LEVEL_HINTS",
         payload: levelHints
       }),
     addLevelHint: (levelId: number, hintId: number) =>
       dispatch({
-        type: StorageActionType.ADD_LEVEL_HINT,
+        type: "ADD_LEVEL_HINT",
         payload: { levelId, hintId }
       })
   };
@@ -209,7 +150,7 @@ const StorageProvider: React.FC = ({ children }) => {
       if (!result) store(initialState);
       else
         dispatch({
-          type: StorageActionType.SET,
+          type: "SET",
           payload: result
         });
     });

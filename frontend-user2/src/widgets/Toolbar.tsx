@@ -12,7 +12,7 @@ interface IToolbar {
   showBack?: boolean;
 }
 
-const Toolbar: React.FC<IToolbar> = ({ title, showBack = true }) => (
+const Toolbar: React.FC<IToolbar> = ({ title = "", showBack = true }) => (
   <>
     <IonToolbar color="dark">
       <IonButtons slot="start">

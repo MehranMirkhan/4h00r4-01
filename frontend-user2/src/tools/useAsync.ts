@@ -18,10 +18,12 @@ export default function() {
         setResponse(res);
         if (!!res && res.status / 100 === 2) setState(CallState.SUCCESS);
         else setState(CallState.FAIL);
+        return res;
       })
       .catch((res: any) => {
         setResponse(res);
         setState(CallState.FAIL);
+        return res;
       });
   };
 
@@ -36,5 +38,5 @@ export default function() {
       setState(CallState.IDLE);
       setResponse(null);
     }
-  };
+  } as const;
 }

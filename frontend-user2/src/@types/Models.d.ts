@@ -1,10 +1,4 @@
-export type AppPage = {
-  url: string;
-  icon: object;
-  title: string;
-};
-
-export type User = {
+type User = {
   id: number;
   name: string;
   phone: string;
@@ -17,7 +11,7 @@ export type User = {
   profile_pic: string;
 };
 
-export type Question = {
+type Question = {
   id: number;
   title: string;
   images: string[];
@@ -36,19 +30,19 @@ export type Question = {
   solved?: boolean;
 };
 
-export type Choice = {
+type Choice = {
   type: string;
   value: string;
 };
 
-export type Answer = {
+type Answer = {
   user_id: number;
   question_id: number;
   text: string;
   correct: boolean;
 };
 
-export type Hint = {
+type Hint = {
   id: number;
   question_id: number;
   type: HintType;
@@ -56,32 +50,17 @@ export type Hint = {
   price: number;
 };
 
-export type Achievement = {
+type Achievement = {
   code: string;
 };
 
-export type LevelHint = {
+type LevelHint = {
   levelId: number;
   hintId: number;
 };
 
-export enum TimeType {
-  DAILY = "daily",
-  WEEKLY = "weekly"
-}
-export enum AnswerType {
-  TEXT = "text",
-  CHOICE = "choice",
-  LETTER = "letter"
-}
-export enum Locale {
-  EN = "en",
-  FA = "fa"
-}
-export enum HintType {
-  IMAGE = "image",
-  CHOICE = "choice",
-  LETTER = "letter",
-  TRY = "try",
-  TIME = "time"
-}
+type TimeType = "daily" | "weekly";
+
+type AnswerType = "text" | "choice" | "letter";
+
+type HintType = "image" | "choice" | "letter" | "try" | "time";

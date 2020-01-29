@@ -28,7 +28,6 @@ import "./theme/variables.css";
 
 /* Fonts */
 import "./theme/font/fonts.css";
-import "./App.css";
 
 const App: React.FC = () => {
   return (

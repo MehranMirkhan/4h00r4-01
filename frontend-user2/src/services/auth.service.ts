@@ -1,6 +1,5 @@
 import { AxiosResponse } from "axios";
 
-import { IStorageContext } from "src/providers/StorageProvider";
 import { IAPI } from "src/api";
 
 export default (storage: IStorageContext, api: IAPI) => ({

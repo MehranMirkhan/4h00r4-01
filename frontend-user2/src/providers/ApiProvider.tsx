@@ -1,5 +1,5 @@
 import React, { useContext, createContext } from "react";
-import { storageContext, initialState, AuthState } from "./StorageProvider";
+import { storageContext, initialState } from "./StorageProvider";
 import Axios from "axios";
 
 import API from "src/api";
