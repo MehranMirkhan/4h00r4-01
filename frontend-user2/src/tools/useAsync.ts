@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { AxiosResponse } from "axios";
 
 export enum CallState {
   IDLE,
@@ -9,23 +10,25 @@ export enum CallState {
 
 export default function() {
   const [state, setState] = useState<CallState>(CallState.IDLE);
-  const [response, setResponse] = useState(null);
+  const [response, setResponse] = useState<AxiosResponse<any> | undefined>(
+    undefined
+  );
 
-  const call = (callMethod: () => Promise<any>) => {
+  const call = useCallback((callMethod: () => Promise<any>) => {
     setState(CallState.CALLING);
     return callMethod()
-      .then((res: any) => {
+      .then((res: AxiosResponse<any>) => {
         setResponse(res);
         if (!!res && res.status / 100 === 2) setState(CallState.SUCCESS);
         else setState(CallState.FAIL);
         return res;
       })
-      .catch((res: any) => {
+      .catch((res: AxiosResponse<any>) => {
         setResponse(res);
         setState(CallState.FAIL);
         return res;
       });
-  };
+  }, []);
 
   return {
     call,
@@ -36,7 +39,7 @@ export default function() {
     },
     reset: () => {
       setState(CallState.IDLE);
-      setResponse(null);
+      setResponse(undefined);
     }
   } as const;
 }

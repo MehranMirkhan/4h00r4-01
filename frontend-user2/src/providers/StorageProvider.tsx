@@ -20,6 +20,7 @@ export const initialContext: IStorageContext = {
   storageActions: {
     setToken: (token: any) => {},
     setMe: (me: any) => {},
+    logout: () => {},
     setSettings: (settings: SettingsState) => {},
     setCurrentLevel: (currentLevel: number) => {},
     incrementCurrentLevel: () => {},
@@ -59,6 +60,14 @@ function storageReducer(
         auth: {
           ...state.auth,
           me: action.payload
+        }
+      };
+      break;
+    case "LOGOUT":
+      newState = {
+        ...state,
+        auth: {
+          ...initialState.auth
         }
       };
       break;
@@ -122,6 +131,7 @@ function storageReducer(
 const makeActions = (dispatch: any) => ({
   setToken: (token: any) => dispatch({ type: "SET_TOKEN", payload: token }),
   setMe: (me: any) => dispatch({ type: "SET_ME", payload: me }),
+  logout: () => dispatch({ type: "LOGOUT" }),
   setSettings: (settings: SettingsState) =>
     dispatch({ type: "SET_SETTINGS", payload: settings }),
   setCurrentLevel: (currentLevel: number) =>

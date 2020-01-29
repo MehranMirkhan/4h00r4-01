@@ -6,7 +6,7 @@ import config from "src/app.config.json";
 
 import { storageContext, initialContext } from "./StorageProvider";
 import { alertContext } from "./AlertProvider";
-import { register } from "src/services/auth.service";
+import { register } from "src/services/users.service";
 
 function createAxios(storage: IStorageContext, showMessage?: ShowMessage) {
   const { auth } = storage.storageState;

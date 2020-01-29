@@ -1,5 +1,7 @@
-import auth from "./auth.service";
+import users from "./users.service";
+import questions from "./questions.service";
 
 export default (storage: IStorageContext, api: IAPI) => ({
-  auth: auth(storage, api)
+  users: users(storage, api),
+  questions: questions(storage, api)
 });

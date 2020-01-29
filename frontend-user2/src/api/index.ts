@@ -1,6 +1,9 @@
-import users from "./users.api";
 import { AxiosInstance } from "axios";
 
+import users from "./users.api";
+import questions from "./questions.api";
+
 export default (axios: AxiosInstance): IAPI => ({
-  users: users(axios)
+  users: users(axios),
+  questions: questions(axios)
 });

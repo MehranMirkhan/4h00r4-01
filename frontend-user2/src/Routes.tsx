@@ -5,10 +5,14 @@ import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { home, settings, logIn, help } from "ionicons/icons";
 
+import { storageContext } from "src/providers/StorageProvider";
+
 import Menu from "src/widgets/Menu";
+
 import Home from "src/pages/Home";
 import Settings from "src/pages/Settings";
-import { storageContext } from "./providers/StorageProvider";
+import QuestionList from "src/pages/QuestionList";
+
 
 const menuItems = [
   {
@@ -59,7 +63,13 @@ export default function() {
           <Menu items={menuItems} />
           <IonRouterOutlet id="main">
             <Route exact path="/home" component={Home} />
+            {/* <Route path="/auth" component={Auth} /> */}
+            {/* <Route path="/profile" component={Profile} /> */}
             <Route exact path="/settings" component={Settings} />
+            {/* <Route exact path="/level_list" component={LevelList} /> */}
+            {/* <Route path="/level/:id" component={Level} /> */}
+            <Route path="/question_list" component={QuestionList} />
+            {/* <Route path="/question/:id" component={Question} /> */}
             <Route path="/" render={() => <Redirect to="/home" exact />} />
           </IonRouterOutlet>
         </IonSplitPane>

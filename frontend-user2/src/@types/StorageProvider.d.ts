@@ -23,6 +23,7 @@ type IStorageContext = {
   storageActions: {
     setToken: (token: any) => void;
     setMe: (me: any) => void;
+    logout: () => void;
     setSettings: (settings: SettingsState) => void;
     setCurrentLevel: (currentLevel: number) => void;
     incrementCurrentLevel: () => void;
@@ -34,6 +35,7 @@ type IStorageContext = {
 type StorageAction =
   | { type: "SET_TOKEN"; payload: any }
   | { type: "SET_ME"; payload: any }
+  | { type: "LOGOUT" }
   | { type: "SET_SETTINGS"; payload: SettingsState }
   | { type: "SET_CURRENT_LEVEL"; payload: number }
   | { type: "INCREMENT_CURRENT_LEVEL" }

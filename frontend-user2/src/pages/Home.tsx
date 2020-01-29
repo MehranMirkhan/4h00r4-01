@@ -1,5 +1,5 @@
-import React from "react";
-import { IonIcon } from "@ionic/react";
+import React, { useContext } from "react";
+import { IonIcon, IonButton } from "@ionic/react";
 import { settings, logIn } from "ionicons/icons";
 import { useTranslation } from "react-i18next";
 
@@ -9,9 +9,13 @@ import MultiCol from "src/widgets/MultiCol";
 import LinkButton from "src/widgets/LinkButton";
 
 import "./Home.css";
+import { storageContext } from "src/providers/StorageProvider";
 
 export default function() {
   const { t } = useTranslation();
+  const {
+    storageActions: { logout }
+  } = useContext(storageContext);
   return (
     <Page title={t("Welcome to Puzzles")} showBack={false}>
       <Slide
@@ -34,6 +38,8 @@ export default function() {
           <FooterButton icon={logIn} to="/auth" />
         ]}
       />
+
+      <IonButton onClick={logout}>Log out</IonButton>
     </Page>
   );
 }
