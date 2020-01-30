@@ -1,0 +1,42 @@
+{
+  "en": {
+    "translation": {
+      "Welcome to Puzzles": "Welcome to Puzzles",
+      "Home": "Home",
+      "Level": "Level",
+      "Daily": "Daily",
+      "Weekly": "Weekly",
+      "Login / Register": "Login / Register",
+      "Settings": "Settings",
+      "Language": "Language",
+      "OK": "OK",
+      "Cancel": "Cancel",
+      "Error": "Error",
+      "Network Error": "Network Error",
+      "Wrong credentials": "Wrong credentials",
+      "Phone": "Phone",
+      "Password": "Password",
+      "Username": "Username"
+    }
+  },
+  "fa": {
+    "translation": {
+      "Welcome to Puzzles": "به بازی پازل خوش آمدید",
+      "Home": "صفحه اصلی",
+      "Level": "مرحله‌ای",
+      "Daily": "روزانه",
+      "Weekly": "هفتگی",
+      "Login / Register": "ورود / ثبت نام",
+      "Settings": "تنظیمات",
+      "Language": "زبان",
+      "OK": "قبول",
+      "Cancel": "انصراف",
+      "Error": "خطا",
+      "Network Error": "خطای شبکه",
+      "Wrong credentials": "شماره همراه یا رمز عبور اشتباه است",
+      "Phone": "شماره همراه",
+      "Password": "رمز عبور",
+      "Username": "نام کاربری"
+    }
+  }
+}
