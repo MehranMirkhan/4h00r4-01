@@ -11,8 +11,8 @@ import Menu from "src/widgets/Menu";
 
 import Home from "src/pages/Home";
 import Settings from "src/pages/Settings";
+import Auth from "src/pages/Auth";
 import QuestionList from "src/pages/QuestionList";
-
 
 const menuItems = [
   {
@@ -63,7 +63,7 @@ export default function() {
           <Menu items={menuItems} />
           <IonRouterOutlet id="main">
             <Route exact path="/home" component={Home} />
-            {/* <Route path="/auth" component={Auth} /> */}
+            <Route exact path="/auth" component={Auth} />
             {/* <Route path="/profile" component={Profile} /> */}
             <Route exact path="/settings" component={Settings} />
             {/* <Route exact path="/level_list" component={LevelList} /> */}

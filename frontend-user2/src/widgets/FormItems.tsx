@@ -1,7 +1,29 @@
 import React from "react";
-import { IonLabel, IonSelect, IonSelectOption } from "@ionic/react";
+import {
+  IonLabel,
+  IonSelect,
+  IonSelectOption,
+  IonItem,
+  IonInput
+} from "@ionic/react";
 import { SelectChangeEventDetail } from "@ionic/core";
 import { useTranslation } from "react-i18next";
+
+export function Input({ label, value, type, onChange }: IInput) {
+  const { t } = useTranslation();
+  return (
+    <IonItem>
+      <IonLabel position="floating">{t(label)}</IonLabel>
+      <IonInput
+        value={value}
+        type={type}
+        onIonChange={e => {
+          if (!!onChange) onChange(e.detail.value || "");
+        }}
+      />
+    </IonItem>
+  );
+}
 
 export function SelectOne(params: ISelectOne) {
   const { t } = useTranslation();

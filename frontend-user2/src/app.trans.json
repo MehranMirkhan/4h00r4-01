@@ -12,7 +12,11 @@
       "OK": "OK",
       "Cancel": "Cancel",
       "Error": "Error",
-      "Network Error": "Network Error"
+      "Network Error": "Network Error",
+      "Wrong credentials": "Wrong credentials",
+      "Phone": "Phone",
+      "Password": "Password",
+      "Username": "Username"
     }
   },
   "fa": {
@@ -28,7 +32,11 @@
       "OK": "قبول",
       "Cancel": "انصراف",
       "Error": "خطا",
-      "Network Error": "خطای شبکه"
+      "Network Error": "خطای شبکه",
+      "Wrong credentials": "شماره همراه یا رمز عبور اشتباه است",
+      "Phone": "شماره همراه",
+      "Password": "رمز عبور",
+      "Username": "نام کاربری"
     }
   }
 }

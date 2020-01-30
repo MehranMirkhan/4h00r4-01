@@ -8,7 +8,7 @@ import { storageContext, initialContext } from "./StorageProvider";
 import { alertContext } from "./AlertProvider";
 import { register } from "src/services/users.service";
 
-function createAxios(storage: IStorageContext, showMessage?: ShowMessage) {
+function createAxios(storage: IStorageContext, showMessage: ShowMessage) {
   const { auth } = storage.storageState;
   // Making props
   const props: any = {
@@ -22,6 +22,7 @@ function createAxios(storage: IStorageContext, showMessage?: ShowMessage) {
 
   // Loging
   if (config.log) {
+    console.log("Creating axios");
     axios.interceptors.request.use(request => {
       console.log("Request:", request);
       return request;
@@ -39,7 +40,7 @@ function createAxios(storage: IStorageContext, showMessage?: ShowMessage) {
       if (error.code === "ECONNABORTED" || error.message === "Network Error") {
         if (!!showMessage) showMessage("Error", "Network Error", 2000);
       } else if (error.response.status === 401) {
-        if (!!auth && !auth.token) register(storage, API(axios))();
+        if (!!auth && !auth.token) register(storage, API(axios), showMessage)();
       }
     }
   );
@@ -48,7 +49,7 @@ function createAxios(storage: IStorageContext, showMessage?: ShowMessage) {
 }
 
 export function createDefaultAPI() {
-  return API(createAxios(initialContext));
+  return API(createAxios(initialContext, () => {}));
 }
 
 export const apiContext = createContext(createDefaultAPI());
