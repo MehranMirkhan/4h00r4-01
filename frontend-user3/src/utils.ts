@@ -11,7 +11,7 @@ export function getURLParams(search: string) {
   return params;
 }
 
-export function getRemainedTime(deadline: string | Date | undefined) {
+export function getRemainedTime(deadline?: string | Date) {
   const start = moment();
   const end = moment.utc(deadline);
   return end.diff(start);

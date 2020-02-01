@@ -12,6 +12,7 @@ import Home from "src/pages/Home";
 import Settings from "src/pages/Settings";
 import Auth from "src/pages/Auth";
 import QuestionList from "src/pages/QuestionList";
+import Question from "src/pages/Question";
 
 const menuItems = [
   {
@@ -64,7 +65,7 @@ export default function() {
             {/* <Route exact path="/level_list" component={LevelList} /> */}
             {/* <Route path="/level/:id" component={Level} /> */}
             <Route path="/question_list" component={QuestionList} />
-            {/* <Route path="/question/:id" component={Question} /> */}
+            <Route path="/question/:id" component={Question} />
             <Route path="/" render={() => <Redirect to="/home" exact />} />
           </IonRouterOutlet>
         </IonSplitPane>

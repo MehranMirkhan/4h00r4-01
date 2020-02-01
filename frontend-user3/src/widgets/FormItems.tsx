@@ -9,12 +9,19 @@ import {
 import { SelectChangeEventDetail } from "@ionic/core";
 import { useTranslation } from "react-i18next";
 
-export function Input({ label, value, type, onChange }: IInput) {
+export function Input({
+  label = "",
+  value,
+  type,
+  onChange,
+  className
+}: IInput) {
   const { t } = useTranslation();
   return (
     <IonItem>
       <IonLabel position="floating">{t(label)}</IonLabel>
       <IonInput
+        className={className}
         value={value}
         type={type}
         onIonChange={e => {

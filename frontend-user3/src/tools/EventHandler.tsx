@@ -61,6 +61,12 @@ export default function() {
           if (!!showMessage) showMessage("Error", "Network Error", 2000);
         } else if (error.response.status === 401) {
           if (!!auth && !auth.token) dispatch(register());
+        } else if (Math.floor(error.response.status / 100) === 4) {
+          showMessage(
+            "Error",
+            error.response.data.message || "Unknown error",
+            -1
+          );
         }
       }
     );

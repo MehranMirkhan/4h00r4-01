@@ -4,7 +4,7 @@ import { IonSlides, IonSlide } from "@ionic/react";
 import "./Slide.css";
 
 type ISlide = {
-  images: string[];
+  images?: string[];
   options?: any;
 };
 
@@ -18,7 +18,7 @@ export default ({ images, options = {} }: ISlide) => {
     spaceBetween: 20,
     ...options
   };
-  return (
+  return !images ? null : (
     <IonSlides pager options={_options} className="slider">
       {images.map((image: string, index: number) => (
         <IonSlide key={index}>

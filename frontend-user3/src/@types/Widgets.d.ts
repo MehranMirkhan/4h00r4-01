@@ -1,5 +1,5 @@
 type IInput = {
-  label: string;
+  label?: string;
   value: string;
   type?:
     | "number"
@@ -11,6 +11,7 @@ type IInput = {
     | "search"
     | "date"
     | "password";
+  className?: string;
   onChange?: (value: string) => void;
 };
 
