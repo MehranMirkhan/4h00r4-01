@@ -1,6 +1,7 @@
 type IInput = {
   label?: string;
   value: string;
+  placeholder?: string;
   type?:
     | "number"
     | "time"

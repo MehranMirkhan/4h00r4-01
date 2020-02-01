@@ -4,7 +4,7 @@ import { IonChip, IonIcon, IonLabel } from "@ionic/react";
 import { alarm } from "ionicons/icons";
 import moment from "moment";
 
-import { getRemainedTime } from "src/utils";
+import { getRemainedTime } from "src/tools/utils";
 
 import "./Timer.css";
 

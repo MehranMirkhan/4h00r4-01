@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 export function Input({
   label = "",
   value,
+  placeholder,
   type,
   onChange,
   className
@@ -24,6 +25,7 @@ export function Input({
         className={className}
         value={value}
         type={type}
+        placeholder={placeholder}
         onIonChange={e => {
           if (!!onChange) onChange(e.detail.value || "");
         }}

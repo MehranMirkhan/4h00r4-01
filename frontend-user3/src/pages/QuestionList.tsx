@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import api from "src/api";
 import useAsync, { CallState } from "src/tools/useAsync";
-import { getURLParams, getRemainedTime } from "src/utils";
+import { getURLParams, getRemainedTime } from "src/tools/utils";
 
 import LinkButton from "src/widgets/LinkButton";
 

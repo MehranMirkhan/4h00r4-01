@@ -1,3 +1,15 @@
 .center {
   text-align: center;
 }
+
+.sep {
+  border-top: 1px solid #ddd;
+}
+
+.vs4 {
+  height: 4px;
+}
+
+.vs24 {
+  height: 24px;
+}
