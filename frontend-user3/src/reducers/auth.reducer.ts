@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { isSuccess } from "src/tools/axiosInstance";
+import axiosInstance, { isSuccess } from "src/tools/axiosInstance";
 import { default_password } from "src/app.config.json";
 
 const init: AuthState = {
@@ -7,9 +7,15 @@ const init: AuthState = {
   me: undefined
 };
 
-export default function(state: AuthState, action: AuthAction): AuthState {
+export default function(
+  state: AuthState = init,
+  action: AuthAction
+): AuthState {
   switch (action.type) {
     case "SET_TOKEN":
+      if (!!action.payload)
+        axiosInstance.defaults.headers.Authorization = `Bearer ${action.payload}`;
+      else axiosInstance.defaults.headers.Authorization = undefined;
       return {
         ...state,
         token: action.payload
@@ -20,28 +26,28 @@ export default function(state: AuthState, action: AuthAction): AuthState {
         me: action.payload
       };
     case "LOGOUT":
+      axiosInstance.defaults.headers.Authorization = undefined;
       return {
         ...init
       };
+    default:
+      return state;
   }
 }
 
-export const setToken = (token: any) => (dispatch: any) =>
-  dispatch({
-    type: "SET_TOKEN",
-    payload: token
-  });
+export const setToken = (token: any) => ({
+  type: "SET_TOKEN",
+  payload: token
+});
 
-export const setMe = (me: any) => (dispatch: any) =>
-  dispatch({
-    type: "SET_ME",
-    payload: me
-  });
+export const setMe = (me: any) => ({
+  type: "SET_ME",
+  payload: me
+});
 
-export const logout = () => (dispatch: any) =>
-  dispatch({
-    type: "LOGOUT"
-  });
+export const logout = () => ({
+  type: "LOGOUT"
+});
 
 // ---------------  Selectors
 

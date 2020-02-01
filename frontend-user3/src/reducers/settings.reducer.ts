@@ -5,7 +5,7 @@ const init: SettingsState = {
 };
 
 export default function(
-  state: SettingsState,
+  state: SettingsState = init,
   action: SettingsAction
 ): SettingsState {
   switch (action.type) {
@@ -18,12 +18,14 @@ export default function(
       return {
         ...init
       };
+    default:
+      return state;
   }
 }
 
-export const setLang = (lang?: string) => (dispatch: any) => ({
+export const setLang = (lang?: string) => ({
   type: "SET_LANG",
   payload: lang
 });
 
-export const reset = () => (dispatch: any) => ({ type: "RESET" });
+export const reset = () => ({ type: "RESET" });

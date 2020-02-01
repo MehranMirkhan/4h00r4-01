@@ -3,7 +3,10 @@ const init: LevelState = {
   levelHints: []
 };
 
-export default function(state: LevelState, action: LevelAction): LevelState {
+export default function(
+  state: LevelState = init,
+  action: LevelAction
+): LevelState {
   switch (action.type) {
     case "SET_CURRENT_LEVEL":
       return {
@@ -25,24 +28,26 @@ export default function(state: LevelState, action: LevelAction): LevelState {
         ...state,
         levelHints: [...state.levelHints, action.payload]
       };
+    default:
+      return state;
   }
 }
 
-export const setCurrentLevel = (level: number) => (dispatch: any) => ({
+export const setCurrentLevel = (level: number) => ({
   type: "SET_CURRENT_LEVEL",
   payload: level
 });
 
-export const incCurrentLevel = () => (dispatch: any) => ({
+export const incCurrentLevel = () => ({
   type: "INCREMENT_CURRENT_LEVEL"
 });
 
-export const setLevelHints = (levelHints: LevelHint[]) => (dispatch: any) => ({
+export const setLevelHints = (levelHints: LevelHint[]) => ({
   type: "SET_LEVEL_HINTS",
   payload: levelHints
 });
 
-export const addLevelHint = (levelHint: LevelHint) => (dispatch: any) => ({
+export const addLevelHint = (levelHint: LevelHint) => ({
   type: "ADD_LEVEL_HINT",
   payload: levelHint
 });

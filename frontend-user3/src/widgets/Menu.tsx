@@ -1,4 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import {
   IonContent,
   IonIcon,
@@ -10,12 +13,8 @@ import {
   IonButton
 } from "@ionic/react";
 import { contact } from "ionicons/icons";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-
-import { storageContext } from "src/providers/StorageProvider";
 
 import "./Menu.css";
-import { useTranslation } from "react-i18next";
 
 interface MenuProps extends RouteComponentProps {
   items: {
@@ -26,15 +25,17 @@ interface MenuProps extends RouteComponentProps {
 }
 
 const Menu: React.FC<MenuProps> = ({ items }) => {
-  const { storageState } = useContext(storageContext);
+  const {
+    auth: { me },
+    settings
+  } = useSelector((state: State) => state);
   const { t } = useTranslation();
-  const { me } = storageState.auth;
   const hasMe = !!me && !!me.phone;
   return (
     <IonMenu
       contentId="main"
       type="overlay"
-      side={storageState.settings.lang === "fa" ? "end" : "start"}
+      side={settings.lang === "fa" ? "end" : "start"}
     >
       <IonContent>
         {hasMe ? (

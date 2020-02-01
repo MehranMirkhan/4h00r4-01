@@ -1,7 +1,6 @@
 import Axios, { AxiosResponse } from "axios";
 
 import config from "src/app.config.json";
-import { store } from "src/providers/StateProvider";
 
 const axiosInstance = Axios.create({
   baseURL: config.api_url,
@@ -9,19 +8,9 @@ const axiosInstance = Axios.create({
   headers: { Accept: "application/json", "Content-Type": "application/json" }
 });
 
-axiosInstance.interceptors.request.use(request => {
-  if (!request.headers.Authorization) {
-    const state: any = store.getState();
-    if (!!state.auth.token)
-      request.headers.Authorization = `Bearer ${state.auth.token}`;
-  }
-
-  return request;
-});
-
 // Logging
 if (config.log) {
-  console.log("Axiso created");
+  console.log("Axios created");
   axiosInstance.interceptors.request.use(request => {
     console.log("Request:", request);
     return request;
@@ -35,5 +24,5 @@ if (config.log) {
 export default axiosInstance;
 
 export function isSuccess(resp: AxiosResponse): boolean {
-  return !!resp && resp.status / 100 === 2;
+  return !!resp && Math.floor(resp.status / 100) === 2;
 }

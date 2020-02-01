@@ -4,7 +4,7 @@ import { IonApp } from "@ionic/react";
 
 import AlertProvider from "src/providers/AlertProvider";
 import StateProvider from "src/providers/StateProvider";
-import StorageHandler from "src/tools/StorageHandler";
+import EventHandler from "src/tools/EventHandler";
 import Routes from "./Routes";
 
 /* Core CSS required for Ionic components to work properly */
@@ -23,18 +23,16 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-/* Theme variables */
-import "./theme/variables.css";
-
-/* Fonts */
-import "./theme/font/fonts.css";
+import "src/theme/variables.css";
+import "src/theme/font/fonts.css";
+import "src/theme/global.css";
 
 const App: React.FC = () => {
   return (
     <IonApp>
       <AlertProvider>
         <StateProvider>
-          <StorageHandler />
+          <EventHandler />
           <Routes />
         </StateProvider>
       </AlertProvider>

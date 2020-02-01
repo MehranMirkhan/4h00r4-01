@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 
 import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { home, settings, logIn, help } from "ionicons/icons";
-
-import { storageContext } from "src/providers/StorageProvider";
 
 import Menu from "src/widgets/Menu";
 
@@ -48,11 +47,7 @@ const menuItems = [
 ];
 
 export default function() {
-  const {
-    storageState: {
-      settings: { lang }
-    }
-  } = useContext(storageContext);
+  const lang = useSelector((state: State) => state.settings.lang);
   return (
     <>
       {lang === "fa" && (

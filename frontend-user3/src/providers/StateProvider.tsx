@@ -4,11 +4,11 @@ import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 
 import reducer from "src/reducers";
-import axiosInstance from "src/tools/axiosInstance";
+import api from "src/api";
 
 export const store = createStore(
   reducer,
-  applyMiddleware(thunk.withExtraArgument(axiosInstance))
+  applyMiddleware(thunk.withExtraArgument(api))
 );
 
 export default function({ children }: any) {
