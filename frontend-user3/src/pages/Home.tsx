@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import Page from "src/widgets/Page";
 import Slide from "src/widgets/Slide";
 import MultiCol from "src/widgets/MultiCol";
-import LinkButton from "src/widgets/LinkButton";
+import { LinkButton } from "src/widgets/Buttons";
 import { logout } from "src/reducers/auth.reducer";
 
 import "./Home.css";

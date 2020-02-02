@@ -35,3 +35,6 @@ type ITabs = {
   activeTab: string;
   setActiveTab: (s: string) => void;
 };
+
+type EntityConsumer = { entity: Partial<Question> };
+type Submitter = { onSubmit: (answer: string) => void };

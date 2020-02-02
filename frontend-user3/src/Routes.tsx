@@ -13,6 +13,7 @@ import Settings from "src/pages/Settings";
 import Auth from "src/pages/Auth";
 import Profile from "src/pages/Profile";
 import LevelList from "src/pages/LevelList";
+import Level from "src/pages/Level";
 import QuestionList from "src/pages/QuestionList";
 import Question from "src/pages/Question";
 
@@ -65,7 +66,7 @@ export default function() {
             <Route path="/profile" component={Profile} />
             <Route exact path="/settings" component={Settings} />
             <Route exact path="/level_list" component={LevelList} />
-            {/* <Route path="/level/:id" component={Level} /> */}
+            <Route path="/level/:id" component={Level} />
             <Route path="/question_list" component={QuestionList} />
             <Route path="/question/:id" component={Question} />
             <Route path="/" render={() => <Redirect to="/home" exact />} />
