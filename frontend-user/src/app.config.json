@@ -1,13 +1,14 @@
 {
   "persist_key": "puzzles_ugQzcAOtUd",
   "base_url": "http://localhost/puzzles",
-  "server_url": "http://localhost/puzzles/api",
+  "api_url": "http://localhost/puzzles/api",
   "request_timeout": 5000,
   "default_password": "1qaz!QAZ",
-  "languages": [
-    {"name": "English", "code": "en"},
-    {"name": "فارسی", "code": "fa"}
-  ],
-  "defaultLanguage": "fa",
+  "i18n": {
+    "lng": "en",
+    "fallbackLng": "en",
+    "debug": false
+  },
+  "default_language": "en",
   "log": true
 }

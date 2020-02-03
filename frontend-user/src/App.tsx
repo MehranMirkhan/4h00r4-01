@@ -1,29 +1,11 @@
-import React, { useEffect } from "react";
-import { Redirect, Route } from "react-router-dom";
-import { Provider, useSelector } from "react-redux";
-// import { PersistGate } from 'redux-persist/integration/react';
+import React from "react";
 
-import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
-import { LocalizeProvider, withLocalize } from "react-localize-redux";
-import { AppPage } from "./declarations";
-import AlertController from "./components/AlertController";
+import { IonApp } from "@ionic/react";
 
-import Menu from "./components/Menu";
-import Home from "./pages/Home";
-// import List from './pages/List';
-import Auth from "./pages/Auth";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
-import LevelList from "./pages/LevelList";
-import Level from "./pages/Level";
-import QuestionList from "./pages/QuestionList";
-import Question from "./pages/Question";
-import { home, settings, logIn, help } from "ionicons/icons";
-
-import { store } from "./redux/store_config";
-import config from "./app.config.json";
-import globalDictionary from "./global.dict.json";
+import AlertProvider from "src/providers/AlertProvider";
+import StateProvider from "src/providers/StateProvider";
+import EventHandler from "src/tools/EventHandler";
+import Routes from "./Routes";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -41,111 +23,21 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-/* Theme variables */
-import "./theme/variables.css";
-
-/* Fonts */
-import "./theme/font/fonts.css";
-import "./App.css";
-import StorageProvider from "./providers/StorageProvider";
-
-const appPages: AppPage[] = [
-  {
-    title: "menu.home",
-    url: "/home",
-    icon: home
-  },
-  {
-    title: "menu.level",
-    url: "/level_list",
-    icon: help
-  },
-  {
-    title: "menu.daily",
-    url: "/question_list?type=daily",
-    icon: help
-  },
-  {
-    title: "menu.weekly",
-    url: "/question_list?type=weekly",
-    icon: help
-  },
-  {
-    title: "menu.auth",
-    url: "/auth",
-    icon: logIn
-  },
-  {
-    title: "menu.settings",
-    url: "/settings",
-    icon: settings
-  }
-];
-
-const localizationConfig: any = {
-  languages: config.languages,
-  translation: globalDictionary,
-  options: {
-    defaultLanguage: config.defaultLanguage,
-    renderToStaticMarkup: false
-  }
-};
+import "src/theme/variables.css";
+import "src/theme/font/fonts.css";
+import "src/theme/global.css";
 
 const App: React.FC = () => {
   return (
     <IonApp>
-      <Provider store={store}>
-        <LocalizeProvider initialize={localizationConfig}>
-          <StorageProvider>
-            <LangHandler>
-              <AlertController>
-                <AppContent />
-              </AlertController>
-            </LangHandler>
-          </StorageProvider>
-        </LocalizeProvider>
-      </Provider>
+      <AlertProvider>
+        <StateProvider>
+          <EventHandler />
+          <Routes />
+        </StateProvider>
+      </AlertProvider>
     </IonApp>
   );
 };
-
-const AppContent: React.FC = () => {
-  return (
-    <IonReactRouter>
-      <IonSplitPane contentId="main">
-        <Menu appPages={appPages} />
-        <IonRouterOutlet id="main">
-          <Route exact path="/home" component={Home} />
-          <Route path="/auth" component={Auth} />
-          <Route path="/profile" component={Profile} />
-          <Route exact path="/settings" component={Settings} />
-          <Route exact path="/level_list" component={LevelList} />
-          <Route path="/level/:id" component={Level} />
-          <Route path="/question_list" component={QuestionList} />
-          <Route path="/question/:id" component={Question} />
-          <Route path="/" render={() => <Redirect to="/home" exact />} />
-        </IonRouterOutlet>
-      </IonSplitPane>
-    </IonReactRouter>
-  );
-};
-
-const LangHandler = withLocalize(
-  ({ children, activeLanguage, setActiveLanguage }: any) => {
-    const settings = useSelector((state: any) => state.settings);
-    useEffect(() => {
-      if (activeLanguage.code !== settings.lang)
-        setActiveLanguage(settings.lang);
-    }, [settings.lang, activeLanguage.code, setActiveLanguage]);
-    return (
-      <>
-        {settings.lang === "fa" && (
-          <link rel="stylesheet" type="text/css" href="rtl.css" />
-        )}
-        {children}
-      </>
-    );
-  }
-);
 
 export default App;

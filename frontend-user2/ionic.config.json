@@ -1,7 +1,0 @@
-{
-  "name": "front-user",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
