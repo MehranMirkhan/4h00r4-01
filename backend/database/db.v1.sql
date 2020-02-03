@@ -86,6 +86,18 @@ CREATE TABLE user_hints
     FOREIGN KEY (hint_id) REFERENCES hints (id) ON DELETE CASCADE
 );
 
+CREATE TABLE user_level_hints
+(
+    id         BIGINT    NOT NULL AUTO_INCREMENT,
+    user_id    BIGINT    NOT NULL,
+    level_id   BIGINT    NOT NULL,
+    hint_id    BIGINT    NOT NULL,
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
 CREATE TABLE achievements
 (
     id         BIGINT      NOT NULL AUTO_INCREMENT,

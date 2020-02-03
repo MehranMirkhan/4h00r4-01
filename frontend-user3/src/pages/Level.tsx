@@ -10,12 +10,15 @@ import Slide from "src/widgets/Slide";
 import QuestionAnswerText from "src/widgets/QuestionAnswerText";
 import QuestionAnswerLetter from "src/widgets/QuestionAnswerLetter";
 import Hints from "src/widgets/Hints";
-import { incCurrentLevel } from "src/reducers/level.reducer";
+import { incCurrentLevel, addLevelHint } from "src/reducers/level.reducer";
 import {
   getVisibleImages,
   isLetterRemovedByHint,
   getPurchasableHints
 } from "src/services/level.service";
+import api from "src/api";
+import { AxiosResponse } from "axios";
+import { isSuccess } from "src/tools/axiosInstance";
 
 export default function({ match }: any) {
   const { id } = match.params;
@@ -53,11 +56,14 @@ export default function({ match }: any) {
     showMessage("", "Wrong", 1000);
   };
 
-  const onBuyHint = (hintId: number) => {
-    if (!!hintId) {
-      // api.questions.buyHint(hintId).then((resp: AxiosResponse) => {
-      //   if (isSuccess(resp)) callFetch(() => api.questions.getById(id));
-      // });
+  const onBuyHint = (hint: Hint) => {
+    if (!!hint) {
+      api.hints
+        .buyLevelHint(level.id, hint.id, hint.price)
+        .then((resp: AxiosResponse) => {
+          if (isSuccess(resp))
+            dispatch(addLevelHint({ levelId: level.id, hintId: hint.id }));
+        });
     }
   };
 
@@ -83,7 +89,7 @@ function Question({
   onSubmit,
   onBuyHint
 }: EntityConsumer &
-  Submitter & { hints: LevelHint[]; onBuyHint: (id: number) => void }) {
+  Submitter & { hints: LevelHint[]; onBuyHint: (hint: Hint) => void }) {
   return (
     <>
       <Slide images={getVisibleImages(entity, hints)} />

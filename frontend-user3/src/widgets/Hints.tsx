@@ -7,7 +7,7 @@ export default function Hints({
   onBuy
 }: {
   hints: Hint[];
-  onBuy: (id: number) => void;
+  onBuy: (hint: Hint) => void;
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -20,7 +20,7 @@ export default function Hints({
     text: `${hint.type} - ${hint.price} Gold`,
     icon: "flash",
     handler: () => {
-      onBuy(hint.id);
+      onBuy(hint);
     },
     disabled: !!hint.value
   });

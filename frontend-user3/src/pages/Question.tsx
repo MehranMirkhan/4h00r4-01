@@ -57,9 +57,9 @@ export default function({ match }: any) {
     }
   };
 
-  const onBuyHint = (hintId: number) => {
-    if (!!hintId) {
-      api.questions.buyHint(hintId).then((resp: AxiosResponse) => {
+  const onBuyHint = (hint: Hint) => {
+    if (!!hint) {
+      api.hints.buyHint(hint.id).then((resp: AxiosResponse) => {
         if (isSuccess(resp)) callFetch(() => api.questions.getById(id));
       });
     }
@@ -80,7 +80,7 @@ function Question({
   entity,
   onSubmit,
   onBuyHint
-}: EntityConsumer & Submitter & { onBuyHint: (id: number) => void }) {
+}: EntityConsumer & Submitter & { onBuyHint: (hint: Hint) => void }) {
   const { t } = useTranslation();
 
   return (

@@ -5,6 +5,5 @@ export default {
     axios.get("/v1/questions", { params: { time_type, locale } }),
   getById: (id: number) => axios.get(`/v1/questions/${id}`),
   postAnswer: (id: number, answer: string) =>
-    axios.post(`/v1/answers`, { question_id: id, text: answer }),
-  buyHint: (id: number) => axios.post(`/v1/hints/${id}/buy`)
+    axios.post(`/v1/answers`, { question_id: id, text: answer })
 };
