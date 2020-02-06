@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'],
         Route::apiResource('user_level_hints', 'UserLevelHintController');
         Route::apiResource('achievements', 'AchievementController');
         Route::apiResource('user_achievements', 'UserAchievementController');
+        Route::apiResource('news', 'NewsController');
     });
 });
 
@@ -39,3 +40,5 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/level_hints/{levelId}/{hintId}/{cost}/buy', 'UserLevelHintController@buy');
     });
 });
+
+Route::get('/active_news', 'NewsController@getActiveNews');

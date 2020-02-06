@@ -118,3 +118,13 @@ CREATE TABLE user_achievements
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (achievement_id) REFERENCES achievements (id) ON DELETE CASCADE
 );
+
+CREATE TABLE news
+(
+    id             BIGINT    NOT NULL AUTO_INCREMENT,
+    image          TEXT      NULL DEFAULT NULL,
+    is_active      BOOLEAN   NOT NULL DEFAULT FALSE,
+    created_at     TIMESTAMP NULL DEFAULT NULL,
+    updated_at     TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (id)
+);
