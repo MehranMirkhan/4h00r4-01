@@ -16,6 +16,7 @@ export default ({ images, options = {} }: ISlide) => {
     paginationClickable: true,
     loop: true,
     spaceBetween: 20,
+    autoHeight: true,
     ...options
   };
   return !images ? null : (

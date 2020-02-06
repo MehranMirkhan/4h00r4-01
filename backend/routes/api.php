@@ -41,4 +41,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 });
 
-Route::get('/active_news', 'NewsController@getActiveNews');
+Route::group(['namespace' => 'v1', 'prefix' => 'v1'], function () {
+    Route::get('/active_news', 'NewsController@getActiveNews');
+});
