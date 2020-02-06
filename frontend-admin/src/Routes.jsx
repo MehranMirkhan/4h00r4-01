@@ -9,6 +9,7 @@ import { fetchMe, logout, isAuthenticated, getMe } from 'src/modules/auth/auth.r
 
 import Auth from 'src/modules/auth';
 import Report from 'src/modules/report';
+import News from 'src/modules/news';
 import Users from 'src/modules/users';
 import Questions from 'src/modules/questions';
 import Answers from 'src/modules/answers';
@@ -59,6 +60,7 @@ function Routes({ fetchMe, logout, isAuthenticated, me }) {
       <Switch>
         <UnAuthRoute exact path="/" component={Auth} />
         <AuthRoute exact path="/report" component={Report} />
+        <AuthRoute path="/news" component={News} />
         <AuthRoute path="/users" component={Users} />
         <AuthRoute path="/questions" component={Questions} />
         <AuthRoute path="/answers" component={Answers} />
