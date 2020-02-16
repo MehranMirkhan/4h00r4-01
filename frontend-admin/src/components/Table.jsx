@@ -88,6 +88,6 @@ export default function MyTable({ schema, data, pagination, sortCol, sortDir, on
   return <Table celled sortable
     headerRow={Header(schema, sortCol, sortDir, onSort)}
     renderBodyRow={Row(schema)}
-    footerRow={Pagination(schema.length, pagination)}
+    footerRow={!!pagination ? Pagination(schema.length, pagination) : undefined}
     tableData={data} />;
 }

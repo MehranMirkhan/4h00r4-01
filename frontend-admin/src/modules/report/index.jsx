@@ -5,6 +5,7 @@ import { Segment, Grid, Statistic } from 'semantic-ui-react';
 import { fetchReport } from './report.reducer';
 
 import Layout from 'src/components/Layout';
+import Table from 'src/components/Table';
 
 
 class Report extends React.Component {
@@ -19,7 +20,7 @@ class Report extends React.Component {
         <h1>گزارش</h1>
       </Segment>
       <Segment attached="bottom" textAlign="center" padded>
-        {report.server &&
+        {report.server && <>
           <Grid columns={3}>
             <Grid.Column>
               <Segment attached="top" color="teal" textAlign="center" inverted raised>
@@ -52,7 +53,31 @@ class Report extends React.Component {
               </Segment>
             </Grid.Column>
           </Grid>
-        }
+          <Grid columns={2}>
+            <Grid.Column>
+              <Segment attached="top" color="teal" textAlign="center" inverted raised>
+                <h2>لیدربرد روزانه</h2>
+              </Segment>
+              <Segment attached="bottom" textAlign="center" raised>
+                <Table schema={[
+                  { key: "name", header: "نام" },
+                  { key: "score_daily", header: "امتیاز روزانه" }
+                ]} data={report.top_daily} />
+              </Segment>
+            </Grid.Column>
+            <Grid.Column>
+              <Segment attached="top" color="teal" textAlign="center" inverted raised>
+                <h2>لیدربرد هفتگی</h2>
+              </Segment>
+              <Segment attached="bottom" textAlign="center" raised>
+                <Table schema={[
+                  { key: "name", header: "نام" },
+                  { key: "score_weekly", header: "امتیاز هفتگی" }
+                ]} data={report.top_weekly} />
+              </Segment>
+            </Grid.Column>
+          </Grid>
+        </>}
       </Segment>
     </Layout>;
   }
