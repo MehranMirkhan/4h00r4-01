@@ -17,3 +17,8 @@ type IUsersAPI = {
 type IQuestionsAPI = {
   get: (time_type?: TimeType, locale?: string) => Promise<AxiosResponse<any>>;
 };
+
+type LeaderBoardResponse = {
+  top_daily: Partial<User>[];
+  top_weekly: Partial<User>[];
+};

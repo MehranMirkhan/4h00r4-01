@@ -4,7 +4,7 @@ import { Redirect, Route } from "react-router-dom";
 
 import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { home, settings, logIn, help } from "ionicons/icons";
+import { home, settings, logIn, trophy } from "ionicons/icons";
 
 import Menu from "src/widgets/Menu";
 
@@ -16,6 +16,7 @@ import LevelList from "src/pages/LevelList";
 import Level from "src/pages/Level";
 import QuestionList from "src/pages/QuestionList";
 import Question from "src/pages/Question";
+import Leaderboard from "src/pages/Leaderboard";
 
 const menuItems = [
   {
@@ -24,19 +25,9 @@ const menuItems = [
     icon: home
   },
   {
-    title: "Level",
-    url: "/level_list",
-    icon: help
-  },
-  {
-    title: "Daily",
-    url: "/question_list?type=daily",
-    icon: help
-  },
-  {
-    title: "Weekly",
-    url: "/question_list?type=weekly",
-    icon: help
+    title: "Leader Board",
+    url: "/leaderboard",
+    icon: trophy
   },
   {
     title: "Login / Register",
@@ -69,6 +60,7 @@ export default function() {
             <Route path="/level/:id" component={Level} />
             <Route path="/question_list" component={QuestionList} />
             <Route path="/question/:id" component={Question} />
+            <Route path="/leaderboard" component={Leaderboard} />
             <Route path="/" render={() => <Redirect to="/home" exact />} />
           </IonRouterOutlet>
         </IonSplitPane>

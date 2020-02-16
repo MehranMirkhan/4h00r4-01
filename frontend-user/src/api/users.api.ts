@@ -19,5 +19,6 @@ export default {
     axios.post("/password", {
       old_password,
       new_password
-    })
+    }),
+  getLeaderboard: () => axios.get("/v1/leaderboard")
 };
