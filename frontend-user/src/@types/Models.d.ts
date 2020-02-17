@@ -8,7 +8,7 @@ type User = {
   score_daily: number;
   score_weekly: number;
   level: number;
-  levelHints: Partial<LevelHint>[];
+  levelHints: LevelHint[];
   profile_pic: string;
 };
 

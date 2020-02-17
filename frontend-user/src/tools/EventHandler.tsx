@@ -50,8 +50,8 @@ export default function() {
   }, [settings]);
   useEffect(() => {
     Storage.setObject("level", level);
-    syncWithServer(level);
-  }, [level]);
+    syncWithServer(level, dispatch);
+  }, [level, dispatch]);
   useEffect(() => {
     const responseListener = axiosInstance.interceptors.response.use(
       res => res,

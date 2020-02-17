@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import axiosInstance, { isSuccess } from "src/tools/axiosInstance";
 import { default_password } from "src/app.config.json";
+import { setCurrentLevel, setLevelHints } from "./level.reducer";
 
 const init: AuthState = {
   token: undefined,
@@ -145,7 +146,12 @@ const changePassword = (oldPassword: string, newPassword: string) => (
 
 export const fetchMe = () => (dispatch: any, _: any, api: IAPI) => {
   return api.users.fetchMe().then((resp: AxiosResponse) => {
-    if (isSuccess(resp)) return dispatch(setMe(resp.data));
+    if (isSuccess(resp)) {
+      const user: Partial<User> = resp.data;
+      dispatch(setMe(user));
+      dispatch(setCurrentLevel(user.level || 1));
+      dispatch(setLevelHints(user.levelHints || []));
+    }
     return resp;
   });
 };

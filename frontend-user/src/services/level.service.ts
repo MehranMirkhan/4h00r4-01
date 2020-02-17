@@ -4,6 +4,7 @@ import api from "src/api";
 import config from "src/app.config.json";
 import Storage from "src/tools/Storage";
 import { isSuccess } from "src/tools/axiosInstance";
+import { fetchMe } from "src/reducers/auth.reducer";
 
 export function isHintBought(hint: Hint, boughtHints: LevelHint[]) {
   for (let h of boughtHints) if (h.hintId === hint.id) return true;
@@ -43,7 +44,7 @@ export function getPurchasableHints(q: Partial<Question>, hints: LevelHint[]) {
   return (q.hints || []).filter(h => !isHintBought(h, hints));
 }
 
-export async function syncWithServer(level: LevelState) {
+export async function syncWithServer(level: LevelState, dispatch: any) {
   Storage.get("sync").then((v: string | null) => {
     if (config.log) console.log("Checking if sync is needed");
     if (v !== "1") return;
@@ -53,6 +54,7 @@ export async function syncWithServer(level: LevelState) {
       .then((resp: AxiosResponse) => {
         if (isSuccess(resp)) {
           Storage.set("sync", "0");
+          dispatch(fetchMe());
           if (config.log) console.log("Sync success");
         }
       });
