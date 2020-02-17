@@ -1,14 +1,15 @@
 import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import config from "src/app.config.json";
 import Storage from "src/tools/Storage";
 import axiosInstance from "src/tools/axiosInstance";
 import { alertContext } from "src/providers/AlertProvider";
-import config from "src/app.config.json";
 
 import { setToken, setMe, register } from "src/reducers/auth.reducer";
 import { setLang } from "src/reducers/settings.reducer";
 import { setCurrentLevel, setLevelHints } from "src/reducers/level.reducer";
+import { syncWithServer } from "src/services/level.service";
 
 export default function() {
   const { auth, settings, level } = useSelector((state: State) => state);
@@ -49,6 +50,7 @@ export default function() {
   }, [settings]);
   useEffect(() => {
     Storage.setObject("level", level);
+    syncWithServer(level);
   }, [level]);
   useEffect(() => {
     const responseListener = axiosInstance.interceptors.response.use(

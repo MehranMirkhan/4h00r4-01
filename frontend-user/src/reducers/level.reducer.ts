@@ -1,3 +1,5 @@
+import Storage from "src/tools/Storage";
+
 const init: LevelState = {
   currentLevel: 1,
   levelHints: []
@@ -14,6 +16,7 @@ export default function(
         currentLevel: action.payload
       };
     case "INCREMENT_CURRENT_LEVEL":
+      Storage.set("sync", "1");
       return {
         ...state,
         currentLevel: state.currentLevel + 1

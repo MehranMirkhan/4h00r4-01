@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Utility;
 use App\Models\User;
+use App\Models\UserLevelHint;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -38,7 +39,10 @@ class UserController extends Controller
     // --------- User routes
     public function me(Request $request)
     {
-        return $request->user();
+        $user = $request->user();
+        $levelHints = UserLevelHint::query()->where('user_id', $user->id)->get();
+        $user->levelHints = $levelHints;
+        return $user;
     }
 
     public function updateMe(Request $request)

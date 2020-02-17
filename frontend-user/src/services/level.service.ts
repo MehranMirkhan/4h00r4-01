@@ -1,3 +1,10 @@
+import { AxiosResponse } from "axios";
+
+import api from "src/api";
+import config from "src/app.config.json";
+import Storage from "src/tools/Storage";
+import { isSuccess } from "src/tools/axiosInstance";
+
 export function isHintBought(hint: Hint, boughtHints: LevelHint[]) {
   for (let h of boughtHints) if (h.hintId === hint.id) return true;
   return false;
@@ -34,4 +41,20 @@ export function isLetterRemovedByHint(
 
 export function getPurchasableHints(q: Partial<Question>, hints: LevelHint[]) {
   return (q.hints || []).filter(h => !isHintBought(h, hints));
+}
+
+export async function syncWithServer(level: LevelState) {
+  Storage.get("sync").then((v: string | null) => {
+    if (config.log) console.log("Checking if sync is needed");
+    if (v !== "1") return;
+    if (config.log) console.log("Syncing with server");
+    api.users
+      .update({ level: level.currentLevel })
+      .then((resp: AxiosResponse) => {
+        if (isSuccess(resp)) {
+          Storage.set("sync", "0");
+          if (config.log) console.log("Sync success");
+        }
+      });
+  });
 }

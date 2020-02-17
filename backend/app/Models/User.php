@@ -41,6 +41,10 @@ class User extends Authenticatable {
         return $this->hasMany(UserHint::class);
     }
 
+    public function levelHints() {
+        return $this->hasMany(UserLevelHint::class);
+    }
+
     public function achievements() {
         return $this->hasMany(UserAchievement::class);
     }
