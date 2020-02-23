@@ -1,6 +1,5 @@
 {
   "persist_key": "puzzles_ugQzdLOtUd",
-  "_server_url": "http://192.168.1.123/4h00r4-01/backend/public/",
-  "server_url": "http://localhost/puzzles/",
+  "server_url": "http://192.168.1.114/puzzles/",
   "request_timeout": 5000
 }

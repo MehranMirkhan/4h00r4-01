@@ -12,4 +12,4 @@ Building:
 [Now run with android studio]
 After each change:
 >> ionic build
->> ionic capacitor copy android
+>> ionic cap copy android
