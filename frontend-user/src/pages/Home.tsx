@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { IonIcon, IonButton } from "@ionic/react";
 import { settings, logIn } from "ionicons/icons";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Page from "src/widgets/Page";
 import Slide from "src/widgets/Slide";
@@ -19,6 +19,7 @@ import "./Home.css";
 export default function() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const state = useSelector((state: State) => state);
 
   // News
   const { call, response } = useAsync();
@@ -49,7 +50,10 @@ export default function() {
         ]}
       />
 
+      <hr/>
+      <span>For Dev:</span>
       <IonButton onClick={() => dispatch(logout())}>Log out</IonButton>
+      <p>{JSON.stringify(state)}</p>
     </Page>
   );
 }
