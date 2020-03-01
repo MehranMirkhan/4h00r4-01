@@ -2,6 +2,7 @@ import React from "react";
 
 import { IonApp } from "@ionic/react";
 
+import ExceptionHandler from "./tools/ExceptionHandler";
 import AlertProvider from "src/providers/AlertProvider";
 import StateProvider from "src/providers/StateProvider";
 import EventHandler from "src/tools/EventHandler";
@@ -30,12 +31,14 @@ import "src/theme/global.css";
 const App: React.FC = () => {
   return (
     <IonApp>
-      <AlertProvider>
-        <StateProvider>
-          <EventHandler />
-          <Routes />
-        </StateProvider>
-      </AlertProvider>
+      <ExceptionHandler>
+        <AlertProvider>
+          <StateProvider>
+            <EventHandler />
+            <Routes />
+          </StateProvider>
+        </AlertProvider>
+      </ExceptionHandler>
     </IonApp>
   );
 };
