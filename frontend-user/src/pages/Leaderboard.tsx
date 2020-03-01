@@ -15,7 +15,7 @@ export default function() {
   }, [call]);
 
   return (
-    <Page title={t("Leaderboard")} showBack={true}>
+    <Page title={t("Leader Board")} showBack={true}>
       {response && <LeaderBoard data={response.data} />}
     </Page>
   );

@@ -12,6 +12,7 @@ import { LinkButton } from "src/widgets/Buttons";
 import api from "src/api";
 import useAsync from "src/tools/useAsync";
 import { logout } from "src/reducers/auth.reducer";
+import { setCurrentLevel } from "src/reducers/level.reducer";
 import config from "src/app.config.json";
 
 import "./Home.css";
@@ -50,9 +51,11 @@ export default function() {
         ]}
       />
 
-      <hr/>
-      <span>For Dev:</span>
+      <div style={{ borderTop: "1px solid black", paddingTop: 8 }}>
+        For Dev:
+      </div>
       <IonButton onClick={() => dispatch(logout())}>Log out</IonButton>
+      <IonButton onClick={() => dispatch(setCurrentLevel(1))}>Reset Level</IonButton>
       <p>{JSON.stringify(state)}</p>
     </Page>
   );

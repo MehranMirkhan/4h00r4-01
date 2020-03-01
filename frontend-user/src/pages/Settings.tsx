@@ -11,7 +11,12 @@ export default function() {
   const { t } = useTranslation();
   const settings = useSelector((state: State) => state.settings);
   const dispatch = useDispatch();
-  const onLangChange = () => (lang: string) => dispatch(setLang(lang));
+  const onLangChange = (lang: string) => {
+    dispatch(setLang(lang));
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  };
   return (
     <Page title={t("Settings")} showBack={true}>
       <IonList>

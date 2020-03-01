@@ -18,7 +18,7 @@ const View: React.FC = () => {
     dispatch(fetchMe());
   }, [dispatch]);
   return (
-    <Page title="Profile" showBack={true}>
+    <Page title={t("Profile")} showBack={true}>
       <div className="center">
         <IonIcon icon={contact} className="profile-pic" />
         <div className="user-name">{me.name}</div>

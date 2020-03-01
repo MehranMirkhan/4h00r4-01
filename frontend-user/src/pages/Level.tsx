@@ -31,21 +31,22 @@ export default function({ match }: any) {
   );
   const [redirect, setRedirect] = useState(false);
 
+  const _id = Number(id);
   const levels = require(`src/data/levels/levels.${lang}.json`);
-  const level = levels[id - 1];
-  const hints = levelHints.filter(x => x.levelId === id);
+  const level = levels.filter((l: any) => l.id === _id)[0];
+  const hints = levelHints.filter(x => x.levelId === _id);
 
   useEffect(() => {
-    if (currentLevel < id) setRedirect(true);
-    if (currentLevel > id) level.solved = true;
+    if (currentLevel < _id) setRedirect(true);
+    if (currentLevel > _id) level.solved = true;
     else level.solved = false;
-  }, [currentLevel, id, level.solved]);
+  }, [currentLevel, _id, level]);
 
   const onSubmit = (answer: string) => {
     if (!level) return;
     for (let solution of level.solutions) {
       if (solution === answer) {
-        showMessage("", "Correct", 1000);
+        showMessage("", "Correct", 2000);
         dispatch(incCurrentLevel());
         setTimeout(() => {
           setRedirect(true);
@@ -53,7 +54,7 @@ export default function({ match }: any) {
         return;
       }
     }
-    showMessage("", "Wrong", 1000);
+    showMessage("", "Wrong", 2000);
   };
 
   const onBuyHint = (hint: Hint) => {

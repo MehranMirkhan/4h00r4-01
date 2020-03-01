@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import config from "src/app.config.json";
 import Storage from "src/tools/Storage";
@@ -15,6 +16,7 @@ export default function() {
   const { auth, settings, level } = useSelector((state: State) => state);
   const dispatch = useDispatch();
   const showMessage = useContext(alertContext);
+  const { i18n } = useTranslation();
 
   // Initial actions
   useEffect(() => {
@@ -47,6 +49,7 @@ export default function() {
   }, [auth]);
   useEffect(() => {
     Storage.setObject("settings", settings);
+    i18n.changeLanguage(settings.lang || "en");
   }, [settings]);
   useEffect(() => {
     Storage.setObject("level", level);

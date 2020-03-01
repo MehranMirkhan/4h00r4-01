@@ -38,7 +38,7 @@ export default function Hints({
         style={{ marginTop: 16 }}
         onClick={onOpen}
       >
-        {t("Hints")}
+        {t("Hint")}
       </IonButton>
     </>
   );

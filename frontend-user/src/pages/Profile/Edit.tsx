@@ -21,7 +21,7 @@ const Edit: React.FC = () => {
   const [email, setEmail] = useState(me.email);
 
   return (
-    <Page>
+    <Page title={t("Edit")} showBack={true}>
       <IonList>
         <Input
           label="Name"

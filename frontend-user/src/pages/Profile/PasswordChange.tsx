@@ -22,7 +22,7 @@ const PC: React.FC = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   return (
-    <Page title="Change Password" showBack={true}>
+    <Page title={t("Change Password")} showBack={true}>
       <IonList>
         <Input
           label="Old Password"
@@ -37,7 +37,7 @@ const PC: React.FC = () => {
           onChange={setPassword}
         />
         <Input
-          label="Confirm password"
+          label="Confirm Password"
           value={passwordConfirm}
           type="password"
           onChange={setPasswordConfirm}

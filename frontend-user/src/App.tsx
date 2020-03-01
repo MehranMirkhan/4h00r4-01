@@ -28,6 +28,8 @@ import "src/theme/variables.css";
 import "src/theme/font/fonts.css";
 import "src/theme/global.css";
 
+import "src/i18n";
+
 const App: React.FC = () => {
   return (
     <IonApp>

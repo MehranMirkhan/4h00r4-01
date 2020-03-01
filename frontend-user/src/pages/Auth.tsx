@@ -14,12 +14,13 @@ export default function() {
   const tabs: string[] = ["Login", "Register"];
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const hasMe = useSelector(isRegistered);
   if (hasMe) return <Redirect to="/home" exact />;
 
   return (
-    <Page title="Login / Register" showBack={true}>
+    <Page title={t("Login / Register")} showBack={true}>
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === tabs[0] ? (
         <Login
@@ -79,8 +80,10 @@ const Register = ({ onRegister }: any) => {
   const onSubmit = () => {
     if (!phone) showMessage("Error", "Phone number is empty", -1);
     else if (!password) showMessage("Error", "Password is empty", -1);
+    else if (password.length < 6)
+      showMessage("Error", "Password must be more than 5 characters", -1);
     else if (!passwordConfirm)
-      showMessage("Error", "Password confirm is wrong", -1);
+      showMessage("Error", "Password confirm is empty", -1);
     else if (password !== passwordConfirm)
       showMessage("Error", "Password and password confirm do not match", -1);
     else onRegister(name, phone, email, password);
@@ -97,7 +100,7 @@ const Register = ({ onRegister }: any) => {
         onChange={setPassword}
       />
       <Input
-        label="Confirm password"
+        label="Confirm Password"
         value={passwordConfirm}
         type="password"
         onChange={setPasswordConfirm}

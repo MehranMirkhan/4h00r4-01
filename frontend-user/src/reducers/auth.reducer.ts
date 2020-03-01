@@ -70,7 +70,7 @@ export const login = (username: string, password: string) => (
   api.users.login(username, password).then((resp: AxiosResponse) => {
     if (isSuccess(resp)) {
       dispatch(setToken(resp.data.access_token));
-      return dispatch(fetchMe());
+      return dispatch(fetchMe(true));
     }
     return resp;
   });
@@ -144,13 +144,19 @@ const changePassword = (oldPassword: string, newPassword: string) => (
     });
 };
 
-export const fetchMe = () => (dispatch: any, _: any, api: IAPI) => {
+export const fetchMe = (fromLogin?: boolean) => (
+  dispatch: any,
+  _: any,
+  api: IAPI
+) => {
   return api.users.fetchMe().then((resp: AxiosResponse) => {
     if (isSuccess(resp)) {
       const user: Partial<User> = resp.data;
       dispatch(setMe(user));
-      dispatch(setCurrentLevel(user.level || 1));
-      dispatch(setLevelHints(user.levelHints || []));
+      if (fromLogin) {
+        dispatch(setCurrentLevel(user.level || 1));
+        dispatch(setLevelHints(user.levelHints || []));
+      }
     }
     return resp;
   });

@@ -1,9 +1,9 @@
 import React from "react";
 import { IonButton } from "@ionic/react";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import Page from "src/widgets/Page";
-import { setCurrentLevel } from "src/reducers/level.reducer";
 
 import "./LevelList.css";
 
@@ -17,11 +17,12 @@ export default function() {
   const lang = useSelector((state: State) => state.settings.lang);
   const currentLevel = useSelector((state: State) => state.level.currentLevel);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const levels: Partial<
     Question
   >[] = require(`src/data/levels/levels.${lang}.json`);
   return (
-    <Page title="Levels" showBack={true}>
+    <Page title={t("Levels")} showBack={true}>
       <div className="level-container">
         {levels.map((level, i) => (
           <LevelItem
@@ -31,7 +32,6 @@ export default function() {
           />
         ))}
       </div>
-      <IonButton onClick={() => dispatch(setCurrentLevel(1))}>Reset</IonButton>
     </Page>
   );
 }
