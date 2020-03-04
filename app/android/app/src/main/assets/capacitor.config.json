@@ -1,0 +1,8 @@
+{
+  "appId": "com.puzzleland",
+  "appName": "puzzle-land",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}

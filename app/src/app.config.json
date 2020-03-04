@@ -1,0 +1,21 @@
+{
+  "persist_key": "puzzle_land_ugQzcAOtUd",
+  "base_url": "http://192.168.1.114/puzzles",
+  "api_url": "http://192.168.1.114/puzzles/api",
+  "request_timeout": 5000,
+  "default_password": "123456",
+  "i18n": {
+    "lng": "en",
+    "fallbackLng": "en",
+    "debug": false
+  },
+  "default_language": "en",
+  "log": true,
+  "tapsell": {
+    "key": "rfffikjgddlajephtehqpnegksnjaltmqtgagoekcheonnllgbdhlspdpfllcjjiqiomgr",
+    "debug": true,
+    "bandwidth": 50,
+    "autoHandlePermissions": true,
+    "profile_zone_id": "5e5e5e5dc6113f00015af318"
+  }
+}

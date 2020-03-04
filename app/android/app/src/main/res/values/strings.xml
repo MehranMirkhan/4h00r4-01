@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">puzzle-land</string>
+    <string name="title_activity_main">puzzle-land</string>
+    <string name="package_name">com.puzzleland</string>
+    <string name="custom_url_scheme">com.puzzleland</string>
+</resources>

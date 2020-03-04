@@ -1,0 +1,9 @@
+.slider {
+  padding-bottom: 36px;
+  background-color: #444;
+  --bullet-background-active: yellow;
+}
+
+.slider img {
+  width: 100%;
+}

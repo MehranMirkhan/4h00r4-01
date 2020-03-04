@@ -1,0 +1,7 @@
+{
+  "name": "puzzle-land",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
