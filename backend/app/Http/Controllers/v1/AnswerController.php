@@ -44,7 +44,7 @@ class AnswerController extends Controller {
             $answer->delete();
             return response()->json(['message' => 'deleted'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'unknown'], $e->getCode());
+            return response()->json(['message' => 'Unknown Error'], $e->getCode());
         }
     }
 
@@ -62,7 +62,7 @@ class AnswerController extends Controller {
 
         // Check if the deadline is reached
         if (Carbon::parse($question->end_time)->lt(Carbon::now()))
-            return response()->json(['message' => 'server.answer.time_up'], 403);
+            return response()->json(['message' => 'Answering time is over'], 403);
 
         // Check if the user has answered correctly already
         $c = Answer::query()->where([
@@ -71,7 +71,7 @@ class AnswerController extends Controller {
             'correct'     => true,
         ])->count();
         if ($c > 0)
-            return response()->json(['message' => 'server.answer.already_answered'], 403);
+            return response()->json(['message' => 'You have already answered this question'], 403);
 
         // Check if the user has reached the number of tries
         $c = Answer::query()->where([
@@ -87,7 +87,7 @@ class AnswerController extends Controller {
             $c -= $try_hint_count;
         } catch(\Exception $e) {}
         if ($c >= $question->tries)
-            return response()->json(['message' => 'server.answer.reached_tries'], 403);
+            return response()->json(['message' => 'Maximum number of tries reached'], 403);
 
         $answer = [
             'question_id' => $q_id,

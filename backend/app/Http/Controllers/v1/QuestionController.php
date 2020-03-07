@@ -35,7 +35,7 @@ class QuestionController extends Controller {
             $question->delete();
             return response()->json(['message' => 'deleted'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'unknown'], $e->getCode());
+            return response()->json(['message' => 'Unknown Error'], $e->getCode());
         }
     }
 

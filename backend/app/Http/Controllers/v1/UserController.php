@@ -32,7 +32,7 @@ class UserController extends Controller
             $user->delete();
             return response()->json(['message' => 'deleted'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'unknown'], $e->getCode());
+            return response()->json(['message' => 'Unknown Error'], $e->getCode());
         }
     }
 
@@ -58,7 +58,7 @@ class UserController extends Controller
             'phone' => isset($request->phone) ? $request->phone : $user->phone,
             'email' => isset($request->email) ? $request->email : $user->email
         ]);
-        return response()->json(['message' => 'server.user.updated'], 200);
+        return response()->json(['message' => 'Updated'], 200);
     }
 
     public function getLeaderBoard()
@@ -79,6 +79,6 @@ class UserController extends Controller
         $user->update([
             'coin_1' => $user->coin_1 + 10
         ]);
-        return response()->json(['message' => 'server.user.updated'], 200);
+        return response()->json(['message' => 'Updated'], 200);
     }
 }

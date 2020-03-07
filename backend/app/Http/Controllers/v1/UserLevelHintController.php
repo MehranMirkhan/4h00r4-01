@@ -38,7 +38,7 @@ class UserLevelHintController extends Controller
             $userLevelHint->delete();
             return response()->json(['message' => 'deleted'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'unknown'], $e->getCode());
+            return response()->json(['message' => 'Unknown Error'], $e->getCode());
         }
     }
 
@@ -56,7 +56,7 @@ class UserLevelHintController extends Controller
             $user->update();
             return response()->json(['message' => 'created'], 200);
         } else {
-            return response()->json(['message' => 'server.hint.notEnoughCoin'], 400);
+            return response()->json(['message' => 'Not enough coin'], 400);
         }
     }
 }
