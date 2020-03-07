@@ -8,7 +8,7 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\UserHint;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller {
     public function index(Request $request) {
@@ -73,13 +73,25 @@ class QuestionController extends Controller {
         unset($question['created_at']);
         unset($question['updated_at']);
 
+        $user_hints = DB::table('user_hints')
+                ->leftJoin('hints', 'user_hints.hint_id', '=', 'hints.id')
+                ->where([
+                    'question_id' => $question->id,
+                    'user_id' => $user->id,
+                ])
+                ->get();
+        $question['bought_hints'] = $user_hints->map(function ($x) { return $x->hint_id; });
+
         foreach ($question->hints as $hint) {
             try {
-                $user_hints = UserHint::query()->where([
-                    'hint_id' => $hint->id,
-                    'user_id' => $user->id,
-                ])->get();
-                if (count($user_hints) === 0)
+                $found = false;
+                foreach ($user_hints as $uh) {
+                    if ($uh->hint_id === $hint->id) {
+                        $found = true;
+                        break;
+                    }
+                }
+                if (!$found)
                     unset($hint['value']);
                 if ($hint->type === "try") {
                     $try_hint_count = UserHint::query()->where([
