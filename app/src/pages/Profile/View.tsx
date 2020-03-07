@@ -1,10 +1,12 @@
 import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { AxiosResponse } from "axios";
 
 import { IonIcon, IonButton } from "@ionic/react";
 import { contact, create, sync, cash } from "ionicons/icons";
 
+import api from "src/api";
 import Page from "src/widgets/Page";
 import { getMe, fetchMe } from "src/reducers/auth.reducer";
 import { showAd, setRewardCallback } from "src/services/ad.service";
@@ -12,6 +14,7 @@ import { alertContext } from "src/providers/AlertProvider";
 import { tapsell as tapsellConfig } from "src/app.config.json";
 
 import "./View.css";
+import { isSuccess } from "src/tools/axiosInstance";
 
 const View: React.FC = () => {
   const { t } = useTranslation();
@@ -25,7 +28,13 @@ const View: React.FC = () => {
 
   useEffect(() => {
     setRewardCallback(() => {
-      // Call server
+      api.users.adWatched(tapsellConfig.profile_zone_id)
+      .then((resp: AxiosResponse) => {
+        if (isSuccess(resp)) {
+          showMessage("", "You won 10 coins!", -1);
+          dispatch(fetchMe());
+        }
+      });
     });
   }, []);
 

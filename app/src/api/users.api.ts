@@ -20,5 +20,6 @@ export default {
       old_password,
       new_password
     }),
-  getLeaderboard: () => axios.get("/v1/leaderboard")
+  getLeaderboard: () => axios.get("/v1/leaderboard"),
+  adWatched: (zoneId: string) => axios.post(`/ad/${zoneId}`)
 };
