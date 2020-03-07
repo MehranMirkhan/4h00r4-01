@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/answers', 'AnswerController@handleAnswer');
         Route::post('/hints/{id}/buy', 'UserHintController@buy');
         Route::post('/level_hints/{levelId}/{hintId}/{cost}/buy', 'UserLevelHintController@buy');
+        Route::post('/ad/{zoneId}', 'UserController@adWatched');
     });
 });
 

@@ -73,4 +73,12 @@ class UserController extends Controller
             ->get();
         return response()->json(['top_daily' => $top_daily, 'top_weekly' => $top_weekly], 200);
     }
+
+    public function adWatched($zoneId, Request $request) {
+        $user = $request->user();
+        $user->update([
+            'coin_1' => $user->coin_1 + 10
+        ]);
+        return response()->json(['message' => 'server.user.updated'], 200);
+    }
 }
