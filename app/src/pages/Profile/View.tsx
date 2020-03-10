@@ -12,9 +12,9 @@ import { getMe, fetchMe } from "src/reducers/auth.reducer";
 import { showAd, setRewardCallback } from "src/services/ad.service";
 import { alertContext } from "src/providers/AlertProvider";
 import { tapsell as tapsellConfig } from "src/app.config.json";
+import { isSuccess } from "src/tools/axiosInstance";
 
 import "./View.css";
-import { isSuccess } from "src/tools/axiosInstance";
 
 const View: React.FC = () => {
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ const View: React.FC = () => {
         }
       });
     });
-  }, []);
+  }, [dispatch, showMessage]);
 
   const onViewAdClick = () => {
     showAd(tapsellConfig.profile_zone_id, {

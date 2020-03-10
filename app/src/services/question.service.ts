@@ -10,6 +10,7 @@ export function convertQuestion(question: any) {
   }
   if (!!q.choices) q.choices = JSON.parse(question.choices);
   if (!!q.letters) q.letters = JSON.parse(question.letters);
+  if (!!q.letters_num) q.letters_num = JSON.parse(question.letters_num);
   return q;
 }
 

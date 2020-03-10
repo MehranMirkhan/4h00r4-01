@@ -40,7 +40,7 @@
       "/assets/shapes.svg"
     ],
     "letters": ["r", "i", "i", "s", "p", "e", "z", "a"],
-    "letters_num": 5,
+    "letters_num": [5],
     "solutions": ["paris"],
     "hints": [
       {
@@ -58,5 +58,18 @@
         "order_no": null
       }
     ]
+  },
+  {
+    "id": 4,
+    "title": "President of USA",
+    "answer_type": "letter",
+    "images": [
+      "/assets/shapes.svg",
+      "/assets/shapes.svg",
+      "/assets/shapes.svg"
+    ],
+    "letters": ["d", "r", "t", "v", "u", "s", "o", "d", "p", "m", "n", "a", "l", "q", "y"],
+    "letters_num": [6, 5],
+    "solutions": ["donald trump"]
   }
 ]

@@ -24,7 +24,7 @@ type Question = {
   answer_type: AnswerType;
   choices: Choice[];
   letters: string[];
-  letters_num: number;
+  letters_num: number[];
   solutions: string[];
   locale: Locale;
   hints: Hint[];

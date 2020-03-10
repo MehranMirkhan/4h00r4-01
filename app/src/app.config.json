@@ -10,10 +10,10 @@
     "debug": false
   },
   "default_language": "en",
-  "log": true,
+  "log": false,
   "tapsell": {
     "key": "rfffikjgddlajephtehqpnegksnjaltmqtgagoekcheonnllgbdhlspdpfllcjjiqiomgr",
-    "debug": true,
+    "debug": false,
     "bandwidth": 50,
     "autoHandlePermissions": true,
     "profile_zone_id": "5e5e5e5dc6113f00015af318"

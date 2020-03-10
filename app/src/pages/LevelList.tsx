@@ -1,6 +1,6 @@
 import React from "react";
 import { IonButton } from "@ionic/react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import Page from "src/widgets/Page";
@@ -16,7 +16,6 @@ enum LevelState {
 export default function() {
   const lang = useSelector((state: State) => state.settings.lang);
   const currentLevel = useSelector((state: State) => state.level.currentLevel);
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const levels: Partial<
     Question

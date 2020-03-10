@@ -17,7 +17,7 @@ export default function Hints({
   if (!hints || hints.length === 0) return null;
 
   const btnHintItem = (hint: Hint) => ({
-    text: `${hint.type} - ${hint.price} Gold`,
+    text: `${t(hint.type)} - ${hint.price} ${'Coin'}`,
     icon: "flash",
     handler: () => {
       onBuy(hint);

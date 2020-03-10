@@ -2,7 +2,7 @@ import React from "react";
 
 import { IonApp } from "@ionic/react";
 
-import ExceptionHandler from "./tools/ExceptionHandler";
+import ExceptionHandler from "src/tools/ExceptionHandler";
 import AlertProvider from "src/providers/AlertProvider";
 import StateProvider from "src/providers/StateProvider";
 import EventHandler from "src/tools/EventHandler";

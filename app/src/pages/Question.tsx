@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { Redirect } from "react-router";
 import { AxiosResponse } from "axios";
 
 import api from "src/api";
@@ -27,7 +26,6 @@ export default function({ match }: any) {
   const { id } = match.params;
   const { t } = useTranslation();
   const showMessage = useContext(alertContext);
-  const [redirect, setRedirect] = useState(false);
 
   // Data
   const {
@@ -50,7 +48,7 @@ export default function({ match }: any) {
           if (isSuccess(resp)) {
             showMessage("", resp.data.correct ? "Correct" : "Wrong");
             callFetch(() => api.questions.getById(id));
-            if (resp.data.correct) setRedirect(true);
+            if (resp.data.correct) window.history.back();
           }
         });
       else showMessage("Error", "Maximum number of tries reached", -1);
@@ -65,9 +63,7 @@ export default function({ match }: any) {
     }
   };
 
-  return redirect ? (
-    <Redirect to={`/question_list?type=${entity.time_type}`} />
-  ) : (
+  return (
     <Page title={t("Question")}>
       {fetchState === CallState.SUCCESS && !!entity && (
         <Question entity={entity} onSubmit={onSubmit} onBuyHint={onBuyHint} />

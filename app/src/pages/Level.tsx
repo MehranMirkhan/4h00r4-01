@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { Redirect } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
+import { AxiosResponse } from "axios";
 
+import api from "src/api";
+import { isSuccess } from "src/tools/axiosInstance";
 import { alertContext } from "src/providers/AlertProvider";
 
 import Page from "src/widgets/Page";
@@ -16,9 +18,6 @@ import {
   isLetterRemovedByHint,
   getPurchasableHints
 } from "src/services/level.service";
-import api from "src/api";
-import { AxiosResponse } from "axios";
-import { isSuccess } from "src/tools/axiosInstance";
 
 export default function({ match }: any) {
   const { id } = match.params;
@@ -29,7 +28,6 @@ export default function({ match }: any) {
   const { currentLevel, levelHints } = useSelector(
     (state: State) => state.level
   );
-  const [redirect, setRedirect] = useState(false);
 
   const _id = Number(id);
   const levels = require(`src/data/levels/levels.${lang}.json`);
@@ -37,7 +35,7 @@ export default function({ match }: any) {
   const hints = levelHints.filter(x => x.levelId === _id);
 
   useEffect(() => {
-    if (currentLevel < _id) setRedirect(true);
+    if (currentLevel < _id) window.history.back();
     if (currentLevel > _id) level.solved = true;
     else level.solved = false;
   }, [currentLevel, _id, level]);
@@ -49,7 +47,7 @@ export default function({ match }: any) {
         showMessage("", "Correct", 2000);
         dispatch(incCurrentLevel());
         setTimeout(() => {
-          setRedirect(true);
+          window.history.back();
         }, 1000);
         return;
       }
@@ -68,9 +66,7 @@ export default function({ match }: any) {
     }
   };
 
-  return redirect ? (
-    <Redirect to="/level_list" />
-  ) : (
+  return (
     <Page title={t("Question")}>
       {!!level && (
         <Question

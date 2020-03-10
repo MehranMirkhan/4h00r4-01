@@ -50,7 +50,7 @@ export default function() {
   useEffect(() => {
     Storage.setObject("settings", settings);
     i18n.changeLanguage(settings.lang || "en");
-  }, [settings]);
+  }, [settings, i18n]);
   useEffect(() => {
     Storage.setObject("level", level);
     syncWithServer(level, dispatch);
