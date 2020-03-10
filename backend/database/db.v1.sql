@@ -38,7 +38,7 @@ CREATE TABLE questions
     answer_type ENUM ('text', 'choice', 'letter') NULL DEFAULT NULL,
     choices     TEXT                              NULL DEFAULT NULL,
     letters     TEXT                              NULL DEFAULT NULL,
-    letters_num INT                               NULL DEFAULT NULL,
+    letters_num VARCHAR(256)                      NULL DEFAULT NULL,
     solutions   TEXT                              NULL DEFAULT NULL,
     locale      ENUM ('en','fa')                  NULL DEFAULT NULL,
     created_at  TIMESTAMP                         NULL DEFAULT NULL,

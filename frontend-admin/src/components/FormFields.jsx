@@ -27,7 +27,7 @@ export const InputField = ({ input, meta, children, ...props }) =>
     error={(!!meta && meta.touched && meta.invalid) ? meta.error : false}
   />;
 
-export const MultiInputField = ({ input, meta, children, ...props }) => {
+export const MultiInputField = ({ input, meta, children, asNumber, ...props }) => {
   const values = JSON.parse(!!input.value ? input.value : "[]");
   const N = !!values ? values.length : 0;
   let result = [];
@@ -36,7 +36,10 @@ export const MultiInputField = ({ input, meta, children, ...props }) => {
       name={props.name + " " + i}
       value={values[i]}
       onChange={(e, { value }) => {
-        values[i] = value;
+        if (!!asNumber)
+          values[i] = Number(value);
+        else
+          values[i] = value;
         input.onChange(JSON.stringify(values));
       }}
       action={{
