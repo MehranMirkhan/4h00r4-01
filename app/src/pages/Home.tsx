@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { IonIcon, IonButton } from "@ionic/react";
-import { settings, logIn } from "ionicons/icons";
+import { home, trophy, logIn, settings } from "ionicons/icons";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -44,10 +44,10 @@ export default function() {
 
       <MultiCol
         cols={[
-          <FooterButton icon={settings} to="/settings" />,
+          <FooterButton icon={home} to="/home" />,
+          <FooterButton icon={trophy} to="/leaderboard" />,
           <FooterButton icon={logIn} to="/auth" />,
-          <FooterButton icon={settings} to="/settings" />,
-          <FooterButton icon={logIn} to="/auth" />
+          <FooterButton icon={settings} to="/settings" />
         ]}
       />
 
