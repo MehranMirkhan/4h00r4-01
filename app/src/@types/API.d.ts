@@ -6,6 +6,7 @@ type IAPI = {
 type IUsersAPI = {
   register: () => Promise<AxiosResponse<any>>;
   login: (email: string, password: string) => Promise<AxiosResponse<any>>;
+  refresh: (refresh_token: string) => Promise<AxiosResponse<any>>;
   fetchMe: () => Promise<AxiosResponse<any>>;
   update: (user: Partial<User>) => Promise<AxiosResponse<any>>;
   changePassword: (

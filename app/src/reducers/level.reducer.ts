@@ -31,6 +31,8 @@ export default function(
         ...state,
         levelHints: [...state.levelHints, action.payload]
       };
+    case "RESET":
+      return { ...init };
     default:
       return state;
   }

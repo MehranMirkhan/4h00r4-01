@@ -6,6 +6,7 @@ export default {
   register: () => axios.post("/register", { password: default_password }),
   login: (username: string, password: string) =>
     axios.post("/login", { username, password }),
+  refresh: (refresh_token: string) => axios.post("/refresh", { refresh_token }),
   fetchMe: () => axios.get("/v1/me"),
   update: (user: Partial<User>) => {
     const params: any = {};

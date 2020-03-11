@@ -87,4 +87,25 @@ class AuthController extends Controller {
         }
         return response()->json(['message' => 'server.auth.passwordChanged'], 200);
     }
+
+    public function refreshToken(Request $request) {
+        try {
+            $user = $request->user();
+            $tokenRequest = Request::create('/oauth/token', 'post', [
+                'grant_type'    => 'refresh_token',
+                'refresh_token' => $request->refresh_token,
+                'client_id'     => config('services.passport.client_id'),
+                'client_secret' => config('services.passport.client_secret'),
+                'scope'         => $user->role,
+            ]);
+            $response = app()->handle($tokenRequest);
+            return $response;
+        } catch (\Exception $e) {
+            if ($e->getCode() === 400)
+                return response()->json(['message' => 'server.auth.badRequest'], $e->getCode());
+            else if ($e->getCode() === 401)
+                return response()->json(['message' => 'server.auth.wrongCredentials'], $e->getCode());
+            return response()->json(['message' => 'unknown'], $e->getCode());
+        }
+    }
 }

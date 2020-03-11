@@ -15,7 +15,7 @@ export default function(
   switch (action.type) {
     case "SET_TOKEN":
       if (!!action.payload)
-        axiosInstance.defaults.headers.Authorization = `Bearer ${action.payload}`;
+        axiosInstance.defaults.headers.Authorization = `Bearer ${action.payload.access_token}`;
       else axiosInstance.defaults.headers.Authorization = undefined;
       return {
         ...state,
@@ -27,6 +27,7 @@ export default function(
         me: action.payload
       };
     case "LOGOUT":
+    case "RESET":
       axiosInstance.defaults.headers.Authorization = undefined;
       return {
         ...init
@@ -69,11 +70,20 @@ export const login = (username: string, password: string) => (
 ) =>
   api.users.login(username, password).then((resp: AxiosResponse) => {
     if (isSuccess(resp)) {
-      dispatch(setToken(resp.data.access_token));
+      dispatch(setToken(resp.data));
       return dispatch(fetchMe(true));
     }
     return resp;
   });
+
+export const refresh = () => (dispatch: any, getState: any, api: IAPI) => {
+  const { auth } = getState();
+  if (!auth || !auth.token) return;
+  api.users.refresh(auth.token.refresh_token).then((resp: AxiosResponse) => {
+    if (isSuccess(resp)) return dispatch(setToken(resp.data));
+    return resp;
+  });
+};
 
 export const register = () => (dispatch: any, _: any, api: IAPI) => {
   return api.users.register().then((resp: AxiosResponse) => {

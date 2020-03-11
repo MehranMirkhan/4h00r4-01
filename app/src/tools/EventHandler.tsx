@@ -1,47 +1,24 @@
 import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Plugins } from "@capacitor/core";
 
 import config from "src/app.config.json";
 import Storage from "src/tools/Storage";
 import axiosInstance from "src/tools/axiosInstance";
 import { alertContext } from "src/providers/AlertProvider";
 
-import { setToken, setMe, register } from "src/reducers/auth.reducer";
-import { setLang } from "src/reducers/settings.reducer";
-import { setCurrentLevel, setLevelHints } from "src/reducers/level.reducer";
+import { register, refresh } from "src/reducers/auth.reducer";
 import { syncWithServer } from "src/services/level.service";
+import { store } from "src/providers/StateProvider";
+
+const { Network } = Plugins;
 
 export default function() {
   const { auth, settings, level } = useSelector((state: State) => state);
   const dispatch = useDispatch();
   const showMessage = useContext(alertContext);
   const { i18n } = useTranslation();
-
-  // Initial actions
-  useEffect(() => {
-    // Loading from local storage
-    Storage.getObject("auth").then((a: AuthState) => {
-      if (config.log) console.log("Storage loaded auth:", a);
-      if (!!a) {
-        dispatch(setToken(a.token));
-        dispatch(setMe(a.me));
-      }
-    });
-    Storage.getObject("settings").then((s: SettingsState) => {
-      if (config.log) console.log("Storage loaded settings:", s);
-      if (!!s) {
-        dispatch(setLang(s.lang));
-      }
-    });
-    Storage.getObject("level").then((l: LevelState) => {
-      if (config.log) console.log("Storage loaded level:", l);
-      if (!!l) {
-        dispatch(setCurrentLevel(l.currentLevel));
-        dispatch(setLevelHints(l.levelHints));
-      }
-    });
-  }, [dispatch]);
 
   // Events
   useEffect(() => {
@@ -55,6 +32,7 @@ export default function() {
     Storage.setObject("level", level);
     syncWithServer(level, dispatch);
   }, [level, dispatch]);
+
   useEffect(() => {
     const responseListener = axiosInstance.interceptors.response.use(
       res => res,
@@ -63,9 +41,20 @@ export default function() {
           error.code === "ECONNABORTED" ||
           error.message === "Network Error"
         ) {
-          if (!!showMessage) showMessage("Error", "Network Error", 2000);
+          Network.getStatus().then((netStat: NetworkStatus) => {
+            if (netStat.connected) {
+              // Try again
+              setTimeout(() => axiosInstance.request(error.config), 1000);
+            } else {
+              if (!!showMessage)
+                showMessage("Error", "Error connecting to server", 2000);
+            }
+          });
         } else if (error.response.status === 401) {
-          if (!!auth && !auth.token) dispatch(register());
+          if (!!auth) {
+            if (!auth.token) dispatch(register());
+            else dispatch(refresh());
+          }
         } else if (Math.floor(error.response.status / 100) === 4) {
           showMessage(
             "Error",
@@ -82,3 +71,11 @@ export default function() {
 
   return <></>;
 }
+
+Network.addListener("networkStatusChange", (status: NetworkStatus) => {
+  if (status.connected) {
+    if (config.log) console.log("Network connected");
+    const { auth } = store.getState();
+    if (!!auth && !auth.token) store.dispatch(register());
+  }
+});

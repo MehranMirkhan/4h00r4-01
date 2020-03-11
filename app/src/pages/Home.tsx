@@ -55,7 +55,17 @@ export default function() {
         For Dev:
       </div>
       <IonButton onClick={() => dispatch(logout())}>Log out</IonButton>
-      <IonButton onClick={() => dispatch(setCurrentLevel(1))}>Reset Level</IonButton>
+      <IonButton onClick={() => dispatch(setCurrentLevel(1))}>
+        Reset Level
+      </IonButton>
+      <IonButton
+        onClick={() => {
+          dispatch({ type: "RESET" });
+          window.location.reload();
+        }}
+      >
+        Reset All
+      </IonButton>
       <p>{JSON.stringify(state)}</p>
     </Page>
   );

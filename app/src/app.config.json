@@ -10,7 +10,7 @@
     "debug": false
   },
   "default_language": "en",
-  "log": false,
+  "log": true,
   "tapsell": {
     "key": "rfffikjgddlajephtehqpnegksnjaltmqtgagoekcheonnllgbdhlspdpfllcjjiqiomgr",
     "debug": false,

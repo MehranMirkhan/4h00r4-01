@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth:api', 'scope:admin'], 'prefix' => 'admin'],
 Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['namespace' => 'Auth'], function () {
         Route::post('/password', 'AuthController@changePassword');
+        Route::post('/refresh', 'AuthController@refreshToken');
     });
     Route::post('/files', 'FileController@store');
     Route::delete('/files', 'FileController@destroy');
