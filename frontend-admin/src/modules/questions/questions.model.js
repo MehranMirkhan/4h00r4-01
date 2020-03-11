@@ -4,7 +4,7 @@ const Question = {
   id: { label: "شناسه" },
   locale: {
     label: "زبان", options: [
-      { key: "null", text: "", value: null },
+      { key: "null", text: "", value: undefined },
       { key: "en", text: "انگلیسی", value: "en" },
       { key: "fa", text: "فارسی", value: "fa" },
     ]
@@ -12,14 +12,14 @@ const Question = {
   title: { label: "عنوان" },
   time_type: {
     label: "نوع زمان", options: [
-      { key: "null", text: "", value: null },
+      { key: "null", text: "", value: undefined },
       { key: "daily", text: "روزانه", value: "daily" },
       { key: "weekly", text: "هفتگی", value: "weekly" },
     ]
   },
   answer_type: {
     label: "نوع پاسخ", options: [
-      { key: "null", text: "", value: null },
+      { key: "null", text: "", value: undefined },
       { key: "text", text: "متنی", value: "text" },
       { key: "choice", text: "گزینه‌ای", value: "choice" },
       { key: "letter", text: "حروفی", value: "letter" },

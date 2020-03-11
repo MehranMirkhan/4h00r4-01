@@ -10,7 +10,7 @@ const Hint = {
   question_id: { label: "شناسه سؤال" },
   type: {
     label: "نوع", options: [
-      { key: "null", text: "", value: null },
+      { key: "null", text: "", value: undefined },
       { key: "image", text: "تصویر", value: "image" },
       { key: "choice", text: "گزینه", value: "choice" },
       { key: "letter", text: "حروف", value: "letter" },

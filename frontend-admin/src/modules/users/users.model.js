@@ -6,7 +6,7 @@ const User = {
   email: { label: "ایمیل" },
   role: {
     label: "نقش", options: [
-      { key: "null", text: "", value: null },
+      { key: "null", text: "", value: undefined },
       { key: "admin", text: "admin", value: "admin" },
       { key: "user", text: "user", value: "user" },
     ]
