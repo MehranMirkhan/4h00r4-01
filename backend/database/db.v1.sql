@@ -17,6 +17,7 @@ CREATE TABLE users
     level             INT                   NOT NULL DEFAULT 0,
     profile_pic       TEXT                  NULL     DEFAULT NULL,
     remember_token    VARCHAR(100)          NULL     DEFAULT NULL,
+    ad_watch          INT                   NOT NULL DEFAULT 0,
     created_at        TIMESTAMP             NULL     DEFAULT NULL,
     updated_at        TIMESTAMP             NULL     DEFAULT NULL,
     PRIMARY KEY (id),

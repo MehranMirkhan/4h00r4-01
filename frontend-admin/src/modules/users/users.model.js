@@ -19,6 +19,7 @@ const User = {
   score_daily: { label: "امتیاز روزانه" },
   score_weekly: { label: "امتیاز هفتگی" },
   level: { label: "مرحله" },
+  ad_watch: { label: "تبلیغات مشاهده شده" },
 };
 
 export default User;

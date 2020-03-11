@@ -6,6 +6,7 @@ import { fetchReport } from './report.reducer';
 
 import Layout from 'src/components/Layout';
 import Table from 'src/components/Table';
+import User from 'src/modules/users/users.model';
 
 
 class Report extends React.Component {
@@ -60,9 +61,10 @@ class Report extends React.Component {
               </Segment>
               <Segment attached="bottom" textAlign="center" raised>
                 <Table schema={[
-                  { key: "name", header: "نام" },
-                  { key: "score_daily", header: "امتیاز روزانه" }
-                ]} data={report.top_daily} />
+                  { key: "id", header: "id" },
+                  { key: "name", header: User.name.label },
+                  { key: "score_daily", header: User.score_daily.label }
+                ]} data={report.users.top_daily} />
               </Segment>
             </Grid.Column>
             <Grid.Column>
@@ -71,12 +73,23 @@ class Report extends React.Component {
               </Segment>
               <Segment attached="bottom" textAlign="center" raised>
                 <Table schema={[
-                  { key: "name", header: "نام" },
-                  { key: "score_weekly", header: "امتیاز هفتگی" }
-                ]} data={report.top_weekly} />
+                  { key: "id", header: "id" },
+                  { key: "name", header: User.name.label },
+                  { key: "score_weekly", header: User.score_weekly.label }
+                ]} data={report.users.top_weekly} />
               </Segment>
             </Grid.Column>
           </Grid>
+          <Segment attached="top" color="teal" textAlign="center" inverted raised>
+            <h2>لیدربرد تبلیغات</h2>
+          </Segment>
+          <Segment attached="bottom" textAlign="center" raised>
+            <Table schema={[
+              { key: "id", header: "id" },
+              { key: "name", header: User.name.label },
+              { key: "ad_watch", header: User.ad_watch.label }
+            ]} data={report.users.ad_watch} />
+          </Segment>
         </>}
       </Segment>
     </Layout>;

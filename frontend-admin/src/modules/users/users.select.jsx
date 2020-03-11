@@ -35,6 +35,7 @@ function UserSelect(props) {
       { key: "email", sortable: true, header: User.email.label },
       { key: "role", header: User.role.label },
       { key: "is_active", header: User.is_active.label, render: "boolean" },
+      { key: "ad_watch", sortable: true, header: User.ad_watch.label },
     ]}
   />;
 }

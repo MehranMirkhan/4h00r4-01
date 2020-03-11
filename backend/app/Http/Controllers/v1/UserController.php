@@ -77,7 +77,8 @@ class UserController extends Controller
     public function adWatched($zoneId, Request $request) {
         $user = $request->user();
         $user->update([
-            'coin_1' => $user->coin_1 + 10
+            'coin_1'   => $user->coin_1 + 10,
+            'ad_watch' => $user->ad_watch + 1,
         ]);
         return response()->json(['message' => 'Updated'], 200);
     }

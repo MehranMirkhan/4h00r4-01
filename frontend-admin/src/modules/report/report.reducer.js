@@ -30,11 +30,9 @@ export const reset = () => ({
 export const fetchReport = () => (dispatch, _, API) => {
   console.log("Fetching report");
   return API.get(`/admin/v1/report`).then(resp =>
-    API.get("/v1/leaderboard").then(resp2 =>
-      dispatch({
-        type: REPORT_ACTIONS.SET,
-        payload: !!resp && !!resp2 ? { ...resp.data, ...resp2.data } : undefined
-      })
-    )
+    dispatch({
+      type: REPORT_ACTIONS.SET,
+      payload: !!resp ? resp.data : undefined
+    })
   );
 };

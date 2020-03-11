@@ -39,6 +39,7 @@ function UserEdit(props) {
       <Field component={InputField} name="score_daily" label={User.score_daily.label} />
       <Field component={InputField} name="score_weekly" label={User.score_weekly.label} />
       <Field component={InputField} name="level" label={User.level.label} />
+      <Field component={InputField} name="ad_watch" label={User.ad_watch.label} />
       <div style={{ marginBottom: 16 }}>
         <Button as={Link} to={`/user_hints?user_id=${!!formProps.initialValues ? formProps.initialValues.id : 'null'}`}>راهنمایی‌ها</Button>
         <Button as={Link} to={`/user_achievements?user_id=${!!formProps.initialValues ? formProps.initialValues.id : 'null'}`}>مدال‌ها</Button>
