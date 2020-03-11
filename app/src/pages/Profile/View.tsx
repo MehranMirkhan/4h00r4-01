@@ -82,6 +82,7 @@ const View: React.FC = () => {
           <IonIcon slot="start" icon={create} color="light" />
           {t("Edit")}
         </IonButton>
+        <br />
         <IonButton onClick={onViewAdClick}>
           <IonIcon slot="start" icon={cash} color="light" />
           {t("View Ad")}

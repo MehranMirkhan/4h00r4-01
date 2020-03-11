@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from "react-router";
+import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { IonButton } from "@ionic/react";
 
@@ -8,16 +7,13 @@ import Page from "src/widgets/Page";
 import Tabs from "src/widgets/Tabs";
 import { Input } from "src/widgets/FormItems";
 import { alertContext } from "src/providers/AlertProvider";
-import { isRegistered, login, signup } from "src/reducers/auth.reducer";
+import { login, signup } from "src/reducers/auth.reducer";
 
 export default function() {
   const tabs: string[] = ["Login", "Register"];
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  const hasMe = useSelector(isRegistered);
-  if (hasMe) return <Redirect to="/home" exact />;
 
   return (
     <Page title={t("Login / Register")} showBack={true}>

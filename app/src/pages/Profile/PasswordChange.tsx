@@ -37,7 +37,7 @@ const PC: React.FC = () => {
           onChange={setPassword}
         />
         <Input
-          label="Confirm Password"
+          label="Confirm New Password"
           value={passwordConfirm}
           type="password"
           onChange={setPasswordConfirm}
