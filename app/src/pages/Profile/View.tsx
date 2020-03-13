@@ -1,18 +1,15 @@
 import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { AxiosResponse } from "axios";
 
 import { IonIcon, IonButton } from "@ionic/react";
 import { contact, create, sync, cash } from "ionicons/icons";
 
-import api from "src/api";
 import Page from "src/widgets/Page";
 import { getMe, fetchMe } from "src/reducers/auth.reducer";
-import { showAd, setRewardCallback } from "src/services/ad.service";
+import { showAd } from "src/services/ad.service";
 import { alertContext } from "src/providers/AlertProvider";
 import { tapsell as tapsellConfig } from "src/app.config.json";
-import { isSuccess } from "src/tools/axiosInstance";
 
 import "./View.css";
 
@@ -26,24 +23,9 @@ const View: React.FC = () => {
     dispatch(fetchMe());
   }, [dispatch]);
 
-  useEffect(() => {
-    setRewardCallback(() => {
-      api.users.adWatched(tapsellConfig.profile_zone_id)
-      .then((resp: AxiosResponse) => {
-        if (isSuccess(resp)) {
-          showMessage("", "You won 10 coins!", -1);
-          dispatch(fetchMe());
-        }
-      });
-    });
-  }, [dispatch, showMessage]);
-
   const onViewAdClick = () => {
     showAd(tapsellConfig.profile_zone_id, {
-      onError: showMessage,
-      onClose: () => {
-        showMessage("Thank you for watching ad");
-      }
+      onError: e => showMessage(`Error occured: ${e}`),
     });
   };
 

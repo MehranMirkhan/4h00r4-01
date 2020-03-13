@@ -42,6 +42,7 @@
       "Password must be more than 5 characters": "رمز عبور باید بیشتر از ۵ حرف داشته باشد",
       "Phone": "شماره همراه",
       "Phone number is empty": "شماره همراه وارد نشده است",
+      "Phone is already used": "شماره همراه قبلا استفاده شده است",
       "Profile": "صفحه کاربری",
       "Question": "سوال",
       "Register": "ثبت نام",

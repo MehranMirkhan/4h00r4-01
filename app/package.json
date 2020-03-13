@@ -36,7 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "make": "sudo ionic build && sudo ionic cap copy android && sudo npx cap sync && sudo chown -R $USER ."
   },
   "eslintConfig": {
     "extends": "react-app"

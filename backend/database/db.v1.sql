@@ -21,9 +21,7 @@ CREATE TABLE users
     created_at        TIMESTAMP             NULL     DEFAULT NULL,
     updated_at        TIMESTAMP             NULL     DEFAULT NULL,
     PRIMARY KEY (id),
-    UNIQUE (username),
-    UNIQUE (email),
-    UNIQUE (phone)
+    UNIQUE (username)
 );
 
 CREATE TABLE questions

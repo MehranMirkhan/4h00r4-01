@@ -30,7 +30,7 @@ class UserController extends Controller
             ])->exists();
         }
         if ($found)
-            return response()->json(['message' => 'Phone or email is already used'], 400);
+            return response()->json(['message' => 'Phone is already used'], 400);
         $user->update($request->except(['password']));
         return $user;
     }
