@@ -56,7 +56,8 @@ class AnswerController extends Controller {
         ]);
 
         $q_id = $request->question_id;
-        $u_id = $request->user()->id;
+        $user = $request->user();
+        $u_id = $user->id;
 
         $question = Question::query()->where('id', $q_id)->firstOrFail();
 
@@ -102,6 +103,11 @@ class AnswerController extends Controller {
                 break;
             }
         }
-        return Answer::create($answer);
+        $a = Answer::create($answer);
+        $type = $question->time_type === 'daily' ? 'score_daily' : 'score_weekly';
+        $user->update([
+            $type => $user[$type] + $question->score
+        ]);
+        return $a;
     }
 }
