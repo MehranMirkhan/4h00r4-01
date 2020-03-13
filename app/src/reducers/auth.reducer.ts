@@ -70,6 +70,7 @@ export const login = (username: string, password: string) => (
 ) =>
   api.users.login(username, password).then((resp: AxiosResponse) => {
     if (isSuccess(resp)) {
+      window.history.back();
       dispatch(setToken(resp.data));
       return dispatch(fetchMe(true));
     }
@@ -108,8 +109,10 @@ export const signup = (
       if (!!res1)
         return dispatch(updateUser(name, phone, email)).then(
           (res2: AxiosResponse) => {
-            if (!!res2)
+            if (!!res2) {
+              window.history.back();
               return dispatch(changePassword(default_password, password));
+            }
             return res2;
           }
         );
@@ -118,6 +121,7 @@ export const signup = (
   else if (!hasMe) {
     return dispatch(updateUser(name, phone, email)).then(
       (res1: AxiosResponse) => {
+        window.history.back();
         if (!!res1) return dispatch(changePassword(default_password, password));
         return res1;
       }

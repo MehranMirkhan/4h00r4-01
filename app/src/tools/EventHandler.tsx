@@ -72,10 +72,16 @@ export default function() {
   return <></>;
 }
 
+setTimeout(() => {
+  const { auth } = store.getState();
+  if (!!auth && !auth.token) store.dispatch(register());
+}, 5000);
+
 Network.addListener("networkStatusChange", (status: NetworkStatus) => {
   if (status.connected) {
     if (config.log) console.log("Network connected");
-    const { auth } = store.getState();
+    const { auth, level } = store.getState();
     if (!!auth && !auth.token) store.dispatch(register());
+    syncWithServer(level, store.dispatch);
   }
 });
