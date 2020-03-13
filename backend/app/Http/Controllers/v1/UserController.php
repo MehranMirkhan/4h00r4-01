@@ -22,6 +22,15 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $found = false;
+        if (isset($request->phone)) {
+            $found = User::query()->where([
+                ['id', '!=', $request->id],
+                ['phone', $request->phone],
+            ])->exists();
+        }
+        if ($found)
+            return response()->json(['message' => 'Phone or email is already used'], 400);
         $user->update($request->except(['password']));
         return $user;
     }
