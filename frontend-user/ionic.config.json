@@ -1,7 +1,0 @@
-{
-  "name": "puzzles",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
