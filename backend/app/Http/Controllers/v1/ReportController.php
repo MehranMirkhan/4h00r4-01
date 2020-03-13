@@ -15,10 +15,11 @@ class ReportController extends Controller {
                 "timestamp" => Carbon::now(),
             ],
             "users" => [
-                "count"      => User::count(),
-                "top_daily"  => User::query()->orderBy('score_daily', 'desc')->take(10)->get(),
-                "top_weekly" => User::query()->orderBy('score_weekly', 'desc')->take(10)->get(),
-                "ad_watch"   => User::query()->orderBy('ad_watch', 'desc')->take(10)->get(),
+                "count"          => User::count(),
+                "top_daily"      => User::query()->orderBy('score_daily', 'desc')->take(10)->get(),
+                "top_weekly"     => User::query()->orderBy('score_weekly', 'desc')->take(10)->get(),
+                "ad_watch"       => User::query()->orderBy('ad_watch', 'desc')->take(10)->get(),
+                "ad_watch_count" => (int) User::query()->sum('ad_watch'),
             ],
             "questions" => [
                 "count" => Question::count(),

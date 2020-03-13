@@ -22,7 +22,7 @@ class Report extends React.Component {
       </Segment>
       <Segment attached="bottom" textAlign="center" padded>
         {report.server && <>
-          <Grid columns={3}>
+          <Grid columns={4}>
             <Grid.Column>
               <Segment attached="top" color="teal" textAlign="center" inverted raised>
                 <h2>سرور</h2>
@@ -50,6 +50,17 @@ class Report extends React.Component {
                 <Statistic>
                   <Statistic.Label>تعداد سؤالات</Statistic.Label>
                   <Statistic.Value>{report.questions.count}</Statistic.Value>
+                </Statistic>
+              </Segment>
+            </Grid.Column>
+            <Grid.Column>
+              <Segment attached="top" color="teal" textAlign="center" inverted raised>
+                <h2>تبلیغات</h2>
+              </Segment>
+              <Segment attached="bottom" textAlign="center" raised>
+                <Statistic>
+                  <Statistic.Label>تعداد مشاهدات</Statistic.Label>
+                  <Statistic.Value>{report.users.ad_watch_count}</Statistic.Value>
                 </Statistic>
               </Segment>
             </Grid.Column>
