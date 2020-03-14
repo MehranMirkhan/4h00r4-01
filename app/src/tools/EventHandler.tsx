@@ -8,7 +8,7 @@ import Storage from "src/tools/Storage";
 import axiosInstance from "src/tools/axiosInstance";
 import { alertContext } from "src/providers/AlertProvider";
 
-import { register, refresh } from "src/reducers/auth.reducer";
+import { refresh } from "src/reducers/auth.reducer";
 import { syncWithServer } from "src/services/level.service";
 import { store } from "src/providers/StateProvider";
 
@@ -45,15 +45,18 @@ export default function() {
             if (netStat.connected) {
               // Try again
               setTimeout(() => axiosInstance.request(error.config), 1000);
-            } else {
+            } /*else {
               if (!!showMessage)
                 showMessage("Error", "Error connecting to server", 2000);
-            }
+            }*/
           });
         } else if (error.response.status === 401) {
           if (!!auth) {
-            if (!auth.token) dispatch(register());
-            else dispatch(refresh());
+            // if (!auth.token) dispatch(register());
+            // else dispatch(refresh());
+            if (!!auth.token) {
+              dispatch(refresh());
+            } else showMessage("Error", "Please register first", -1);
           }
         } else if (Math.floor(error.response.status / 100) === 4) {
           showMessage(
@@ -72,16 +75,17 @@ export default function() {
   return <></>;
 }
 
-setTimeout(() => {
-  const { auth } = store.getState();
-  if (!!auth && !auth.token) store.dispatch(register());
-}, 5000);
+// setTimeout(() => {
+//   const { auth } = store.getState();
+//   if (!!auth && !auth.token) store.dispatch(register());
+// }, 5000);
 
 Network.addListener("networkStatusChange", (status: NetworkStatus) => {
   if (status.connected) {
     if (config.log) console.log("Network connected");
-    const { auth, level } = store.getState();
-    if (!!auth && !auth.token) store.dispatch(register());
+    const { level } = store.getState();
+    // if (!!auth && !auth.token) store.dispatch(register());
     syncWithServer(level, store.dispatch);
+    // window.location.reload();
   }
 });
