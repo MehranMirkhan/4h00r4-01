@@ -59,6 +59,8 @@ export const fetchUserAchievements = (searchParams) => (dispatch, _, API) => {
     params.page = searchParams.page;
   if (searchParams && searchParams.page_size)
     params.page_size = searchParams.page_size;
+  if (searchParams && searchParams.sortCol)
+    params.sort = (searchParams.sortDir === "asc" ? "" : "-") + searchParams.sortCol;
   return API.get('/admin/v1/user_achievements', { params })
     .then(resp => dispatch({
       type: USER_ACHIEVEMENTS_ACTIONS.SET_ENTITY_LIST,

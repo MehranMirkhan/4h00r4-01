@@ -59,6 +59,8 @@ export const fetchHints = (searchParams) => (dispatch, _, API) => {
     params.page = searchParams.page;
   if (searchParams && searchParams.page_size)
     params.page_size = searchParams.page_size;
+  if (searchParams && searchParams.sortCol)
+    params.sort = (searchParams.sortDir === "asc" ? "" : "-") + searchParams.sortCol;
   return API.get('/admin/v1/hints', { params })
     .then(resp => dispatch({
       type: HINTS_ACTIONS.SET_ENTITY_LIST,
