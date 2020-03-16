@@ -23,8 +23,8 @@ function UserAchievementSelect(props) {
       </Form.Group>
     </>}
     tableSchema={[
-      { key: "achievement_id", header: UserAchievement.achievement_id.label },
-      { key: "user_id", header: UserAchievement.user_id.label },
+      { key: "achievement_id", sortable: true, header: UserAchievement.achievement_id.label },
+      { key: "user_id", sortable: true, header: UserAchievement.user_id.label },
     ]}
   />;
 }

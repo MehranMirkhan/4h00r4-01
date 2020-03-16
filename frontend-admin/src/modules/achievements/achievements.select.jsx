@@ -20,7 +20,7 @@ function AchievementSelect(props) {
       </Form.Group>
     </>}
     tableSchema={[
-      { key: "code", header: Achievement.code.label },
+      { key: "code", sortable: true, header: Achievement.code.label },
     ]}
   />;
 }

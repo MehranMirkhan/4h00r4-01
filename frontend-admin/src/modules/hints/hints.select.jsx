@@ -21,10 +21,10 @@ function HintSelect(props) {
       </Form.Group>
     </>}
     tableSchema={[
-      { key: "question_id", header: Hint.question_id.label },
-      { key: "type", header: Hint.type.label },
+      { key: "question_id", sortable: true, header: Hint.question_id.label },
+      { key: "type", sortable: true, header: Hint.type.label },
       { key: "value", header: Hint.value.label },
-      { key: "price", header: Hint.price.label },
+      { key: "price", sortable: true, header: Hint.price.label },
     ]}
   />;
 }

@@ -23,8 +23,8 @@ function UserHintSelect(props) {
       </Form.Group>
     </>}
     tableSchema={[
-      { key: "hint_id", header: UserHint.hint_id.label },
-      { key: "user_id", header: UserHint.user_id.label },
+      { key: "hint_id", sortable: true, header: UserHint.hint_id.label },
+      { key: "user_id", sortable: true, header: UserHint.user_id.label },
     ]}
   />;
 }

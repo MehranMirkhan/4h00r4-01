@@ -28,8 +28,8 @@ function AnswerSelect(props) {
       </Form.Group>
     </>}
     tableSchema={[
-      { key: "question_id", header: Answer.question_id.label },
-      { key: "user_id", header: Answer.user_id.label },
+      { key: "question_id", sortable: true, header: Answer.question_id.label },
+      { key: "user_id", sortable: true, header: Answer.user_id.label },
       { key: "text", header: Answer.text.label },
       { key: "correct", header: Answer.correct.label, render: "boolean" },
     ]}

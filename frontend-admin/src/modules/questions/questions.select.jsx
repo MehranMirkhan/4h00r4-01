@@ -30,13 +30,13 @@ function QuestionSelect(props) {
       </Form.Group>
     </>}
     tableSchema={[
-      { key: "id", header: Question.id.label },
+      { key: "id", sortable: true, header: Question.id.label },
       { key: "locale", header: Question.locale.label },
-      { key: "title", header: Question.title.label },
-      { key: "time_type", header: Question.time_type.label },
-      { key: "answer_type", header: Question.answer_type.label },
-      { key: "start_time", header: Question.start_time.label },
-      { key: "end_time", header: Question.end_time.label },
+      { key: "title", sortable: true, header: Question.title.label },
+      { key: "time_type", sortable: true, header: Question.time_type.label },
+      { key: "answer_type", sortable: true, header: Question.answer_type.label },
+      { key: "start_time", sortable: true, header: Question.start_time.label },
+      { key: "end_time", sortable: true, header: Question.end_time.label },
       // { key: "score", header: Question.score.label },
       // { key: "tries", header: Question.tries.label },
     ]}
