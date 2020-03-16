@@ -8,7 +8,7 @@ import Storage from "src/tools/Storage";
 import axiosInstance from "src/tools/axiosInstance";
 import { alertContext } from "src/providers/AlertProvider";
 
-import { refresh } from "src/reducers/auth.reducer";
+import { refresh, register } from "src/reducers/auth.reducer";
 import { syncWithServer } from "src/services/level.service";
 import { store } from "src/providers/StateProvider";
 
@@ -75,10 +75,10 @@ export default function() {
   return <></>;
 }
 
-// setTimeout(() => {
-//   const { auth } = store.getState();
-//   if (!!auth && !auth.token) store.dispatch(register());
-// }, 5000);
+setTimeout(() => {
+  const { auth } = store.getState();
+  if (!!auth && !auth.token) store.dispatch(register());
+}, 3000);
 
 Network.addListener("networkStatusChange", (status: NetworkStatus) => {
   if (status.connected) {
