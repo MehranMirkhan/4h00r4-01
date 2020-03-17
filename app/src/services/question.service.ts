@@ -51,5 +51,5 @@ export function isLetterRemovedByHint(q: Partial<Question>, index: number) {
 }
 
 export function getPurchasableHints(q: Partial<Question>) {
-  return (q.hints || []).filter(h => h.value !== undefined);
+  return (q.hints || []).filter(h => !h.value);
 }

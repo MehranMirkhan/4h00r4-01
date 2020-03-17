@@ -104,10 +104,12 @@ class AnswerController extends Controller {
             }
         }
         $a = Answer::create($answer);
-        $type = $question->time_type === 'daily' ? 'score_daily' : 'score_weekly';
-        $user->update([
-            $type => $user[$type] + $question->score
-        ]);
+        if ($answer['correct']) {
+            $type = $question->time_type === 'daily' ? 'score_daily' : 'score_weekly';
+            $user->update([
+                $type => $user[$type] + $question->score
+            ]);
+        }
         return $a;
     }
 }
