@@ -1,5 +1,6 @@
 {
-  "persist_key": "puzzles_ugQzdLOtUd",
+  "persist_key": "riddles_ugQzdLOtUd",
   "server_url": "http://192.168.1.114/puzzles/",
+  "_server_url": "https://riddles.ir/",
   "request_timeout": 5000
 }
