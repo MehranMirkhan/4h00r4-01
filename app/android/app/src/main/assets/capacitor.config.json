@@ -1,6 +1,6 @@
 {
-  "appId": "com.puzzleland",
-  "appName": "puzzle-land",
+  "appId": "ir.riddles",
+  "appName": "riddles",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",

@@ -1,4 +1,4 @@
-package com.puzzleland;
+package ir.riddles;
 
 import android.os.Bundle;
 
