@@ -14,6 +14,7 @@
   "default_language": "en",
   "log": false,
   "tapsell": {
+    "enabled": true,
     "key": "rfffikjgddlajephtehqpnegksnjaltmqtgagoekcheonnllgbdhlspdpfllcjjiqiomgr",
     "debug": false,
     "bandwidth": 50,
