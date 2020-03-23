@@ -34,6 +34,7 @@ devDependencies:
   '@types/enzyme': 3.10.5
   enzyme: 3.11.0
   enzyme-adapter-react-16: 1.15.2_df2dc313d8031f8c2dbd009d86ca7fc7
+  enzyme-to-json: 3.4.4_enzyme@3.11.0
 lockfileVersion: 5.1
 packages:
   /@babel/code-frame/7.8.3:
@@ -4967,6 +4968,18 @@ packages:
     dev: true
     resolution:
       integrity: sha512-hGA3i1so8OrYOZSM9whlkNmVHOicJpsjgTzC+wn2JMJXhq1oO4kA4bJ5MsfzSIcC71aLDKzJ6gZpIxrqt3QTAQ==
+  /enzyme-to-json/3.4.4_enzyme@3.11.0:
+    dependencies:
+      enzyme: 3.11.0
+      lodash: 4.17.15
+      react-is: 16.13.1
+    dev: true
+    engines:
+      node: '>=6.0.0'
+    peerDependencies:
+      enzyme: ^3.4.0
+    resolution:
+      integrity: sha512-50LELP/SCPJJGic5rAARvU7pgE3m1YaNj7JLM+Qkhl5t7PAs6fiyc8xzc50RnkKPFQCv0EeFVjEWdIFRGPWMsA==
   /enzyme/3.11.0:
     dependencies:
       array.prototype.flat: 1.2.3
@@ -12839,6 +12852,7 @@ specifiers:
   axios: ^0.19.2
   enzyme: ^3.11.0
   enzyme-adapter-react-16: ^1.15.2
+  enzyme-to-json: ^3.4.4
   i18next: ^19.3.3
   ionicons: ^5.0.0
   react: ^16.12.0

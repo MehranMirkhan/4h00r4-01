@@ -1,3 +1,4 @@
 {
-  "extends": ["tslint-react"]
+  "extends": ["tslint-react"],
+  "no-restricted-globals": [true, "shallow", "render", "mount"]
 }

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Home /> should match snapshot 1`] = `
+<_default
+  showBack={false}
+  title="Welcome to Riddles"
+>
+  <div>
+    Hello, World!
+  </div>
+</_default>
+`;
