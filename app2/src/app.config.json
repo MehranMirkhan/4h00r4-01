@@ -1,0 +1,24 @@
+{
+  "persist_key": "riddles_ugQzcAOtUd",
+  "_base_url": "http://192.168.1.114/puzzles",
+  "_api_url": "http://192.168.1.114/puzzles/api",
+  "base_url": "https://riddles.ir",
+  "api_url": "https://riddles.ir/api",
+  "request_timeout": 5000,
+  "default_password": "123456",
+  "i18n": {
+    "lng": "en",
+    "fallbackLng": "en",
+    "debug": false
+  },
+  "default_language": "en",
+  "log": false,
+  "tapsell": {
+    "enabled": true,
+    "key": "rfffikjgddlajephtehqpnegksnjaltmqtgagoekcheonnllgbdhlspdpfllcjjiqiomgr",
+    "debug": false,
+    "bandwidth": 50,
+    "autoHandlePermissions": true,
+    "profile_zone_id": "5e5e5e5dc6113f00015af318"
+  }
+}

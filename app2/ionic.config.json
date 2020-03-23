@@ -1,0 +1,7 @@
+{
+  "name": "Riddles",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
