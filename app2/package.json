@@ -58,6 +58,9 @@
   },
   "description": "Riddles",
   "devDependencies": {
-    "@capacitor/cli": "1.5.1"
+    "@capacitor/cli": "1.5.1",
+    "@types/enzyme": "^3.10.5",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2"
   }
 }
