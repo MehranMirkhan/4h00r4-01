@@ -34,6 +34,6 @@ interface IHome {
   news?: News[];
 }
 
-const mapStateToProps = (state: AppState) => ({ news: newsSelector(state) });
+const props = (state: AppState) => ({ news: newsSelector(state) });
 
-export default connect(mapStateToProps)(Home);
+export default connect(props)(Home);

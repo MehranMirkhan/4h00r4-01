@@ -5,16 +5,21 @@ import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 
 // Reducers
+import settingsReducer, { SettingsState } from "./settings";
 import newsReducer, { NewsState } from "./news";
 
 // Sagas
 import sagas from "./sagas";
 
 export type AppState = {
+  settings: SettingsState;
   news: NewsState;
 };
 
-const reducer = combineReducers({ news: newsReducer });
+const reducer = combineReducers({
+  settings: settingsReducer,
+  news: newsReducer
+});
 
 const sagaMiddleware = createSagaMiddleware();
 

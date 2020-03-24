@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Settings /> should match snapshot 1`] = `
+<_default
+  showBack={true}
+  title="Settings"
+>
+  <ForwardRef(IonList)>
+    <ForwardRef(IonItem)>
+      <_default
+        label="Language"
+        options={
+          Array [
+            Object {
+              "name": "English",
+              "value": "en",
+            },
+            Object {
+              "name": "فارسی",
+              "value": "fa",
+            },
+          ]
+        }
+        value="en"
+      />
+    </ForwardRef(IonItem)>
+  </ForwardRef(IonList)>
+</_default>
+`;
+
+exports[`<Settings /> should match snapshot 2`] = `
+<_default
+  showBack={true}
+  title="Settings"
+>
+  <ForwardRef(IonList)>
+    <ForwardRef(IonItem)>
+      <_default
+        label="Language"
+        options={
+          Array [
+            Object {
+              "name": "English",
+              "value": "en",
+            },
+            Object {
+              "name": "فارسی",
+              "value": "fa",
+            },
+          ]
+        }
+        value="fa"
+      />
+    </ForwardRef(IonItem)>
+  </ForwardRef(IonList)>
+</_default>
+`;

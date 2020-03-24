@@ -1,11 +1,11 @@
 import React from "react";
-import { render } from "enzyme";
+import { mount } from "enzyme";
 
 import App from "./App";
 
 describe("<App />", () => {
   it("renders without crashing", () => {
-    const app = render(<App />);
+    const app = mount(<App />);
     expect(app).toBeDefined();
   });
 });

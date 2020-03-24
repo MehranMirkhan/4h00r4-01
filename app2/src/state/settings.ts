@@ -1,0 +1,23 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { AppState } from ".";
+import { default_language } from "src/app.config.json";
+
+export type SettingsState = { lang: string };
+
+const initialState: SettingsState = { lang: default_language };
+
+const settingsSlice = createSlice({
+  name: "settings",
+  initialState,
+  reducers: {
+    setLang(state: SettingsState, { payload }: PayloadAction<string>) {
+      state.lang = payload;
+    },
+    reset: (state: SettingsState) => initialState
+  }
+});
+
+export default settingsSlice.reducer;
+export const { setLang } = settingsSlice.actions;
+export const langSelector = (state: AppState) => state.settings.lang;
