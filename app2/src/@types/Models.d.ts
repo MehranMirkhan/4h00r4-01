@@ -60,6 +60,11 @@ type LevelHint = {
   hintId: number;
 };
 
+type News = {
+  id: number;
+  img: string;
+};
+
 type TimeType = "daily" | "weekly";
 
 type AnswerType = "text" | "choice" | "letter";

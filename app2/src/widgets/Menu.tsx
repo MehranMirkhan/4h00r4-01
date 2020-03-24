@@ -1,5 +1,6 @@
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   IonContent,
   IonIcon,
@@ -10,15 +11,8 @@ import {
   IonMenuToggle
 } from "@ionic/react";
 
-interface MenuProps extends RouteComponentProps {
-  items: {
-    title: string;
-    url: string;
-    icon: any;
-  }[];
-}
-
-const Menu: React.FC<MenuProps> = ({ items }) => {
+function Menu({ items }: IMenu) {
+  const { t } = useTranslation();
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
@@ -28,7 +22,7 @@ const Menu: React.FC<MenuProps> = ({ items }) => {
               <IonMenuToggle key={index} autoHide={false}>
                 <IonItem routerLink={item.url} routerDirection="none">
                   <IonIcon slot="start" icon={item.icon} />
-                  <IonLabel>{item.title}</IonLabel>
+                  <IonLabel>{t(item.title)}</IonLabel>
                 </IonItem>
               </IonMenuToggle>
             );
@@ -37,6 +31,14 @@ const Menu: React.FC<MenuProps> = ({ items }) => {
       </IonContent>
     </IonMenu>
   );
-};
+}
+
+interface IMenu extends RouteComponentProps {
+  items: {
+    title: string;
+    url: string;
+    icon: any;
+  }[];
+}
 
 export default withRouter(Menu);

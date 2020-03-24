@@ -3,12 +3,6 @@ import { IonContent, IonHeader, IonPage } from "@ionic/react";
 
 import Toolbar from "src/widgets/Toolbar";
 
-interface IPage {
-  children: ReactNode;
-  title?: string;
-  showBack?: boolean;
-}
-
 export default function({ children, title, showBack }: IPage) {
   return (
     <IonPage>
@@ -18,4 +12,10 @@ export default function({ children, title, showBack }: IPage) {
       <IonContent>{children}</IonContent>
     </IonPage>
   );
+}
+
+interface IPage {
+  children: ReactNode;
+  title?: string;
+  showBack?: boolean;
 }
