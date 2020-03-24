@@ -1,14 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 import { home, trophy, logIn, settings } from "ionicons/icons";
 
 import Page from "src/widgets/Page";
 import ImageSlide from "src/widgets/ImageSlide";
 import Button from "src/widgets/Button";
 import MultiCol from "src/widgets/MultiCol";
-
-export default function() {
-  return <Home />;
-}
+import { newsSelector } from "src/state/news";
+import { AppState } from "src/state";
 
 export function Home({ news }: IHome) {
   return (
@@ -34,3 +33,7 @@ export function Home({ news }: IHome) {
 interface IHome {
   news?: News[];
 }
+
+const mapStateToProps = (state: AppState) => ({ news: newsSelector(state) });
+
+export default connect(mapStateToProps)(Home);

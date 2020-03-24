@@ -1,0 +1,24 @@
+:root {
+  direction: rtl;
+}
+
+ion-split-pane {
+  flex-direction: row-reverse;
+}
+
+ion-back-button {
+  transform: rotate(180deg);
+}
+
+* {
+  font-family: 'Vazir' !important;
+}
+
+.alert-radio-icon.sc-ion-alert-md {
+  left: unset;
+  right: 26px;
+}
+
+.label-floating.sc-ion-label-md-h {
+  transform-origin: right top;
+}
