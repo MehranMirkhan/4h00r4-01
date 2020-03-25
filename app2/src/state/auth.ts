@@ -42,6 +42,9 @@ const authSlice = createSlice({
       state.fetching = false;
       state.error = payload;
     },
+    signupSuccess(state: AuthState) {
+      state.fetching = false;
+    },
     loginReq(state: AuthState, { payload }: PayloadAction<LoginRequest>) {
       state.fetching = true;
     },
@@ -98,6 +101,7 @@ export const {
   registerFail,
   signupReq,
   signupFail,
+  signupSuccess,
   loginReq,
   loginFail,
   refreshTokenReq,

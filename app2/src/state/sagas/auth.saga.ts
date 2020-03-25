@@ -6,6 +6,7 @@ import {
   registerFail,
   signupReq,
   signupFail,
+  signupSuccess,
   loginReq,
   loginFail,
   refreshTokenReq,
@@ -35,10 +36,11 @@ export function* registerSaga() {
 
 export function* signupSaga(user: Partial<User>) {
   const token: Token = yield select(authTokenSelector);
-  if (!token) yield call(registerSaga);
   try {
+    if (!token) yield call(registerSaga);
     const resp = yield call(api.users.update, user);
     if (isSuccess(resp)) {
+      yield put(signupSuccess());
       yield call(fetchMeSaga);
     } else throw resp;
   } catch (error) {
@@ -76,7 +78,9 @@ export function* logoutSaga() {
 }
 
 export function* fetchMeSaga() {
+  const token: Token = yield select(authTokenSelector);
   try {
+    if (!token) throw "Please signup first";
     const resp = yield call(api.users.fetchMe);
     if (isSuccess(resp)) {
       yield put(fetchMeSuccess(resp.data));
