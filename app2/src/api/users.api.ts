@@ -1,8 +1,8 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosResponse } from "axios";
 
 import { default_password } from "src/app.config.json";
 
-export default (axios: AxiosInstance) => ({
+const users: (axios: AxiosInstance) => IUsersAPI = (axios: AxiosInstance) => ({
   register: () => axios.post("/register", { password: default_password }),
   login: (username: string, password: string) =>
     axios.post("/login", { username, password }),
@@ -24,3 +24,19 @@ export default (axios: AxiosInstance) => ({
   getLeaderboard: () => axios.get("/v1/leaderboard"),
   adWatched: (zoneId: string) => axios.post(`/v1/ad/${zoneId}`)
 });
+
+export default users;
+
+type IUsersAPI = {
+  register: () => Promise<AxiosResponse<any>>;
+  login: (email: string, password: string) => Promise<AxiosResponse<any>>;
+  refresh: (refresh_token: string) => Promise<AxiosResponse<any>>;
+  fetchMe: () => Promise<AxiosResponse<any>>;
+  update: (user: Partial<User>) => Promise<AxiosResponse<any>>;
+  changePassword: (
+    oldPassword: string,
+    newPassword: string
+  ) => Promise<AxiosResponse<any>>;
+  getLeaderboard: () => Promise<AxiosResponse<any>>;
+  adWatched: (zoneId: string) => Promise<AxiosResponse<any>>;
+};

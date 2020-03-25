@@ -70,3 +70,8 @@ type TimeType = "daily" | "weekly";
 type AnswerType = "text" | "choice" | "letter";
 
 type HintType = "image" | "choice" | "letter" | "try" | "time";
+
+type LeaderBoardResponse = {
+  top_daily: Partial<User>[];
+  top_weekly: Partial<User>[];
+};
