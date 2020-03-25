@@ -2,7 +2,7 @@
  * State of application's execution (e.g. initialization states)
  */
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import { AppState } from ".";
 

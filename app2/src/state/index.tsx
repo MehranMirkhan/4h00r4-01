@@ -11,6 +11,7 @@ import settingsReducer, {
   initialState as settingsInit
 } from "./settings";
 import newsReducer, { NewsState, initialState as newsInit } from "./news";
+import authReducer, { AuthState, initialState as authInit } from "./auth";
 
 // Sagas
 import sagas from "./sagas";
@@ -19,6 +20,7 @@ export type AppState = {
   run: RunState;
   settings: SettingsState;
   news: NewsState;
+  auth: AuthState;
 };
 
 export type StorageState = {
@@ -28,13 +30,15 @@ export type StorageState = {
 const reducer = combineReducers({
   run: runReducer,
   settings: settingsReducer,
-  news: newsReducer
+  news: newsReducer,
+  auth: authReducer
 });
 
 export const initialState: AppState = {
   run: { ...runInit },
   settings: { ...settingsInit },
-  news: { ...newsInit }
+  news: { ...newsInit },
+  auth: { ...authInit }
 };
 
 const sagaMiddleware = createSagaMiddleware();

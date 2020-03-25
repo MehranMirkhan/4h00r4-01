@@ -14,10 +14,10 @@ const settingsSlice = createSlice({
     setLang(state: SettingsState, { payload }: PayloadAction<string>) {
       state.lang = payload;
     },
-    reset: (state: SettingsState) => initialState
+    resetSettings: (state: SettingsState) => initialState
   }
 });
 
 export default settingsSlice.reducer;
-export const { setLang } = settingsSlice.actions;
+export const { setLang, resetSettings } = settingsSlice.actions;
 export const langSelector = (state: AppState) => state.settings.lang;

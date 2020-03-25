@@ -33,5 +33,5 @@ export const {
   fetchNewsFail
 } = newsSlice.actions;
 export const newsSelector = (state: AppState) => state.news.data;
-export const newsLoadingSelector = (state: AppState) => state.news.fetching;
+export const newsFetchingSelector = (state: AppState) => state.news.fetching;
 export const newsErrorSelector = (state: AppState) => state.news.error;
