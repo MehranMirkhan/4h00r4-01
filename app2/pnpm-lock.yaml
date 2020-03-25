@@ -18,6 +18,7 @@ dependencies:
   axios: 0.19.2
   i18next: 19.3.3
   ionicons: 5.0.1
+  moment: 2.24.0
   react: 16.13.1
   react-dom: 16.13.1_react@16.13.1
   react-i18next: 11.3.4_i18next@19.3.3+react@16.13.1
@@ -8290,6 +8291,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-P+2gwrFqx8lhew375MQHHeTlY8AuOJSrGf0R5ddkEndUkmwpgUob/vQuBD1V22/Cw1/lJr4x+EjllSezBThzBg==
+  /moment/2.24.0:
+    dev: false
+    resolution:
+      integrity: sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
   /moo/0.5.1:
     dev: true
     resolution:
@@ -12863,6 +12868,7 @@ specifiers:
   enzyme-to-json: ^3.4.4
   i18next: ^19.3.3
   ionicons: ^5.0.0
+  moment: ^2.24.0
   react: ^16.12.0
   react-dom: ^16.12.0
   react-i18next: ^11.3.4
