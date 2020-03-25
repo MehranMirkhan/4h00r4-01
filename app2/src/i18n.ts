@@ -8,3 +8,5 @@ i18n.use(initReactI18next).init({
   ...config.i18n,
   resources
 });
+
+export default i18n;

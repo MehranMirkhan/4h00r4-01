@@ -16,7 +16,7 @@ export default ({ images, options = {}, className = "" }: IImageSlide) => {
     <IonSlides pager options={_options} className={className}>
       {images.map((image: string, index: number) => (
         <IonSlide key={index}>
-          <img src={image} alt="" />
+          <img src={image} alt="" data-testid="slide-img" />
         </IonSlide>
       ))}
     </IonSlides>
@@ -27,4 +27,4 @@ interface IImageSlide {
   images?: string[];
   options?: { [key: string]: any };
   className?: string;
-};
+}

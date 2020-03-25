@@ -20,7 +20,7 @@ export default ({
   }
   return (
     <>
-      <IonLabel position="floating" data-test="so-label">{t(label)}</IonLabel>
+      <IonLabel position="floating" data-testid="so-label">{t(label)}</IonLabel>
       <IonSelect
         onIonChange={(event: CustomEvent<any>) => {
           if (!!onChange) onChange(event.detail.value);
