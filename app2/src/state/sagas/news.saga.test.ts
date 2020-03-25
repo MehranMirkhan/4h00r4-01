@@ -7,7 +7,7 @@ import {
   fetchNewsFail
 } from "src/state/news";
 
-import { fetchNews } from "./misc.saga";
+import { fetchNews } from "./news.saga";
 
 describe("News saga", () => {
   const news: News[] = [{ id: 2, img: "/a" }];

@@ -4,7 +4,7 @@ import { AppState } from ".";
 
 export type NewsState = { data: any[]; fetching: boolean; error: any };
 
-const initialState: NewsState = { data: [], fetching: false, error: undefined };
+export const initialState: NewsState = { data: [], fetching: false, error: undefined };
 
 const newsSlice = createSlice({
   name: "news",

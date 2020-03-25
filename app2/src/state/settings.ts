@@ -5,7 +5,7 @@ import { default_language } from "src/app.config.json";
 
 export type SettingsState = { lang: string };
 
-const initialState: SettingsState = { lang: default_language };
+export const initialState: SettingsState = { lang: default_language };
 
 const settingsSlice = createSlice({
   name: "settings",
