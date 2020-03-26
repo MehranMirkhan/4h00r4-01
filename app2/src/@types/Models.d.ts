@@ -32,7 +32,7 @@ type Question = {
 };
 
 type Choice = {
-  type: string;
+  type: ChoiceType;
   value: string;
 };
 
@@ -64,6 +64,8 @@ type News = {
   id: number;
   img: string;
 };
+
+type ChoiceType = "text" | "image";
 
 type TimeType = "daily" | "weekly";
 
