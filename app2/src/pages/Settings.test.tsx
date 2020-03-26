@@ -10,7 +10,7 @@ describe("<Settings />", () => {
   it("should render", () => {
     const comp = render(
       <I18nextProvider i18n={i18n}>
-        <Settings />
+        <Settings lang="en" setLang={(s: string) => {}} />
       </I18nextProvider>
     );
     expect(comp).toBeDefined();

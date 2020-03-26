@@ -1,9 +1,12 @@
-import { all, take, call } from "redux-saga/effects";
+import { all, take, call, select } from "redux-saga/effects";
 import i18n from "i18next";
 
 import { setLang } from "src/state/settings";
 import { default_language } from "src/app.config.json";
+import { storageLoadedOninitSelector } from "../meta";
 
+// This throws exception
+// Don't use
 export function* onLangChangeSet_i18n() {
   while (true) {
     const { payload } = yield take(setLang.type);
@@ -12,6 +15,17 @@ export function* onLangChangeSet_i18n() {
   }
 }
 
+export function* onLangChangeReload() {
+  while (true) {
+    yield take(setLang.type);
+    const storageLoadedOnInit: boolean = yield select(
+      storageLoadedOninitSelector
+    );
+    if (storageLoadedOnInit)
+      yield call(setTimeout, window.location.reload.bind(window.location), 500);
+  }
+}
+
 export default function*() {
-  yield all([onLangChangeSet_i18n()]);
+  yield all([onLangChangeReload()]);
 }

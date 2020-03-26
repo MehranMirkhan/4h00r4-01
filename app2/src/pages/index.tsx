@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
@@ -33,6 +34,10 @@ const menuItems = [
 ];
 
 function Pages({ lang }: IPages) {
+  const { i18n } = useTranslation();
+  useEffect(() => {
+    i18n.changeLanguage(lang || "en");
+  }, [lang]);
   return (
     <>
       {lang === "fa" && (

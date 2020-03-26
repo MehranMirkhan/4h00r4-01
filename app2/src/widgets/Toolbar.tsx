@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   IonToolbar,
   IonButtons,
@@ -7,19 +8,22 @@ import {
   IonTitle
 } from "@ionic/react";
 
-export default ({ title = "", showBack = true }: IToolbar) => (
-  <IonToolbar color="dark">
-    <IonButtons slot="start">
-      <IonMenuButton />
-    </IonButtons>
-    {showBack && (
-      <IonButtons slot="end">
-        <IonBackButton defaultHref="/home" />
+export default ({ title = "", showBack = true }: IToolbar) => {
+  const { t } = useTranslation();
+  return (
+    <IonToolbar color="dark">
+      <IonButtons slot="start">
+        <IonMenuButton />
       </IonButtons>
-    )}
-    {!!title && <IonTitle>{title}</IonTitle>}
-  </IonToolbar>
-);
+      {showBack && (
+        <IonButtons slot="end">
+          <IonBackButton defaultHref="/home" />
+        </IonButtons>
+      )}
+      {!!title && <IonTitle>{t(title)}</IonTitle>}
+    </IonToolbar>
+  );
+};
 
 interface IToolbar {
   title?: string;

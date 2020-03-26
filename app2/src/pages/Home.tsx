@@ -15,8 +15,8 @@ export function Home({ news }: IHome) {
       {!!news && <ImageSlide images={news.map(n => n.img)} />}
 
       <Button text="Level" fluid link href="/level_list" />
-      <Button text="Daily" fluid link href="/daily_list" />
-      <Button text="Weekly" fluid link href="/weekly_list" />
+      <Button text="Daily" fluid link href="/daily" />
+      <Button text="Weekly" fluid link href="/weekly" />
 
       <MultiCol
         cols={[

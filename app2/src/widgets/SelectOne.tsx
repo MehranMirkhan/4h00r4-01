@@ -11,23 +11,19 @@ export default ({
   onChange
 }: ISelectOne) => {
   const { t } = useTranslation();
-  let selectedText = "";
-  for (let opt of options) {
-    if (opt.value === value) {
-      selectedText = opt.name;
-      break;
-    }
-  }
   return (
     <>
-      <IonLabel position="floating" data-testid="so-label">{t(label)}</IonLabel>
+      <IonLabel position="floating" data-testid="so-label">
+        {t(label)}
+      </IonLabel>
       <IonSelect
+        value={value}
         onIonChange={(event: CustomEvent<any>) => {
-          if (!!onChange) onChange(event.detail.value);
+          const v = event.detail.value;
+          if (!!onChange && v !== value) onChange(v);
         }}
         okText={t(okText || "OK")}
         cancelText={t(cancelText || "Cancel")}
-        selectedText={selectedText}
       >
         {options.map((opt: ISelectOneOption) => (
           <IonSelectOption key={opt.value} value={opt.value}>

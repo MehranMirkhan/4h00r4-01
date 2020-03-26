@@ -29,7 +29,7 @@ export function Settings({ lang, setLang }: ISettings) {
 
 interface ISettings {
   lang?: string;
-  setLang?: (lang: string) => void;
+  setLang: (lang: string) => void;
 }
 
 const props = (state: AppState) => ({ lang: langSelector(state) });
