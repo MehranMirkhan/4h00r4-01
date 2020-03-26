@@ -2,7 +2,7 @@ import { put } from "redux-saga/effects";
 
 import { AppState, initialState } from "src/state";
 import { watchStateChange, loadStorageOnInit } from "./storage.saga";
-import { storageLoaded } from "src/state/run";
+import { storageLoaded } from "src/state/meta";
 
 describe("Storage saga", () => {
   it("should store on state change", () => {
@@ -11,7 +11,7 @@ describe("Storage saga", () => {
     gen.next();
     let state: AppState = initialState;
     expect(gen.next(state).value).toHaveProperty("type", "TAKE");
-    state.run.storageLoadedOnInit = true;
+    state.meta.storageLoadedOnInit = true;
     state.settings.lang = "fr";
     gen.next();
     expect(gen.next(state).value).toHaveProperty("type", "CALL");

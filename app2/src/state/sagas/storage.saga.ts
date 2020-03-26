@@ -5,7 +5,7 @@ import { StorageState, AppState } from "src/state";
 import { persist_key } from "src/app.config.json";
 
 import { setLang } from "src/state/settings";
-import { storageLoaded } from "src/state/run";
+import { storageLoaded } from "src/state/meta";
 
 export function convertStateToStorage(state: AppState): StorageState {
   return {
@@ -20,7 +20,7 @@ export function* watchStateChange() {
   while (true) {
     yield take([setLang.type]);
     const state: AppState = yield select();
-    if (state.run.storageLoadedOnInit) {
+    if (state.meta.storageLoadedOnInit) {
       const storage: StorageState = convertStateToStorage(state);
       yield call(Storage.setObject, persist_key, storage);
     }

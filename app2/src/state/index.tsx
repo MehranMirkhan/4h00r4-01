@@ -5,7 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 
 // Reducers
-import runReducer, { RunState, initialState as runInit } from "./run";
+import metaReducer, { MetaState, initialState as metaInit } from "./meta";
 import settingsReducer, {
   SettingsState,
   initialState as settingsInit
@@ -17,7 +17,7 @@ import authReducer, { AuthState, initialState as authInit } from "./auth";
 import sagas from "./sagas";
 
 export type AppState = {
-  run: RunState;
+  meta: MetaState;
   settings: SettingsState;
   news: NewsState;
   auth: AuthState;
@@ -28,14 +28,14 @@ export type StorageState = {
 };
 
 const reducer = combineReducers({
-  run: runReducer,
+  meta: metaReducer,
   settings: settingsReducer,
   news: newsReducer,
   auth: authReducer
 });
 
 export const initialState: AppState = {
-  run: { ...runInit },
+  meta: { ...metaInit },
   settings: { ...settingsInit },
   news: { ...newsInit },
   auth: { ...authInit }
