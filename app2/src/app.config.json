@@ -1,9 +1,9 @@
 {
   "persist_key": "riddles_ugQzcAOtUd",
-  "_base_url": "http://192.168.1.114/puzzles",
-  "_api_url": "http://192.168.1.114/puzzles/api",
-  "base_url": "https://riddles.ir",
-  "api_url": "https://riddles.ir/api",
+  "base_url": "http://192.168.1.114/puzzles",
+  "api_url": "http://192.168.1.114/puzzles/api",
+  "_base_url": "https://riddles.ir",
+  "_api_url": "https://riddles.ir/api",
   "request_timeout": 5000,
   "default_password": "123456",
   "i18n": {

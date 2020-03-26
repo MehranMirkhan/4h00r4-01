@@ -13,6 +13,8 @@ import Menu from "src/widgets/Menu";
 
 import Home from "src/pages/Home";
 import Settings from "src/pages/Settings";
+import Daily from "src/pages/Daily";
+import Weekly from "src/pages/Weekly";
 
 const menuItems = [
   { title: "Home", url: "/home", icon: home },
@@ -31,6 +33,9 @@ function Pages({ lang }: IPages) {
           <IonRouterOutlet id="main">
             <Route exact path="/home" component={Home} />
             <Route exact path="/settings" component={Settings} />
+            <Route exact path="/daily" component={Daily} />
+            <Route exact path="/weekly" component={Weekly} />
+            {/* <Route path="/question/:id" component={Question} /> */}
             <Route path="*" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
         </IonSplitPane>
