@@ -12,6 +12,15 @@ import settingsReducer, {
 } from "./settings";
 import newsReducer, { NewsState, initialState as newsInit } from "./news";
 import authReducer, { AuthState, initialState as authInit } from "./auth";
+import dailyReducer, { DailyState, initialState as dailyInit } from "./daily";
+import weeklyReducer, {
+  WeeklyState,
+  initialState as weeklyInit
+} from "./weekly";
+import questionReducer, {
+  QuestionState,
+  initialState as questionInit
+} from "./question";
 
 // Sagas
 import sagas from "./sagas";
@@ -21,6 +30,9 @@ export type AppState = {
   settings: SettingsState;
   news: NewsState;
   auth: AuthState;
+  daily: DailyState;
+  weekly: WeeklyState;
+  question: QuestionState;
 };
 
 export type StorageState = {
@@ -31,14 +43,20 @@ const reducer = combineReducers({
   meta: metaReducer,
   settings: settingsReducer,
   news: newsReducer,
-  auth: authReducer
+  auth: authReducer,
+  daily: dailyReducer,
+  weekly: weeklyReducer,
+  question: questionReducer
 });
 
 export const initialState: AppState = {
   meta: { ...metaInit },
   settings: { ...settingsInit },
   news: { ...newsInit },
-  auth: { ...authInit }
+  auth: { ...authInit },
+  daily: { ...dailyInit },
+  weekly: { ...weeklyInit },
+  question: { ...questionInit }
 };
 
 const sagaMiddleware = createSagaMiddleware();
