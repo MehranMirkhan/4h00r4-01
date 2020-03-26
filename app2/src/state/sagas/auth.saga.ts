@@ -1,6 +1,7 @@
 import { all, call, put, take, select } from "redux-saga/effects";
 
 import api, { isSuccess } from "src/api";
+import config from "src/app.config.json";
 import {
   registerReq,
   registerFail,
@@ -18,39 +19,58 @@ import {
   fetchMeReq,
   fetchMeSuccess,
   fetchMeFail,
+  updateMeReq,
+  updateMeSuccess,
+  updateMeFail,
+  passwordChangeReq,
+  passwordChangeSuccess,
+  passwordChangeFail,
   Token,
-  authTokenSelector
+  authTokenSelector,
+  hasTokenSelector,
+  PasswordChangeRequest,
+  hasMeSelector,
+  SignupRequest,
+  LoginRequest
 } from "src/state/auth";
 
 export function* registerSaga() {
+  const hasToken: boolean = yield select(hasTokenSelector);
+  if (hasToken) yield call(logoutSaga);
   try {
     const resp = yield call(api.users.register);
     if (isSuccess(resp)) {
       const { username, password } = resp.data;
-      yield call(loginSaga, username, password);
+      yield call(loginSaga, { username, password });
     } else throw resp;
   } catch (error) {
     yield put(registerFail(error));
   }
 }
 
-export function* signupSaga(user: Partial<User>) {
-  const token: Token = yield select(authTokenSelector);
+export function* signupSaga(signupRequest: SignupRequest) {
+  const hasToken: boolean = yield select(hasTokenSelector);
+  const hasMe: boolean = yield select(hasMeSelector);
   try {
-    if (!token) yield call(registerSaga);
-    const resp = yield call(api.users.update, user);
-    if (isSuccess(resp)) {
-      yield put(signupSuccess());
-      yield call(fetchMeSaga);
-    } else throw resp;
+    if (hasMe) yield call(logoutSaga);
+    if (!hasToken) yield call(registerSaga);
+    yield call(updateMeSaga, signupRequest);
+    yield call(passwordChangeSaga, {
+      oldPassword: config.default_password,
+      newPassword: signupRequest.password
+    });
   } catch (error) {
     yield put(signupFail(error));
   }
 }
 
-export function* loginSaga(username: string, password: string) {
+export function* loginSaga(loginRequest: LoginRequest) {
   try {
-    const resp = yield call(api.users.login, username, password);
+    const resp = yield call(
+      api.users.login,
+      loginRequest.username,
+      loginRequest.password
+    );
     if (isSuccess(resp)) {
       yield put(fetchTokenSuccess(resp.data));
       yield call(fetchMeSaga);
@@ -61,8 +81,10 @@ export function* loginSaga(username: string, password: string) {
 }
 
 export function* refreshTokenSaga() {
-  const { refresh_token }: Token = yield select(authTokenSelector);
+  const hasToken: boolean = yield select(hasTokenSelector);
+  if (!hasToken) return;
   try {
+    const { refresh_token }: Token = yield select(authTokenSelector);
     const resp = yield call(api.users.refresh, refresh_token);
     if (isSuccess(resp)) {
       yield put(fetchTokenSuccess(resp.data));
@@ -78,15 +100,46 @@ export function* logoutSaga() {
 }
 
 export function* fetchMeSaga() {
-  const token: Token = yield select(authTokenSelector);
+  const hasToken: boolean = yield select(hasTokenSelector);
   try {
-    if (!token) throw "Please signup first";
+    if (!hasToken) throw "Please signup first";
     const resp = yield call(api.users.fetchMe);
     if (isSuccess(resp)) {
       yield put(fetchMeSuccess(resp.data));
     } else throw resp;
   } catch (error) {
     yield put(fetchMeFail(error));
+  }
+}
+
+export function* updateMeSaga(user: Partial<User>) {
+  const hasToken: boolean = yield select(hasTokenSelector);
+  try {
+    if (!hasToken) throw "Please signup first";
+    console.log(`[updateMeSaga] user = ${JSON.stringify(user)}`);
+    const resp = yield call(api.users.update, user);
+    if (isSuccess(resp)) {
+      yield put(updateMeSuccess());
+      yield call(fetchMeSaga);
+    } else throw resp;
+  } catch (error) {
+    yield put(updateMeFail(error));
+  }
+}
+
+export function* passwordChangeSaga({
+  oldPassword,
+  newPassword
+}: PasswordChangeRequest) {
+  const hasToken: boolean = yield select(hasTokenSelector);
+  try {
+    if (!hasToken) throw "Please signup first";
+    const resp = yield call(api.users.changePassword, oldPassword, newPassword);
+    if (isSuccess(resp)) {
+      yield put(passwordChangeSuccess());
+    } else throw resp;
+  } catch (error) {
+    yield put(passwordChangeFail(error));
   }
 }
 
@@ -109,7 +162,7 @@ export function* watchSignup() {
 export function* watchLogin() {
   while (true) {
     const { payload } = yield take(loginReq.type);
-    yield call(loginSaga, payload.username, payload.password);
+    yield call(loginSaga, payload);
   }
 }
 
@@ -134,6 +187,20 @@ export function* watchFetchMe() {
   }
 }
 
+export function* watchUpdateMe() {
+  while (true) {
+    const { payload } = yield take(updateMeReq.type);
+    yield call(updateMeSaga, payload);
+  }
+}
+
+export function* watchPasswordChange() {
+  while (true) {
+    const { payload } = yield take(passwordChangeReq.type);
+    yield call(passwordChangeSaga, payload);
+  }
+}
+
 export default function*() {
   yield all([
     watchRegister(),
@@ -141,6 +208,8 @@ export default function*() {
     watchLogin(),
     watchRefreshtoken(),
     watchLogout(),
-    watchFetchMe()
+    watchFetchMe(),
+    watchUpdateMe(),
+    watchPasswordChange()
   ]);
 }

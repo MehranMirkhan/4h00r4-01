@@ -8,6 +8,7 @@ import Button from "src/widgets/Button";
 import MultiCol from "src/widgets/MultiCol";
 import { newsSelector } from "src/state/news";
 import { AppState } from "src/state";
+import Dev from "src/components/Dev";
 
 export function Home({ news }: IHome) {
   return (
@@ -26,6 +27,8 @@ export function Home({ news }: IHome) {
           <Button icon={settings} link href="/settings" />
         ]}
       />
+
+      <Dev />
     </Page>
   );
 }

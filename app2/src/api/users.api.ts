@@ -14,7 +14,7 @@ const users: (axios: AxiosInstance) => IUsersAPI = (axios: AxiosInstance) => ({
     if (name !== undefined) params.name = name;
     if (phone !== undefined) params.phone = phone;
     if (email !== undefined) params.email = email;
-    return axios.patch("/v1/me", user);
+    return axios.patch("/v1/me", params);
   },
   changePassword: (old_password: string, new_password: string) =>
     axios.post("/password", {

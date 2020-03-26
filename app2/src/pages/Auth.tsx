@@ -5,7 +5,12 @@ import Page from "src/widgets/Page";
 import Tabs from "src/widgets/Tabs";
 import Input from "src/widgets/Input";
 import Button from "src/widgets/Button";
-import { loginReq, signupReq } from "src/state/auth";
+import {
+  loginReq,
+  signupReq,
+  SignupRequest,
+  LoginRequest
+} from "src/state/auth";
 import { setAlert, AlertType } from "src/state/meta";
 
 export function Auth({ onLogin, onRegister, setAlert }: IAuth) {
@@ -30,7 +35,7 @@ const Login = ({ onLogin, showError }: ILogin) => {
   const onSubmit = () => {
     if (!username) showError("Phone is empty");
     else if (!password) showError("Password is empty");
-    else onLogin(username, password);
+    else onLogin({ username, password });
   };
   return (
     <>
@@ -65,7 +70,7 @@ const Register = ({ onRegister, showError }: IRegister) => {
     else if (!passwordConfirm) showError("Password confirm is empty");
     else if (password !== passwordConfirm)
       showError("Password and password confirm do not match");
-    else onRegister(name, phone, email, password);
+    else onRegister({ name, phone, email, password });
   };
   return (
     <>
@@ -90,27 +95,18 @@ const Register = ({ onRegister, showError }: IRegister) => {
 };
 
 interface IAuth {
-  onLogin: (username: string, password: string) => void;
-  onRegister: (
-    name: string,
-    phone: string,
-    email: string,
-    password: string
-  ) => void;
+  onLogin: (loginRequest: LoginRequest) => void;
+  onRegister: (signupRequest: SignupRequest) => void;
   setAlert: (alert: string, alertType: AlertType) => void;
 }
 
 interface ILogin {
-  onLogin: (username: string, password: string) => void;
+  onLogin: (loginRequest: LoginRequest) => void;
   showError: (msg: string) => void;
 }
+
 interface IRegister {
-  onRegister: (
-    name: string,
-    phone: string,
-    email: string,
-    password: string
-  ) => void;
+  onRegister: (signupRequest: SignupRequest) => void;
   showError: (msg: string) => void;
 }
 

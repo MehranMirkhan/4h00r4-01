@@ -11,7 +11,11 @@ import settingsReducer, {
   initialState as settingsInit
 } from "./settings";
 import newsReducer, { NewsState, initialState as newsInit } from "./news";
-import authReducer, { AuthState, initialState as authInit } from "./auth";
+import authReducer, {
+  AuthState,
+  initialState as authInit,
+  Token
+} from "./auth";
 import dailyReducer, { DailyState, initialState as dailyInit } from "./daily";
 import weeklyReducer, {
   WeeklyState,
@@ -37,6 +41,7 @@ export type AppState = {
 
 export type StorageState = {
   settings: SettingsState;
+  auth: { token?: Token; me?: Partial<User> };
 };
 
 const reducer = combineReducers({
@@ -61,7 +66,7 @@ export const initialState: AppState = {
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = configureStore({ reducer, middleware: [sagaMiddleware] });
+export const store = configureStore({ reducer, middleware: [sagaMiddleware] });
 
 sagaMiddleware.run(sagas);
 

@@ -15,6 +15,7 @@ import Menu from "src/widgets/Menu";
 import Home from "src/pages/Home";
 import Settings from "src/pages/Settings";
 import Auth from "src/pages/Auth";
+import Profile from "src/pages/Profile";
 import Daily from "src/pages/Daily";
 import Weekly from "src/pages/Weekly";
 
@@ -37,7 +38,7 @@ function Pages({ lang }: IPages) {
   const { i18n } = useTranslation();
   useEffect(() => {
     i18n.changeLanguage(lang || "en");
-  }, [lang]);
+  }, [lang, i18n]);
   return (
     <>
       {lang === "fa" && (
@@ -50,6 +51,7 @@ function Pages({ lang }: IPages) {
             <Route exact path="/home" component={Home} />
             <Route exact path="/settings" component={Settings} />
             <Route exact path="/auth" component={Auth} />
+            <Route path="/profile" component={Profile} />
             <Route exact path="/daily" component={Daily} />
             <Route exact path="/weekly" component={Weekly} />
             {/* <Route path="/question/:id" component={Question} /> */}
