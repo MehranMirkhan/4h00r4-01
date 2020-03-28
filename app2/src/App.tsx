@@ -4,6 +4,8 @@ import { IonApp } from "@ionic/react";
 import StateProvider from "./state";
 import Pages from "./pages";
 
+import "src/i18n";
+
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 

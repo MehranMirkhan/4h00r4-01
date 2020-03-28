@@ -69,6 +69,7 @@
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "clearMocks": true
   }
 }

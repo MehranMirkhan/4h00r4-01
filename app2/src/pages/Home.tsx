@@ -8,7 +8,10 @@ import Button from "src/widgets/Button";
 import MultiCol from "src/widgets/MultiCol";
 import { newsSelector } from "src/state/news";
 import { AppState } from "src/state";
-import Dev from "src/components/Dev";
+
+// import Dev from "src/components/Dev";
+
+import "src/i18n";
 
 export function Home({ news }: IHome) {
   return (
@@ -28,7 +31,7 @@ export function Home({ news }: IHome) {
         ]}
       />
 
-      <Dev />
+      {/* <Dev /> */}
     </Page>
   );
 }

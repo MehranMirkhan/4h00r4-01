@@ -7,6 +7,8 @@ import SelectOne from "src/widgets/SelectOne";
 import { AppState } from "src/state";
 import { langSelector, setLang } from "src/state/settings";
 
+import "src/i18n";
+
 export function Settings({ lang, setLang }: ISettings) {
   return (
     <Page title={"Settings"} showBack={true}>
