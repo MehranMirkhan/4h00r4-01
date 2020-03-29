@@ -65,6 +65,7 @@ function Pages({ lang }: IPages) {
 
 interface IPages {
   lang: string;
+  [key: string]: any;
 }
 
 const props = (state: AppState) => ({ lang: langSelector(state) });

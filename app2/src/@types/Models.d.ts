@@ -62,7 +62,7 @@ type LevelHint = {
 
 type News = {
   id: number;
-  img: string;
+  image: string;
 };
 
 type ChoiceType = "text" | "image";
