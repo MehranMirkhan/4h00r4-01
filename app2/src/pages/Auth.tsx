@@ -13,13 +13,20 @@ import {
 } from "src/state/auth";
 import { setAlert, AlertType } from "src/state/meta";
 
+import "src/i18n";
+
 export function Auth({ onLogin, onRegister, setAlert }: IAuth) {
   const tabs: string[] = ["Login", "Register"];
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const showError = (e: string) => setAlert(e, "error");
   return (
     <Page title="Login / Register" showBack={true}>
-      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Tabs
+        tabs={tabs}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        data-testid="tabs"
+      />
       {activeTab === tabs[0] ? (
         <Login onLogin={onLogin} showError={showError} />
       ) : (
@@ -29,11 +36,12 @@ export function Auth({ onLogin, onRegister, setAlert }: IAuth) {
   );
 }
 
-const Login = ({ onLogin, showError }: ILogin) => {
+export const Login = ({ onLogin, showError = (_: any) => {} }: ILogin) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const onSubmit = () => {
     if (!username) showError("Phone is empty");
+    else if (isNaN(username as any)) showError("Phone should be a number");
     else if (!password) showError("Password is empty");
     else onLogin({ username, password });
   };
@@ -44,19 +52,29 @@ const Login = ({ onLogin, showError }: ILogin) => {
         value={username}
         type="number"
         onChange={setUsername}
+        data-testid="login-phone"
       />
       <Input
         label="Password"
         value={password}
         type="password"
         onChange={setPassword}
+        data-testid="login-password"
       />
-      <Button text="Login" type="submit" onClick={onSubmit} />
+      <Button
+        text="Login"
+        type="submit"
+        onClick={onSubmit}
+        data-testid="login-submit"
+      />
     </>
   );
 };
 
-const Register = ({ onRegister, showError }: IRegister) => {
+export const Register = ({
+  onRegister,
+  showError = (_: any) => {}
+}: IRegister) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -64,6 +82,7 @@ const Register = ({ onRegister, showError }: IRegister) => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const onSubmit = () => {
     if (!phone) showError("Phone number is empty");
+    else if (isNaN(phone as any)) showError("Phone should be a number");
     else if (!password) showError("Password is empty");
     else if (password.length < 6)
       showError("Password must be more than 5 characters");
@@ -74,22 +93,47 @@ const Register = ({ onRegister, showError }: IRegister) => {
   };
   return (
     <>
-      <Input label="Name" value={name} type="text" onChange={setName} />
-      <Input label="Phone" value={phone} type="number" onChange={setPhone} />
-      <Input label="Email" value={email} type="email" onChange={setEmail} />
+      <Input
+        label="Name"
+        value={name}
+        type="text"
+        onChange={setName}
+        data-testid="register-name"
+      />
+      <Input
+        label="Phone"
+        value={phone}
+        type="number"
+        onChange={setPhone}
+        data-testid="register-phone"
+      />
+      <Input
+        label="Email"
+        value={email}
+        type="email"
+        onChange={setEmail}
+        data-testid="register-email"
+      />
       <Input
         label="Password"
         value={password}
         type="password"
         onChange={setPassword}
+        data-testid="register-password"
       />
       <Input
         label="Confirm Password"
         value={passwordConfirm}
         type="password"
         onChange={setPasswordConfirm}
+        data-testid="register-passwordConfirm"
       />
-      <Button text="Register" type="submit" onClick={onSubmit} />
+      <Button
+        text="Register"
+        type="submit"
+        onClick={onSubmit}
+        data-testid="register-submit"
+      />
     </>
   );
 };

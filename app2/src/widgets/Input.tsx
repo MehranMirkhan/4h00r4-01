@@ -5,23 +5,21 @@ import { useTranslation } from "react-i18next";
 export default function({
   label = "",
   value,
-  placeholder,
   type,
   onChange,
-  className
+  ...otherProps
 }: IInput) {
   const { t } = useTranslation();
   return (
     <IonItem>
       <IonLabel position="floating">{t(label)}</IonLabel>
       <IonInput
-        className={className}
         value={value}
         type={type}
-        placeholder={placeholder}
         onIonChange={e => {
           if (!!onChange) onChange(e.detail.value || "");
         }}
+        {...otherProps}
       />
     </IonItem>
   );
@@ -30,7 +28,6 @@ export default function({
 type IInput = {
   label?: string;
   value: string;
-  placeholder?: string;
   type?:
     | "number"
     | "time"
@@ -41,6 +38,6 @@ type IInput = {
     | "search"
     | "date"
     | "password";
-  className?: string;
   onChange?: (value: string) => void;
+  [key: string]: any;
 };

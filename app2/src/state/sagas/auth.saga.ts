@@ -116,7 +116,6 @@ export function* updateMeSaga(user: Partial<User>) {
   const hasToken: boolean = yield select(hasTokenSelector);
   try {
     if (!hasToken) throw "Please signup first";
-    console.log(`[updateMeSaga] user = ${JSON.stringify(user)}`);
     const resp = yield call(api.users.update, user);
     if (isSuccess(resp)) {
       yield put(updateMeSuccess());

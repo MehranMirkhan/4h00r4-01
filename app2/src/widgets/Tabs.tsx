@@ -2,12 +2,18 @@ import React from "react";
 import { IonSegment, IonSegmentButton, IonLabel } from "@ionic/react";
 import { useTranslation } from "react-i18next";
 
-export default function({ tabs, activeTab, setActiveTab }: ITabs) {
+export default function({
+  tabs,
+  activeTab,
+  setActiveTab,
+  ...otherProps
+}: ITabs) {
   const { t } = useTranslation();
   return (
     <IonSegment
       onIonChange={e => setActiveTab(e.detail.value || tabs[0])}
       value={activeTab}
+      {...otherProps}
     >
       {tabs.map((tab: string) => (
         <IonSegmentButton key={tab} value={tab}>
@@ -22,4 +28,5 @@ type ITabs = {
   tabs: string[];
   activeTab: string;
   setActiveTab: (s: string) => void;
+  [key: string]: any;
 };

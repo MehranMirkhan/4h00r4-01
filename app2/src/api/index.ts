@@ -16,7 +16,7 @@ const axiosInstance = Axios.create({
 });
 
 // Logging
-if (config.log) {
+if (config.log && !!axiosInstance) {
   axiosInstance.interceptors.request.use(request => {
     console.log("Request:", request);
     return request;
@@ -27,11 +27,13 @@ if (config.log) {
   });
 }
 
-axiosInstance.interceptors.request.use(request => {
-  const token: Token | undefined = authTokenSelector(store.getState());
-  if (!!token) request.headers.Authorization = `Bearer ${token.access_token}`;
-  return request;
-});
+if (!!axiosInstance) {
+  axiosInstance.interceptors.request.use(request => {
+    const token: Token | undefined = authTokenSelector(store.getState());
+    if (!!token) request.headers.Authorization = `Bearer ${token.access_token}`;
+    return request;
+  });
+}
 
 export default {
   users: users(axiosInstance),
